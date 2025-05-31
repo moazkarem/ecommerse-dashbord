@@ -1,7 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+body{
+  background-color: #232333 !important;
+}
+.MuiDataGrid-columnHeaderTitleContainer , .MuiDataGrid-columnHeader {
+  background-color: #232333 !important;
+  color: white !important;
+}
+.MuiDataGrid-columnHeaderTitleContainer:hover{
+  background-color: #232333 !important;
+  color: white !important;
+}
+.MuiDataGrid-row:hover , .MuiDataGrid-row:active{
+  background-color: #1b1d33 !important;
+  color: white !important;
+}
+.MuiDataGrid-row:active{
+  background-color: #1b1d33 !important;
+  color: white !important;
+}
+.MuiDataGrid-row:focus{
+  background-color: #1b1d33 !important;
+  color: white !important;
+}
+.MuiToolbar-root{
+  color: #fff !important;
+}
 ::-webkit-scrollbar {
     width: 13px;
   }

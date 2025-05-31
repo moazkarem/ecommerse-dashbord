@@ -1,13 +1,10 @@
-
 import { Avatar } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import {  useTheme } from "@mui/material/styles";
 // eslint-disable-next-line react/prop-types
-const Logo = ({open}) => {
-    const theme = useTheme()
+const Logo = ({ open }) => {
   return (
     <>
-           <Avatar
+      <Avatar
         sx={{
           mx: "auto",
           mt: 1,
@@ -23,19 +20,19 @@ const Logo = ({open}) => {
       <Typography
         align="center"
         fontSize={open ? 17 : 0}
-        sx={{ transition: ".25s" }}
+        sx={{ transition: ".25s", color: "#fff" }}
       >
         Moaz Karem
       </Typography>
       <Typography
         align="center"
         fontSize={open ? 15 : 0}
-        sx={{ mb: 1, transition: ".25s", color: '#f00' }}
+        sx={{ mb: 1, transition: ".25s", color: "#fff" }}
       >
         Admin
       </Typography>
     </>
-  )
-}
+  );
+};
 
-export default Logo
+export default Logo;

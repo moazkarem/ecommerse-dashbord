@@ -9,7 +9,7 @@ import Home from "../pages/HomePage/Home";
 // import Departments from "../pages/Departments/Departments";
 // import Patients from "../pages/Patients/Patients";
 // import Rooms from "../pages/Rooms/Rooms";
-// import Doctors from "../pages/Users/Doctors/Doctors";
+import Doctors from "../pages/Doctors/Doctors";
 // import Nursing from "../pages/Users/Nurse/Nursing";
 // import LabManager from "../pages/Users/Lab Manager/LabManager";
 // import RoomManager from "../pages/Users/Room Manager/RoomManager";
@@ -27,7 +27,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Rootlayout />}>
       <Route index element={<Home />} />
-      
+      <Route path="doctors" element={<Doctors />} />
     </Route>
   )
 );

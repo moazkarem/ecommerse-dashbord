@@ -1,11 +1,6 @@
-import Firstsec from "../../components/Home/Firstsec/Firstsec";
-import Secondsec from "../../components/Home/secondsec/Secondsec";
 const Home = () => {
-  return (
-    <div>
-      <Firstsec />
-      <Secondsec />
-    </div>
-  );
+  return <div className="">
+    Home Page
+  </div>;
 };
 export default Home;

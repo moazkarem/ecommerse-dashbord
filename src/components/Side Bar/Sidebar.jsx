@@ -6,18 +6,11 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-
 import { styled, useTheme } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { Sidedata } from "../../data/data";
-import Collapse from "@mui/material/Collapse";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
 import Logo from "../Logo/Logo";
 
 const drawerWidth = 240;
@@ -48,15 +41,25 @@ const Drawer = styled(MuiDrawer, {
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
+
   ...(open && {
     ...openedMixin(theme),
-    "& .MuiDrawer-paper": openedMixin(theme),
+    "& .MuiDrawer-paper": {
+      ...openedMixin(theme),
+      backgroundColor: "#2a2b40",
+    }
+   
   }),
   ...(!open && {
     ...closedMixin(theme),
-    "& .MuiDrawer-paper": closedMixin(theme),
+    "& .MuiDrawer-paper":{
+      ...closedMixin(theme),
+       backgroundColor: "#2a2b40",
+    }
   }),
 }));
+
+
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -68,17 +71,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 // eslint-disable-next-line react/prop-types
 const Sidebar = ({ open, setOpen }) => {
-  const [openNested, setOpenNested] = useState({});
-
-  const handleItemClick = (path) => {
-    navigate(path);
-  };
-  const handleNestedClick = (index) => {
-    setOpenNested((prevOpenNested) => ({
-      ...prevOpenNested,
-      [index]: !prevOpenNested[index],
-    }));
-  };
+ 
   const theme = useTheme();
   const handleDrawerClose = () => {
     setOpen(false);
@@ -87,7 +80,7 @@ const Sidebar = ({ open, setOpen }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   return (
-    <Drawer variant="permanent" open={open} sx={{ backgroundColor: "red" }}>
+    <Drawer variant="permanent" open={open} >
       <DrawerHeader>
         <IconButton onClick={handleDrawerClose}>
           {theme.direction === "rtl" ? (
@@ -98,7 +91,7 @@ const Sidebar = ({ open, setOpen }) => {
         </IconButton>
       </DrawerHeader>
       <Logo open={open} />
-      <List>
+      <List >
         {Sidedata.map((item, index) => (
           <React.Fragment key={index}>
             <ListItem disablePadding sx={{ display: "block" }}>
