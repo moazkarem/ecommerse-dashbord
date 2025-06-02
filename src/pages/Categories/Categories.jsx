@@ -7,7 +7,7 @@ import EditDoctor from "./EditCategory/EditCategory";
 import DelDoctor from "./DeleteCategory/DelCategory";
 import Loading from "../../components/Loading/Loading";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setCategoriesAction } from "../../features/categoriesSlice";
 import { useGetCategories } from "../../hooks/useCategories";
 import { getCategoryColumns, style } from "./data";
