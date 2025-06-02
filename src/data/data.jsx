@@ -7,8 +7,8 @@ export const Sidedata = [
     icon: <InboxIcon />,
   },
   {
-    path: "/doctors",
-    title: "doctor",
+    path: "/categories",
+    title: "Categories",
     icon: <InboxIcon />,
   },
 ];
