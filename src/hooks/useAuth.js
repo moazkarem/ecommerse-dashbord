@@ -1,11 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { loginApi } from "../api/auth";
-export const useAuthQuery = (data) => {
-  const authQuery = useQuery({
-    queryKey: ["auth"],
-    queryFn: () => {
-      loginApi(data);
-    },
+export const useAuthQuery = () => {
+  return useMutation({
+    mutationFn: loginApi,
   });
-  return authQuery;
 };
