@@ -15,7 +15,6 @@ export const Sidedata = [
   },
 ];
 
-
 export const signIn = [
   {
     type: "email",
@@ -24,4 +23,19 @@ export const signIn = [
     icon: MdOutlineMarkEmailRead,
   },
   { type: "password", name: "password", label: "Password", icon: CiLock },
+];
+
+//==================== CATEGORIES =======
+
+export const addCategoriesFields = [
+  {
+    name: "name",
+    type: "text",
+    label: "Category Name",
+  },
+  {
+    name: "image",
+    type: "file",
+    label: "Category Image",
+  },
 ];

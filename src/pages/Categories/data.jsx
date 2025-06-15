@@ -1,3 +1,5 @@
+import { MdDelete } from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
 export const getCategoryColumns = ({ onEdit, onDelete }) => [
   {
     field: "name",
@@ -25,9 +27,8 @@ export const getCategoryColumns = ({ onEdit, onDelete }) => [
       <button
         style={{ lineHeight: "32px" }}
         onClick={onEdit}
-        className="border rounded-[7px] h-8 border-[#71dd37] px-12 text-center"
       >
-        Edit
+       <FaEdit />
       </button>
     ),
   },
@@ -35,15 +36,15 @@ export const getCategoryColumns = ({ onEdit, onDelete }) => [
     field: "delete",
     headerName: "Delete",
     flex: 1,
+    width: 150,
     align: "center",
     headerAlign: "center",
     renderCell: () => (
       <button
         style={{ lineHeight: "32px" }}
         onClick={onDelete}
-        className="border rounded-[7px] h-8 border-[#f00] px-12 text-center"
       >
-        Delete
+       <MdDelete color=""/>
       </button>
     ),
   },

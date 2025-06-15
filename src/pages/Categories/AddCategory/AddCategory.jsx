@@ -2,30 +2,51 @@ import Modal from "../../../Ui/Modal";
 import Input from "../../../Ui/Input";
 import Label from "../../../Ui/Label";
 import Button from "../../../Ui/Button";
-
+import { addCategoriesFields } from "../../../data/data";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import Errormsg from "./../../../components/Error/ErrorMsg";
+import { categorySchema } from "../../../helpers/validation";
+import { useAddCategory } from "../../../hooks/useCategories";
 const AddDoctor = ({ isOpen, closeModal, title }) => {
-  const user_render = [1, 1, 1, 1].map((_, idx) => (
+  const { mutate, isPending } = useAddCategory();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(categorySchema),
+  });
+
+  const user_render = addCategoriesFields?.map(({ label, name, type }, idx) => (
     <div key={idx} className="flex gap-2 flex-col">
-      <Label htmlFor={"name"}>name:</Label>
-      <Input type="text" />
+      <Label htmlFor={label}>{label} : </Label>
+      <Input type={type} id={label} {...register(name)} />
+      {errors[name] && <Errormsg msg={errors[name]?.message} />}
     </div>
   ));
 
+  //================= SUBMIT DATA ========
+  const onSubmit = (data) => {
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("image", data.image[0]);
+    // console.log(...formData.entries());
+    mutate(formData);
+  };
   return (
     <div>
       <Modal title={title} isOpen={isOpen} closeModal={closeModal}>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           {user_render}
           <div className="flex justify-center items-center space-x-3">
             <Button
-          
-              styles={`mt-4  text-[#696cff] border w-48 px-12 border-1 border-[#5265FF] `}
+              style={`mt-4  text-[#696cff] border w-48 px-12 border-1 border-[#5265FF] py-[6px] rounded-[8px]`}
             >
-             Add
+              Add
             </Button>
             <Button
-              styles={`border-[#798594] text-[#dbdbebde]  mt-4   border w-48 px-12 border-1  `}
-           
+              style={`border-[#798594] text-[#dbdbebde]  mt-4   border w-48 px-12 border-1  py-[6px] rounded-[8px]`}
             >
               Cancel
             </Button>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { signIn } from "../../data/data";
 import Button from "../../Ui/Button";
 import { useForm } from "react-hook-form";
@@ -34,13 +34,13 @@ const Login = () => {
     </div>
   ));
   //============================HANDEL SUBMIT DATA ===========
-  const { mutate, isPending, error } = useAuthQuery();
+  const { mutate, isPending } = useAuthQuery();
   const navigate = useNavigate();
   const onSubmit = (data) => {
     mutate(data, {
       onSuccess: (res) => {
-        console.log(res?.data?.data, "from login ");
-        localStorage.setItem("userData", JSON.stringify(res?.data)); // stringify هنا
+        // console.log(res?.data?.data, "from login ");
+        localStorage.setItem("userData", JSON.stringify(res?.data));
         toast.success("Login Success");
         setTimeout(() => {
           navigate("/");
