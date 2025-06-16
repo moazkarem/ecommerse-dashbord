@@ -8,7 +8,7 @@ export const getCategoriesApi = async () => {
 export const addCategoryApi = async (data) => {
   const storedUser = localStorage.getItem("userData");
   const userData = storedUser ? JSON.parse(storedUser) : null;
-  const token = userData?.data?.token;
+  const token = userData?.token;
   const res = await server.post("/api/v1/categories", data, {
     headers: {
       Authorization: `Bearer ${token}`,

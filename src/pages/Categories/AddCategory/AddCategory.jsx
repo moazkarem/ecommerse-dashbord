@@ -8,12 +8,20 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Errormsg from "./../../../components/Error/ErrorMsg";
 import { categorySchema } from "../../../helpers/validation";
 import { useAddCategory } from "../../../hooks/useCategories";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { useQueryClient } from "@tanstack/react-query";
 const AddDoctor = ({ isOpen, closeModal, title }) => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
   const { mutate, isPending } = useAddCategory();
   const {
     register,
     handleSubmit,
     formState: { errors },
+    
   } = useForm({
     resolver: yupResolver(categorySchema),
   });
@@ -30,9 +38,21 @@ const AddDoctor = ({ isOpen, closeModal, title }) => {
   const onSubmit = (data) => {
     const formData = new FormData();
     formData.append("name", data.name);
-    formData.append("image", data.image[0]);
-    // console.log(...formData.entries());
-    mutate(formData);
+    // formData.append("image", data.image[0]);
+    mutate(formData, {
+      onSuccess: () => {
+        toast.success("Category added successfully");
+        closeModal();
+        queryClient.invalidateQueries(["categories"]);
+
+        // setTimeout(() => {
+        //   navigate("/categories");
+        // }, 1200);
+      },
+      onError: () => {
+        toast.error("An error occurred, category was not added");
+      },
+    });
   };
   return (
     <div>
@@ -46,6 +66,7 @@ const AddDoctor = ({ isOpen, closeModal, title }) => {
               Add
             </Button>
             <Button
+              onClick={() => closeModal()}
               style={`border-[#798594] text-[#dbdbebde]  mt-4   border w-48 px-12 border-1  py-[6px] rounded-[8px]`}
             >
               Cancel
