@@ -29,7 +29,6 @@ export const getCategoryColumns = ({ onEdit, onDelete }) => [
     headerAlign: "center",
     renderCell: () => (
       <div className="w-full flex justify-center ">
-
         <img
           className="w-12 h-12 object-contain p-2"
           src={images[Math.floor(Math.random() * images.length)]}
@@ -57,8 +56,11 @@ export const getCategoryColumns = ({ onEdit, onDelete }) => [
     width: 150,
     align: "center",
     headerAlign: "center",
-    renderCell: () => (
-      <button style={{ lineHeight: "32px" }} onClick={onDelete}>
+    renderCell: (category) => (
+      <button
+        style={{ lineHeight: "32px" }}
+        onClick={() => onDelete(category.row)}
+      >
         <MdDelete color="" />
       </button>
     ),

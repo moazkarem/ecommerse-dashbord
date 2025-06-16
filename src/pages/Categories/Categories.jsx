@@ -14,6 +14,7 @@ import { getCategoryColumns, style } from "./data";
 
 const Doctors = () => {
   //===================== MODAL STATES ===========
+  const [deletedCat , setDeletedCat] = useState({})
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [isOpenDel, setIsOpenDel] = useState(false);
@@ -21,7 +22,11 @@ const Doctors = () => {
   const closeModal = () => setIsOpen(false);
   const openModalEdit = () => setIsOpenEdit(true);
   const closeModalEdit = () => setIsOpenEdit(false);
-  const openModalDel = () => setIsOpenDel(true);
+  const openModalDel = (selectedCate) => {
+    console.log(selectedCate , 'del obj ')
+    setIsOpenDel(true)
+    setDeletedCat(selectedCate)
+  };
   const closeModalDel = () => setIsOpenDel(false);
 
   //===================== DATA AND API ===========
@@ -60,7 +65,7 @@ const Doctors = () => {
         isOpenEdit={isOpenEdit}
         closeModalEdit={closeModalEdit}
       />
-      <DelDoctor isOpen={isOpenDel} closeModal={closeModalDel} />
+      <DelDoctor isOpen={isOpenDel} closeModal={closeModalDel} deletedCat={deletedCat} />
     </Box>
   );
 };

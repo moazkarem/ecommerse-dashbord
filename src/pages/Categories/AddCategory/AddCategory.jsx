@@ -10,18 +10,17 @@ import { categorySchema } from "../../../helpers/validation";
 import { useAddCategory } from "../../../hooks/useCategories";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { useQueryClient } from "@tanstack/react-query";
 const AddDoctor = ({ isOpen, closeModal, title }) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { mutate, isPending } = useAddCategory();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    
   } = useForm({
     resolver: yupResolver(categorySchema),
   });
@@ -38,16 +37,12 @@ const AddDoctor = ({ isOpen, closeModal, title }) => {
   const onSubmit = (data) => {
     const formData = new FormData();
     formData.append("name", data.name);
-    // formData.append("image", data.image[0]);
+
     mutate(formData, {
       onSuccess: () => {
         toast.success("Category added successfully");
         closeModal();
         queryClient.invalidateQueries(["categories"]);
-
-        // setTimeout(() => {
-        //   navigate("/categories");
-        // }, 1200);
       },
       onError: () => {
         toast.error("An error occurred, category was not added");
@@ -61,7 +56,8 @@ const AddDoctor = ({ isOpen, closeModal, title }) => {
           {user_render}
           <div className="flex justify-center items-center space-x-3">
             <Button
-              style={`mt-4  text-[#696cff] border w-48 px-12 border-1 border-[#5265FF] py-[6px] rounded-[8px]`}
+              loading={isPending}
+              style={`mt-4  text-[#696cff] border w-48 px-12 border-1 border-[#5265FF] py-[6px] flex justify-center items-center  rounded-[8px]`}
             >
               Add
             </Button>

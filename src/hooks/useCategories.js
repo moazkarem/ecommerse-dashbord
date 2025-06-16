@@ -1,5 +1,9 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { addCategoryApi, getCategoriesApi } from "../api/categories";
+import {
+  addCategoryApi,
+  getCategoriesApi,
+  delCategoryApi,
+} from "../api/categories";
 
 export const useGetCategories = () => {
   return useQuery({
@@ -11,5 +15,11 @@ export const useGetCategories = () => {
 export const useAddCategory = () => {
   return useMutation({
     mutationFn: addCategoryApi,
+  });
+};
+
+export const useDelCategory = () => {
+  return useMutation({
+    mutationFn: delCategoryApi,
   });
 };
