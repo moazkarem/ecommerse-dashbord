@@ -3,7 +3,10 @@ import {
   addCategoryApi,
   getCategoriesApi,
   delCategoryApi,
+  editCatApi,
 } from "../api/categories";
+
+//============ GET CATEGORY HOOK ======
 
 export const useGetCategories = () => {
   return useQuery({
@@ -11,6 +14,7 @@ export const useGetCategories = () => {
     queryFn: getCategoriesApi,
   });
 };
+//============ ADD CATEGORY HOOK ======
 
 export const useAddCategory = () => {
   return useMutation({
@@ -18,8 +22,17 @@ export const useAddCategory = () => {
   });
 };
 
+//============ DEL CATEGORY HOOK ======
 export const useDelCategory = () => {
   return useMutation({
     mutationFn: delCategoryApi,
+  });
+};
+
+//============ EDIT CATEGORY HOOK ======
+
+export const useEditCategory = () => {
+  return useMutation({
+    mutationFn: editCatApi,
   });
 };

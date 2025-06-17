@@ -43,8 +43,11 @@ export const getCategoryColumns = ({ onEdit, onDelete }) => [
     flex: 1,
     align: "center",
     headerAlign: "center",
-    renderCell: () => (
-      <button style={{ lineHeight: "32px" }} onClick={onEdit}>
+    renderCell: (category) => (
+      <button
+        style={{ lineHeight: "32px" }}
+        onClick={() => onEdit(category.row)}
+      >
         <FaEdit />
       </button>
     ),

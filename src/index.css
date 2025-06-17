@@ -3,6 +3,7 @@
 @tailwind utilities;
 body{
   background-color: #232333 !important;
+  min-height: 100vh;
 }
 .MuiDataGrid-columnHeaderTitleContainer , .MuiDataGrid-columnHeader {
   background-color: #232333 !important;

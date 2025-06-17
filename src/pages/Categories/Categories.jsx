@@ -15,15 +15,21 @@ import { getCategoryColumns, style } from "./data";
 const Doctors = () => {
   //===================== MODAL STATES ===========
   const [deletedCat , setDeletedCat] = useState({})
+  const [editedCat , setEditedCat] = useState({})
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [isOpenDel, setIsOpenDel] = useState(false);
+
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
-  const openModalEdit = () => setIsOpenEdit(true);
+
+  const openModalEdit = (selectedCate) => {
+    setIsOpenEdit(true);
+    setEditedCat(selectedCate)
+  }  
   const closeModalEdit = () => setIsOpenEdit(false);
+
   const openModalDel = (selectedCate) => {
-    console.log(selectedCate , 'del obj ')
     setIsOpenDel(true)
     setDeletedCat(selectedCate)
   };
@@ -64,6 +70,7 @@ const Doctors = () => {
         title={"Edit Category Information"}
         isOpenEdit={isOpenEdit}
         closeModalEdit={closeModalEdit}
+        editedCat={editedCat}
       />
       <DelDoctor isOpen={isOpenDel} closeModal={closeModalDel} deletedCat={deletedCat} />
     </Box>

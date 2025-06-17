@@ -9,13 +9,9 @@ import Errormsg from "./../../../components/Error/ErrorMsg";
 import { categorySchema } from "../../../helpers/validation";
 import { useAddCategory } from "../../../hooks/useCategories";
 import { toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { useQueryClient } from "@tanstack/react-query";
 const AddDoctor = ({ isOpen, closeModal, title }) => {
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { mutate, isPending } = useAddCategory();
   const {
     register,
@@ -25,13 +21,15 @@ const AddDoctor = ({ isOpen, closeModal, title }) => {
     resolver: yupResolver(categorySchema),
   });
 
-  const user_render = addCategoriesFields?.map(({ label, name, type }, idx) => (
-    <div key={idx} className="flex gap-2 flex-col">
-      <Label htmlFor={label}>{label} : </Label>
-      <Input type={type} id={label} {...register(name)} />
-      {errors[name] && <Errormsg msg={errors[name]?.message} />}
-    </div>
-  ));
+  const renderCatFields = addCategoriesFields?.map(
+    ({ label, name, type }, idx) => (
+      <div key={idx} className="flex gap-2 flex-col">
+        <Label htmlFor={label}>{label} : </Label>
+        <Input type={type} id={label} {...register(name)} />
+        {errors[name] && <Errormsg msg={errors[name]?.message} />}
+      </div>
+    )
+  );
 
   //================= SUBMIT DATA ========
   const onSubmit = (data) => {
@@ -53,7 +51,7 @@ const AddDoctor = ({ isOpen, closeModal, title }) => {
     <div>
       <Modal title={title} isOpen={isOpen} closeModal={closeModal}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          {user_render}
+          {renderCatFields}
           <div className="flex justify-center items-center space-x-3">
             <Button
               loading={isPending}
@@ -62,6 +60,7 @@ const AddDoctor = ({ isOpen, closeModal, title }) => {
               Add
             </Button>
             <Button
+              type="button"
               onClick={() => closeModal()}
               style={`border-[#798594] text-[#dbdbebde]  mt-4   border w-48 px-12 border-1  py-[6px] rounded-[8px]`}
             >
