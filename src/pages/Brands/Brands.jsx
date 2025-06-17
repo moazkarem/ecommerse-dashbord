@@ -2,9 +2,9 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 import TitlePage from "../../components/Title page/TitlePage";
 import AddButton from "../../components/Add Button/AddButton";
-import AddCategory from "./AddCategory/AddCategory";
-import EditCategory from "./EditCategory/EditCategory";
-import DelCategory from "./DeleteCategory/DelCategory";
+import AddDoctor from "./AddBrand";
+import EditDoctor from "./EditBrand";
+import DelDoctor from "./DelBrand";
 import Loading from "../../components/Loading/Loading";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -12,10 +12,10 @@ import { setCategoriesAction } from "../../features/categoriesSlice";
 import { useGetCategories } from "../../hooks/useCategories";
 import { getCategoryColumns, style } from "./data";
 
-const Doctors = () => {
+const Brands = () => {
   //===================== MODAL STATES ===========
-  const [deletedCat, setDeletedCat] = useState({});
-  const [editedCat, setEditedCat] = useState({});
+  const [deletedCat , setDeletedCat] = useState({})
+  const [editedCat , setEditedCat] = useState({})
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [isOpenDel, setIsOpenDel] = useState(false);
@@ -25,13 +25,13 @@ const Doctors = () => {
 
   const openModalEdit = (selectedCate) => {
     setIsOpenEdit(true);
-    setEditedCat(selectedCate);
-  };
+    setEditedCat(selectedCate)
+  }  
   const closeModalEdit = () => setIsOpenEdit(false);
 
   const openModalDel = (selectedCate) => {
-    setIsOpenDel(true);
-    setDeletedCat(selectedCate);
+    setIsOpenDel(true)
+    setDeletedCat(selectedCate)
   };
   const closeModalDel = () => setIsOpenDel(false);
 
@@ -61,24 +61,20 @@ const Doctors = () => {
       <TitlePage path={"Dashbord / "} page={"Categories"} />
       <AddButton add={openModal} title={"Add New Category"} />
       <DataGrid rows={rows} columns={columns} sx={style} />
-      <AddCategory
+      <AddDoctor
         title={"Add New Doctor"}
         isOpen={isOpen}
         closeModal={closeModal}
       />
-      <EditCategory
+      <EditDoctor
         title={"Edit Category Information"}
         isOpenEdit={isOpenEdit}
         closeModalEdit={closeModalEdit}
         editedCat={editedCat}
       />
-      <DelCategory
-        isOpen={isOpenDel}
-        closeModal={closeModalDel}
-        deletedCat={deletedCat}
-      />
+      <DelDoctor isOpen={isOpenDel} closeModal={closeModalDel} deletedCat={deletedCat} />
     </Box>
   );
 };
 
-export default Doctors;
+export default Brands;
