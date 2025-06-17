@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { setCategoriesAction } from "../../features/categoriesSlice";
 import { useGetCategories } from "../../hooks/useCategories";
 import { getCategoryColumns, style } from "./data";
+import { useGetBrands } from "../../hooks/useBrands";
 
 const Brands = () => {
   //===================== MODAL STATES ===========
@@ -37,7 +38,7 @@ const Brands = () => {
 
   //===================== DATA AND API ===========
   const dispatch = useDispatch();
-  const { data: categories, isLoading } = useGetCategories();
+  const { data: categories, isLoading } = useGetBrands();
 
   useEffect(() => {
     if (categories?.data) {
