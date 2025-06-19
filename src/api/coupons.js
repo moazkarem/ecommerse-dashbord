@@ -24,22 +24,23 @@ export const addCouponApi = async (data) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  // console.log(res, "from add brand res");
+  // console.log(res, "from add coupons res");
   return res;
 };
 
 //================ DELETE COUPONS API ===========
 
-export const delCouponApi = async (brandId) => {
+export const delCouponApi = async (couponId) => {
+  console.log(couponId , 'id')
   const storedUser = localStorage.getItem("userData");
   const userData = storedUser ? JSON.parse(storedUser) : null;
   const token = userData?.token;
-  const res = await server.delete(`/api/v1/brands/${brandId}`, {
+  const res = await server.delete(`/api/v1/coupons/${couponId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-  // console.log(res, "from del category res");
+  console.log(res, "from del coupon res");
   return res;
 };
 

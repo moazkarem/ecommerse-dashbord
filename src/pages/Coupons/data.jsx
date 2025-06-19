@@ -32,7 +32,7 @@ export const getCategoryColumns = ({ onEdit, onDelete }) => [
 
   {
     field: "discount",
-    headerName: "Discount Date",
+    headerName: "Discount",
     width: 80,
     flex: 1,
     align: "center",

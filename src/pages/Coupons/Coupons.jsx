@@ -7,14 +7,14 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getCategoryColumns, style } from "./data";
 import { useGetCoupons } from "../../hooks/useCoupons";
-import DelBrand from "./DelBrand";
 import EditBrand from "./EditBrand";
 import { setCouponsAction } from "../../features/couponsSlice";
 import AddCoupon from "./AddCoupon";
+import DelCoupon from "./DelCoupon";
 
 const Coupons = () => {
   //===================== MODAL STATES ===========
-  const [deletedBrand, setDeletedBrand] = useState({});
+  const [deletedCoupon, setDeletedCoupon] = useState({});
   const [editedBrand, setEditedBrand] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
@@ -29,9 +29,9 @@ const Coupons = () => {
   };
   const closeModalEdit = () => setIsOpenEdit(false);
 
-  const openModalDel = (selectedBrand) => {
+  const openModalDel = (selectedCoupon) => {
     setIsOpenDel(true);
-    setDeletedBrand(selectedBrand);
+    setDeletedCoupon(selectedCoupon);
   };
   const closeModalDel = () => setIsOpenDel(false);
 
@@ -72,11 +72,11 @@ const Coupons = () => {
         closeModalEdit={closeModalEdit}
         editedBrand={editedBrand}
       />
-      <DelBrand
-        key={deletedBrand._id}
+      <DelCoupon
+        key={deletedCoupon._id}
         isOpen={isOpenDel}
         closeModal={closeModalDel}
-        deletedBrand={deletedBrand}
+        deletedCoupon={deletedCoupon}
       />
     </Box>
   );
