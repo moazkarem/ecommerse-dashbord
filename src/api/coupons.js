@@ -31,7 +31,7 @@ export const addCouponApi = async (data) => {
 //================ DELETE COUPONS API ===========
 
 export const delCouponApi = async (couponId) => {
-  console.log(couponId , 'id')
+  console.log(couponId, "id");
   const storedUser = localStorage.getItem("userData");
   const userData = storedUser ? JSON.parse(storedUser) : null;
   const token = userData?.token;
@@ -40,21 +40,21 @@ export const delCouponApi = async (couponId) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(res, "from del coupon res");
+  // console.log(res, "from del coupon res");
   return res;
 };
 
 //================ EDIT COUPONS API ===========
 
-export const editCouponApi = async ({ formData, catId }) => {
+export const editCouponApi = async ({ data, couponId }) => {
   const storedKey = localStorage.getItem("userData");
   const userData = storedKey ? JSON.parse(storedKey) : null;
   const token = userData?.token;
-  const res = await server.put(`/api/v1/brands/${catId}`, formData, {
+  const res = await server.put(`/api/v1/coupons/${couponId}`, data, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-  // console.log(res?.data, "from edit categories api ");
+  console.log(res?.data, "from edit categories api ");
   return res;
 };

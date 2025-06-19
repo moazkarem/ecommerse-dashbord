@@ -67,6 +67,7 @@ const Brands = () => {
         closeModal={closeModal}
       />
       <EditBrand
+      key={editedBrand._id}
         title={"Edit Brand "}
         isOpenEdit={isOpenEdit}
         closeModalEdit={closeModalEdit}
