@@ -17,6 +17,11 @@ export const Sidedata = [
     title: "Brands",
     icon: <InboxIcon />,
   },
+  {
+    path: "/coupons",
+    title: "Coupons",
+    icon: <InboxIcon />,
+  },
 ];
 
 export const signIn = [

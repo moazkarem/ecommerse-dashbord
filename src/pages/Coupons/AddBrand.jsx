@@ -10,7 +10,7 @@ import { categorySchema } from "../../helpers/validation";
 import { useAddBrand } from "../../hooks/useBrands";
 import { toast } from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
-const AddBrand = ({ isOpen, closeModal, title }) => {
+const AddDoctor = ({ isOpen, closeModal, title }) => {
   const queryClient = useQueryClient();
   const { mutate, isPending } = useAddBrand();
   const {
@@ -74,4 +74,4 @@ const AddBrand = ({ isOpen, closeModal, title }) => {
   );
 };
 
-export default AddBrand;
+export default AddDoctor;

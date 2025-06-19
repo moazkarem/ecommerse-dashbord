@@ -2,17 +2,17 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 import TitlePage from "../../components/Title page/TitlePage";
 import AddButton from "../../components/Add Button/AddButton";
+import AddDoctor from "./AddBrand";
 import Loading from "../../components/Loading/Loading";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getCategoryColumns, style } from "./data";
-import { useGetBrands } from "../../hooks/useBrands";
+import { useGetCoupons } from "../../hooks/useCoupons";
 import DelBrand from "./DelBrand";
 import EditBrand from "./EditBrand";
-import { setBrandsAction } from "../../features/brandsSlice";
-import AddBrand from "./AddBrand";
+import { setCouponsAction } from "../../features/couponsSlice";
 
-const Brands = () => {
+const Coupons = () => {
   //===================== MODAL STATES ===========
   const [deletedBrand, setDeletedBrand] = useState({});
   const [editedBrand, setEditedBrand] = useState({});
@@ -37,32 +37,32 @@ const Brands = () => {
 
   //===================== DATA AND API ===========
   const dispatch = useDispatch();
-  const { data: brands, isLoading } = useGetBrands();
+  const { data: coupons, isLoading } = useGetCoupons();
 
   useEffect(() => {
-    if (brands?.data) {
-      dispatch(setBrandsAction(brands?.data?.data));
+    if (coupons?.data) {
+      dispatch(setCouponsAction(coupons?.data?.data));
     }
-  }, [brands, dispatch]);
+  }, [coupons, dispatch]);
 
   const columns = getCategoryColumns({
     onEdit: openModalEdit,
     onDelete: openModalDel,
   });
 
-  const rows = brands?.data?.data.map((brand, index) => ({
-    ...brand,
-    id: brand._id || index,
+  const rows = coupons?.data?.data.map((coupon, index) => ({
+    ...coupon,
+    id: coupon._id || index,
   }));
 
   if (isLoading) return <Loading />;
   return (
     <Box sx={{ height: 600, width: "85%", mx: "auto" }}>
-      <TitlePage path={"Dashbord / "} page={"Brands"} />
-      <AddButton add={openModal} title={"Add New Brand"} />
+      <TitlePage path={"Dashbord / "} page={"Coupons"} />
+      <AddButton add={openModal} title={"Add New Coupon"} />
       <DataGrid rows={rows} columns={columns} sx={style} />
-      <AddBrand
-        title={"Add New Brand"}
+      <AddDoctor
+        title={"Add New Coupon"}
         isOpen={isOpen}
         closeModal={closeModal}
       />
@@ -82,4 +82,4 @@ const Brands = () => {
   );
 };
 
-export default Brands;
+export default Coupons;
