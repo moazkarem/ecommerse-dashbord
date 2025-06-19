@@ -17,22 +17,22 @@ export const addBrandApi = async (data) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(res, "from add brand res");
+  // console.log(res, "from add brand res");
   return res;
 };
 
 //================ DELETE BRANDS API ===========
 
-export const delBrandApi = async (catId) => {
+export const delBrandApi = async (brandId) => {
   const storedUser = localStorage.getItem("userData");
   const userData = storedUser ? JSON.parse(storedUser) : null;
   const token = userData?.token;
-  const res = await server.delete(`/api/v1/categories/${catId}`, {
+  const res = await server.delete(`/api/v1/brands/${brandId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-  // console.log(res, "from del category res");
+  console.log(res, "from del category res");
   return res;
 };
 

@@ -4,17 +4,17 @@ import TitlePage from "../../components/Title page/TitlePage";
 import AddButton from "../../components/Add Button/AddButton";
 import AddDoctor from "./AddBrand";
 import EditDoctor from "./EditBrand";
-import DelDoctor from "./DelBrand";
 import Loading from "../../components/Loading/Loading";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCategoriesAction } from "../../features/categoriesSlice";
 import { getCategoryColumns, style } from "./data";
 import { useGetBrands } from "../../hooks/useBrands";
+import DelBrand from "./DelBrand";
 
 const Brands = () => {
   //===================== MODAL STATES ===========
-  const [deletedCat, setDeletedCat] = useState({});
+  const [deletedBrand, setDeletedBrand] = useState({});
   const [editedCat, setEditedCat] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
@@ -29,9 +29,9 @@ const Brands = () => {
   };
   const closeModalEdit = () => setIsOpenEdit(false);
 
-  const openModalDel = (selectedCate) => {
+  const openModalDel = (selectedBrand) => {
     setIsOpenDel(true);
-    setDeletedCat(selectedCate);
+    setDeletedBrand(selectedBrand);
   };
   const closeModalDel = () => setIsOpenDel(false);
 
@@ -72,10 +72,11 @@ const Brands = () => {
         closeModalEdit={closeModalEdit}
         editedCat={editedCat}
       />
-      <DelDoctor
+      <DelBrand
+        key={deletedBrand._id}
         isOpen={isOpenDel}
         closeModal={closeModalDel}
-        deletedCat={deletedCat}
+        deletedBrand={deletedBrand}
       />
     </Box>
   );

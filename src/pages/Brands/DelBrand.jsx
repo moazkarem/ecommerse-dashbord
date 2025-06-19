@@ -1,32 +1,32 @@
 /* eslint-disable react/prop-types */
 import Modal from "../../Ui/Modal";
 import Button from "../../Ui/Button";
-import { useDelCategory } from "./../../hooks/useCategories";
+import { useDelBrand } from "./../../hooks/useBrands";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
-const DelDoctor = ({ isOpen, closeModal, deletedCat }) => {
+const DelBrand = ({ isOpen, closeModal, deletedBrand }) => {
   //============= SUBMIT FUNCTION =======
   const { handleSubmit } = useForm({});
   const queryClient = useQueryClient();
-  const { isPending, mutate } = useDelCategory();
+  const { isPending, mutate } = useDelBrand();
   const onSubmit = () => {
-    mutate(deletedCat._id, {
+    mutate(deletedBrand._id, {
       onSuccess: () => {
-        toast.success("Category deleted successfully");
+        toast.success("Brand deleted successfully");
         closeModal();
-        queryClient.invalidateQueries(["categories"]);
+        queryClient.invalidateQueries(["brands"]);
       },
       onError: (err) => {
         console.log(err, "err del");
-        toast.error("An error occurred, category was not deleted");
+        toast.error("An error occurred, brand was not deleted");
       },
     });
   };
   return (
     <div>
       <Modal
-        title={` Delete ${deletedCat.name} ? `}
+        title={` Delete ${deletedBrand?.name} ? `}
         isOpen={isOpen}
         closeModal={closeModal}
       >
@@ -54,4 +54,4 @@ const DelDoctor = ({ isOpen, closeModal, deletedCat }) => {
   );
 };
 
-export default DelDoctor;
+export default DelBrand;

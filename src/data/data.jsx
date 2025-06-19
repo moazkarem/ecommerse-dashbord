@@ -1,7 +1,6 @@
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import { CiLock } from "react-icons/ci";
 import { MdOutlineMarkEmailRead } from "react-icons/md";
-import { FaRegUser } from "react-icons/fa";
 export const Sidedata = [
   {
     path: "/",

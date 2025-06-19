@@ -59,10 +59,10 @@ export const getCategoryColumns = ({ onEdit, onDelete }) => [
     width: 150,
     align: "center",
     headerAlign: "center",
-    renderCell: (category) => (
+    renderCell: (brand) => (
       <button
         style={{ lineHeight: "32px" }}
-        onClick={() => onDelete(category.row)}
+        onClick={() => onDelete(brand.row)}
       >
         <MdDelete className="text-[#ff0000cc] text-[20px]" />
       </button>
