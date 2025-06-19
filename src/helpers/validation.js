@@ -13,10 +13,10 @@ export const loginSchema = yup
   .required();
 
 export const categorySchema = yup.object({
-  name: yup.string().required("Category Name Is Required"),
+  name: yup.string().required(" Name Is Required"),
   image: yup
     .mixed()
-    .required("Category Image Is Required")
+    .required(" Image Is Required")
     .test("fileExist", "Image is required", (value) => {
       return value && value.length > 0;
     }),

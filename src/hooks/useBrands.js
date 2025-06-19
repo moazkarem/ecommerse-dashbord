@@ -1,13 +1,12 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getBrandsApi } from './../api/brands';
 import {
-  addCategoryApi,
-  getCategoriesApi,
-  delCategoryApi,
-  editCatApi,
-} from "../api/categories";
+  getBrandsApi,
+  addBrandApi,
+  editBrandApi,
+  delBrandApi,
+} from "./../api/brands";
 
-//============ GET CATEGORY HOOK ======
+//============ GET BRANDS HOOK ======
 
 export const useGetBrands = () => {
   return useQuery({
@@ -15,25 +14,25 @@ export const useGetBrands = () => {
     queryFn: getBrandsApi,
   });
 };
-//============ ADD CATEGORY HOOK ======
+//============ ADD BRANDS HOOK ======
 
-export const useAddCategory = () => {
+export const useAddBrand = () => {
   return useMutation({
-    mutationFn: addCategoryApi,
+    mutationFn: addBrandApi,
   });
 };
 
-//============ DEL CATEGORY HOOK ======
-export const useDelCategory = () => {
+//============ DEL BRANDS HOOK ======
+export const useDelBrand = () => {
   return useMutation({
-    mutationFn: delCategoryApi,
+    mutationFn: delBrandApi,
   });
 };
 
-//============ EDIT CATEGORY HOOK ======
+//============ EDIT BRANDS HOOK ======
 
-export const useEditCategory = () => {
+export const useEditBrand = () => {
   return useMutation({
-    mutationFn: editCatApi,
+    mutationFn: editBrandApi,
   });
 };

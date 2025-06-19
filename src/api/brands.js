@@ -1,9 +1,12 @@
 import server from "./server";
 
+//================ GET BRANDS API ===========
 export const getBrandsApi = async () => {
   const res = await server.get("/api/v1/brands");
   return res;
 };
+
+//================ ADD BRANDS API ===========
 
 export const addBrandApi = async (data) => {
   const storedUser = localStorage.getItem("userData");
@@ -14,9 +17,11 @@ export const addBrandApi = async (data) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  // console.log(res, "from add category res");
+  console.log(res, "from add brand res");
   return res;
 };
+
+//================ DELETE BRANDS API ===========
 
 export const delBrandApi = async (catId) => {
   const storedUser = localStorage.getItem("userData");
@@ -31,8 +36,10 @@ export const delBrandApi = async (catId) => {
   return res;
 };
 
+//================ EDIT BRANDS API ===========
+
 export const editBrandApi = async ({ formData, catId }) => {
-   const storedKey = localStorage.getItem("userData");
+  const storedKey = localStorage.getItem("userData");
   const userData = storedKey ? JSON.parse(storedKey) : null;
   const token = userData?.token;
   const res = await server.put(`/api/v1/categories/${catId}`, formData, {

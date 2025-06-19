@@ -44,3 +44,18 @@ export const addCategoriesFields = [
     label: "Category Image",
   },
 ];
+
+//==================== CATEGORIES =======
+
+export const addBrandsFields = [
+  {
+    name: "name",
+    type: "text",
+    label: "Brand Name",
+  },
+  {
+    name: "image",
+    type: "file",
+    label: "Brand Image",
+  },
+];

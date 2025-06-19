@@ -50,24 +50,24 @@ const Brands = () => {
     onDelete: openModalDel,
   });
 
-  const rows = brands?.data?.data.map((cat, index) => ({
-    ...cat,
-    id: cat._id || index,
+  const rows = brands?.data?.data.map((brand, index) => ({
+    ...brand,
+    id: brand._id || index,
   }));
 
   if (isLoading) return <Loading />;
   return (
     <Box sx={{ height: 600, width: "85%", mx: "auto" }}>
       <TitlePage path={"Dashbord / "} page={"Brands"} />
-      <AddButton add={openModal} title={"Add New Category"} />
+      <AddButton add={openModal} title={"Add New Brand"} />
       <DataGrid rows={rows} columns={columns} sx={style} />
       <AddDoctor
-        title={"Add New Doctor"}
+        title={"Add New Brand"}
         isOpen={isOpen}
         closeModal={closeModal}
       />
       <EditDoctor
-        title={"Edit Category Information"}
+        title={"Edit Brand "}
         isOpenEdit={isOpenEdit}
         closeModalEdit={closeModalEdit}
         editedCat={editedCat}

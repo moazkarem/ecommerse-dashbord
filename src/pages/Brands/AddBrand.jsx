@@ -2,17 +2,17 @@ import Modal from "../../Ui/Modal";
 import Input from "../../Ui/Input";
 import Label from "../../Ui/Label";
 import Button from "../../Ui/Button";
-import { addCategoriesFields } from "../../data/data";
+import { addBrandsFields } from "../../data/data";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Errormsg from "./../../components/Error/ErrorMsg";
 import { categorySchema } from "../../helpers/validation";
-import { useAddCategory } from "../../hooks/useCategories";
+import { useAddBrand } from "../../hooks/useBrands";
 import { toast } from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
 const AddDoctor = ({ isOpen, closeModal, title }) => {
   const queryClient = useQueryClient();
-  const { mutate, isPending } = useAddCategory();
+  const { mutate, isPending } = useAddBrand();
   const {
     register,
     handleSubmit,
@@ -21,7 +21,7 @@ const AddDoctor = ({ isOpen, closeModal, title }) => {
     resolver: yupResolver(categorySchema),
   });
 
-  const renderCatFields = addCategoriesFields?.map(
+  const renderCatFields = addBrandsFields?.map(
     ({ label, name, type }, idx) => (
       <div key={idx} className="flex gap-2 flex-col">
         <Label htmlFor={label}>{label} : </Label>
@@ -35,15 +35,16 @@ const AddDoctor = ({ isOpen, closeModal, title }) => {
   const onSubmit = (data) => {
     const formData = new FormData();
     formData.append("name", data.name);
+    // formData.append("name", data.image);
 
     mutate(formData, {
       onSuccess: () => {
-        toast.success("Category added successfully");
+        toast.success("Brand added successfully");
         closeModal();
-        queryClient.invalidateQueries(["categories"]);
+        queryClient.invalidateQueries(["brands"]);
       },
       onError: () => {
-        toast.error("An error occurred, category was not added");
+        toast.error("An error occurred, brand was not added");
       },
     });
   };
