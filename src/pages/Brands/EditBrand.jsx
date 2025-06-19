@@ -2,18 +2,16 @@ import Modal from "../../Ui/Modal";
 import Input from "../../Ui/Input";
 import Label from "../../Ui/Label";
 import Button from "../../Ui/Button";
-import { addCategoriesFields } from "../../data/data";
+import { addBrandsFields } from "../../data/data";
 import Errormsg from "./../../components/Error/ErrorMsg";
-
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { categorySchema } from "../../helpers/validation";
-
-import { useEditCategory } from "../../hooks/useCategories";
+import { useEditBrand } from "../../hooks/useBrands";
 import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-const EditDoctor = ({ isOpenEdit, closeModalEdit, title, editedCat }) => {
-  const { isPending, mutate } = useEditCategory();
+const EditBrand = ({ isOpenEdit, closeModalEdit, title, editedBrand }) => {
+  const { isPending, mutate } = useEditBrand();
   const queryClient = useQueryClient();
   const {
     register,
@@ -23,30 +21,28 @@ const EditDoctor = ({ isOpenEdit, closeModalEdit, title, editedCat }) => {
     resolver: yupResolver(categorySchema),
   });
 
-  const renderCatFields = addCategoriesFields?.map(
-    ({ label, name, type }, idx) => (
-      <div key={idx} className="flex gap-2 flex-col">
-        <Label htmlFor={label}>{label} : </Label>
-        //========= check file type to avoide default value error in file input
-        {type === "file" ? (
-          <Input type="file" id={label} {...register(name)} />
-        ) : (
-          <Input
-            type={type}
-            id={label}
-            defaultValue={editedCat ? editedCat[name] : ""}
-            {...register(name)}
-          />
-        )}
-        {errors[name] && <Errormsg msg={errors[name]?.message} />}
-      </div>
-    )
-  );
+  const renderCatFields = addBrandsFields?.map(({ label, name, type }, idx) => (
+    //========= check file type to avoide default value error in file input
+    <div key={idx} className="flex gap-2 flex-col">
+      <Label htmlFor={label}>{label} : </Label>
+      {type === "file" ? (
+        <Input type="file" id={label} {...register(name)} />
+      ) : (
+        <Input
+          type={type}
+          id={label}
+          defaultValue={editedBrand ? editedBrand[name] : ""}
+          {...register(name)}
+        />
+      )}
+      {errors[name] && <Errormsg msg={errors[name]?.message} />}
+    </div>
+  ));
   const onSubmit = (data) => {
     const formData = new FormData();
     formData.append("name", data.name);
     // formData.append("image", data.image);
-    const catId = editedCat._id;
+    const catId = editedBrand._id;
     mutate(
       { formData, catId },
       {
@@ -91,4 +87,4 @@ const EditDoctor = ({ isOpenEdit, closeModalEdit, title, editedCat }) => {
   );
 };
 
-export default EditDoctor;
+export default EditBrand;

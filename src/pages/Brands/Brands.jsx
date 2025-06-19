@@ -3,7 +3,6 @@ import { Box } from "@mui/material";
 import TitlePage from "../../components/Title page/TitlePage";
 import AddButton from "../../components/Add Button/AddButton";
 import AddDoctor from "./AddBrand";
-import EditDoctor from "./EditBrand";
 import Loading from "../../components/Loading/Loading";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -11,11 +10,12 @@ import { setCategoriesAction } from "../../features/categoriesSlice";
 import { getCategoryColumns, style } from "./data";
 import { useGetBrands } from "../../hooks/useBrands";
 import DelBrand from "./DelBrand";
+import EditBrand from "./EditBrand";
 
 const Brands = () => {
   //===================== MODAL STATES ===========
   const [deletedBrand, setDeletedBrand] = useState({});
-  const [editedCat, setEditedCat] = useState({});
+  const [editedBrand, setEditedBrand] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [isOpenDel, setIsOpenDel] = useState(false);
@@ -23,9 +23,9 @@ const Brands = () => {
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
-  const openModalEdit = (selectedCate) => {
+  const openModalEdit = (selectedBrand) => {
     setIsOpenEdit(true);
-    setEditedCat(selectedCate);
+    setEditedBrand(selectedBrand);
   };
   const closeModalEdit = () => setIsOpenEdit(false);
 
@@ -66,11 +66,11 @@ const Brands = () => {
         isOpen={isOpen}
         closeModal={closeModal}
       />
-      <EditDoctor
+      <EditBrand
         title={"Edit Brand "}
         isOpenEdit={isOpenEdit}
         closeModalEdit={closeModalEdit}
-        editedCat={editedCat}
+        editedBrand={editedBrand}
       />
       <DelBrand
         key={deletedBrand._id}

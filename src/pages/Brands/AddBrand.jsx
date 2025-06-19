@@ -16,20 +16,19 @@ const AddDoctor = ({ isOpen, closeModal, title }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(categorySchema),
   });
 
-  const renderCatFields = addBrandsFields?.map(
-    ({ label, name, type }, idx) => (
-      <div key={idx} className="flex gap-2 flex-col">
-        <Label htmlFor={label}>{label} : </Label>
-        <Input type={type} id={label} {...register(name)} />
-        {errors[name] && <Errormsg msg={errors[name]?.message} />}
-      </div>
-    )
-  );
+  const renderCatFields = addBrandsFields?.map(({ label, name, type }, idx) => (
+    <div key={idx} className="flex gap-2 flex-col">
+      <Label htmlFor={label}>{label} : </Label>
+      <Input type={type} id={label} {...register(name)} />
+      {errors[name] && <Errormsg msg={errors[name]?.message} />}
+    </div>
+  ));
 
   //================= SUBMIT DATA ========
   const onSubmit = (data) => {
@@ -41,6 +40,7 @@ const AddDoctor = ({ isOpen, closeModal, title }) => {
       onSuccess: () => {
         toast.success("Brand added successfully");
         closeModal();
+        reset();
         queryClient.invalidateQueries(["brands"]);
       },
       onError: () => {

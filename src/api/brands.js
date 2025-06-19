@@ -32,7 +32,7 @@ export const delBrandApi = async (brandId) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(res, "from del category res");
+  // console.log(res, "from del category res");
   return res;
 };
 
@@ -42,11 +42,11 @@ export const editBrandApi = async ({ formData, catId }) => {
   const storedKey = localStorage.getItem("userData");
   const userData = storedKey ? JSON.parse(storedKey) : null;
   const token = userData?.token;
-  const res = await server.put(`/api/v1/categories/${catId}`, formData, {
+  const res = await server.put(`/api/v1/brands/${catId}`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(res?.data, "from edit categories api ");
+  // console.log(res?.data, "from edit categories api ");
   return res;
 };

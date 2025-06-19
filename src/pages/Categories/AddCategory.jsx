@@ -16,6 +16,7 @@ const AddCategory = ({ isOpen, closeModal, title }) => {
   const {
     register,
     handleSubmit,
+    reset ,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(categorySchema),
@@ -40,6 +41,7 @@ const AddCategory = ({ isOpen, closeModal, title }) => {
       onSuccess: () => {
         toast.success("Category added successfully");
         closeModal();
+        reset()
         queryClient.invalidateQueries(["categories"]);
       },
       onError: () => {
