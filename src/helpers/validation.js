@@ -12,6 +12,8 @@ export const loginSchema = yup
   })
   .required();
 
+//============== Categories & Brands
+
 export const categorySchema = yup.object({
   name: yup.string().required(" Name Is Required"),
   image: yup
@@ -20,4 +22,20 @@ export const categorySchema = yup.object({
     .test("fileExist", "Image is required", (value) => {
       return value && value.length > 0;
     }),
+});
+
+//============== Coupons
+
+export const couponsSchema = yup.object({
+  name: yup.string().required("Name is required"),
+
+  expire: yup
+    .date()
+    .typeError("Expire date must be a valid date")
+    .required("Expire date is required"),
+
+  discount: yup
+    .number()
+    .typeError("Discount must be a number")
+    .required("Discount is required"),
 });

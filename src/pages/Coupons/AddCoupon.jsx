@@ -2,49 +2,47 @@ import Modal from "../../Ui/Modal";
 import Input from "../../Ui/Input";
 import Label from "../../Ui/Label";
 import Button from "../../Ui/Button";
-import { addBrandsFields } from "../../data/data";
+import { addCouponsFields } from "../../data/data";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Errormsg from "./../../components/Error/ErrorMsg";
-import { categorySchema } from "../../helpers/validation";
-import { useAddBrand } from "../../hooks/useBrands";
+import Errormsg from "../../components/Error/ErrorMsg";
+import { couponsSchema } from "../../helpers/validation";
+import { useAddCoupon } from "../../hooks/useCoupons";
 import { toast } from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
-const AddDoctor = ({ isOpen, closeModal, title }) => {
+const AddCoupon = ({ isOpen, closeModal, title }) => {
   const queryClient = useQueryClient();
-  const { mutate, isPending } = useAddBrand();
+  const { mutate, isPending } = useAddCoupon();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(categorySchema),
+    resolver: yupResolver(couponsSchema),
   });
 
-  const renderCatFields = addBrandsFields?.map(({ label, name, type }, idx) => (
-    <div key={idx} className="flex gap-2 flex-col">
-      <Label htmlFor={label}>{label} : </Label>
-      <Input type={type} id={label} {...register(name)} />
-      {errors[name] && <Errormsg msg={errors[name]?.message} />}
-    </div>
-  ));
+  const renderCatFields = addCouponsFields?.map(
+    ({ label, name, type }, idx) => (
+      <div key={idx} className="flex gap-2 flex-col">
+        <Label htmlFor={label}>{label} : </Label>
+        <Input type={type} id={label} {...register(name)} />
+        {errors[name] && <Errormsg msg={errors[name]?.message} />}
+      </div>
+    )
+  );
 
   //================= SUBMIT DATA ========
   const onSubmit = (data) => {
-    const formData = new FormData();
-    formData.append("name", data.name);
-    // formData.append("name", data.image);
-
-    mutate(formData, {
+    mutate(data, {
       onSuccess: () => {
-        toast.success("Brand added successfully");
+        toast.success("Coupon added successfully");
         closeModal();
         reset();
-        queryClient.invalidateQueries(["brands"]);
+        queryClient.invalidateQueries(["coupons"]);
       },
       onError: () => {
-        toast.error("An error occurred, brand was not added");
+        toast.error("An error occurred, coupon was not added");
       },
     });
   };
@@ -74,4 +72,4 @@ const AddDoctor = ({ isOpen, closeModal, title }) => {
   );
 };
 
-export default AddDoctor;
+export default AddCoupon;

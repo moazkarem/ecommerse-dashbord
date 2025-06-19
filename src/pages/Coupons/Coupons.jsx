@@ -2,7 +2,6 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 import TitlePage from "../../components/Title page/TitlePage";
 import AddButton from "../../components/Add Button/AddButton";
-import AddDoctor from "./AddBrand";
 import Loading from "../../components/Loading/Loading";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -11,6 +10,7 @@ import { useGetCoupons } from "../../hooks/useCoupons";
 import DelBrand from "./DelBrand";
 import EditBrand from "./EditBrand";
 import { setCouponsAction } from "../../features/couponsSlice";
+import AddCoupon from "./AddCoupon";
 
 const Coupons = () => {
   //===================== MODAL STATES ===========
@@ -61,7 +61,7 @@ const Coupons = () => {
       <TitlePage path={"Dashbord / "} page={"Coupons"} />
       <AddButton add={openModal} title={"Add New Coupon"} />
       <DataGrid rows={rows} columns={columns} sx={style} />
-      <AddDoctor
+      <AddCoupon
         title={"Add New Coupon"}
         isOpen={isOpen}
         closeModal={closeModal}

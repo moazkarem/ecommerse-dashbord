@@ -63,3 +63,21 @@ export const addBrandsFields = [
     label: "Brand Image",
   },
 ];
+
+export const addCouponsFields = [
+  {
+    name: "name",
+    type: "text",
+    label: "Coupon Name",
+  },
+  {
+    name: "expire",
+    type: "date",
+    label: "Expire Date",
+  },
+  {
+    name: "discount",
+    type: "number",
+    label: "Discount Date",
+  },
+];

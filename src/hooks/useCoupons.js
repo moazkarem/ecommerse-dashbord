@@ -7,7 +7,7 @@ import {
   editCouponApi,
 } from "../api/coupons";
 
-//============ GET BRANDS HOOK ======
+//============ GET COUPONS HOOK ======
 
 export const useGetCoupons = () => {
   return useQuery({
@@ -15,24 +15,24 @@ export const useGetCoupons = () => {
     queryFn: getCouponsApi,
   });
 };
-//============ ADD BRANDS HOOK ======
+//============ ADD COUPONS HOOK ======
 
-export const useAddBrand = () => {
+export const useAddCoupon = () => {
   return useMutation({
     mutationFn: addCouponApi,
   });
 };
 
-//============ DEL BRANDS HOOK ======
-export const useDelBrand = () => {
+//============ DEL COUPONS HOOK ======
+export const useDelCoupon = () => {
   return useMutation({
     mutationFn: delCouponApi,
   });
 };
 
-//============ EDIT BRANDS HOOK ======
+//============ EDIT COUPONS HOOK ======
 
-export const useEditBrand = () => {
+export const useEditCoupon = () => {
   return useMutation({
     mutationFn: editCouponApi,
   });

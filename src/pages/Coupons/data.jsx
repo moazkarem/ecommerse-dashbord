@@ -9,6 +9,7 @@ import img6 from "../../../public/images/brands/img6.png";
 import img7 from "../../../public/images/brands/img7.png";
 import img9 from "../../../public/images/brands/img9.png";
 import img10 from "../../../public/images/brands/img10.png";
+import { formatedDate } from "../../helpers/functions";
 
 export const images = [img1, img2, img3, img4, img5, img6, img7, img9, img10];
 export const getCategoryColumns = ({ onEdit, onDelete }) => [
@@ -23,16 +24,16 @@ export const getCategoryColumns = ({ onEdit, onDelete }) => [
     field: "expire",
     headerName: "Expire Date",
     width: 250,
-
     flex: 1,
     align: "center",
     headerAlign: "center",
+    renderCell: (row) => <span>{formatedDate(row.row.expire)}</span>,
   },
+
   {
     field: "discount",
     headerName: "Discount Date",
     width: 80,
-
     flex: 1,
     align: "center",
     headerAlign: "center",

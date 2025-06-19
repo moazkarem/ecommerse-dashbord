@@ -19,7 +19,7 @@ export const addCouponApi = async (data) => {
   const storedUser = localStorage.getItem("userData");
   const userData = storedUser ? JSON.parse(storedUser) : null;
   const token = userData?.token;
-  const res = await server.post("/api/v1/brands", data, {
+  const res = await server.post("/api/v1/coupons", data, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
