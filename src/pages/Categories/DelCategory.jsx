@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
-import Modal from "../../../Ui/Modal";
-import Button from "../../../Ui/Button";
-import { useDelCategory } from "./../../../hooks/useCategories";
+import Modal from "../../Ui/Modal";
+import Button from "../../Ui/Button";
+import { useDelCategory } from "../../hooks/useCategories";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";

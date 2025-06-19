@@ -1,13 +1,13 @@
-import Modal from "../../../Ui/Modal";
-import Input from "../../../Ui/Input";
-import Label from "../../../Ui/Label";
-import Button from "../../../Ui/Button";
-import { addCategoriesFields } from "../../../data/data";
+import Modal from "../../Ui/Modal";
+import Input from "../../Ui/Input";
+import Label from "../../Ui/Label";
+import Button from "../../Ui/Button";
+import { addCategoriesFields } from "../../data/data";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Errormsg from "./../../../components/Error/ErrorMsg";
-import { categorySchema } from "../../../helpers/validation";
-import { useAddCategory } from "../../../hooks/useCategories";
+import Errormsg from "../../components/Error/ErrorMsg";
+import { categorySchema } from "../../helpers/validation";
+import { useAddCategory } from "../../hooks/useCategories";
 import { toast } from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
 const AddCategory = ({ isOpen, closeModal, title }) => {

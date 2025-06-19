@@ -48,7 +48,7 @@ export const getCategoryColumns = ({ onEdit, onDelete }) => [
         style={{ lineHeight: "32px" }}
         onClick={() => onEdit(category.row)}
       >
-        <FaEdit />
+        <FaEdit color="#008000" className="text-[20px]" />
       </button>
     ),
   },
@@ -64,7 +64,7 @@ export const getCategoryColumns = ({ onEdit, onDelete }) => [
         style={{ lineHeight: "32px" }}
         onClick={() => onDelete(category.row)}
       >
-        <MdDelete color="" />
+        <MdDelete className="text-[#ff0000cc] text-[20px]" />
       </button>
     ),
   },

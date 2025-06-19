@@ -9,14 +9,13 @@ import Loading from "../../components/Loading/Loading";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCategoriesAction } from "../../features/categoriesSlice";
-import { useGetCategories } from "../../hooks/useCategories";
 import { getCategoryColumns, style } from "./data";
 import { useGetBrands } from "../../hooks/useBrands";
 
 const Brands = () => {
   //===================== MODAL STATES ===========
-  const [deletedCat , setDeletedCat] = useState({})
-  const [editedCat , setEditedCat] = useState({})
+  const [deletedCat, setDeletedCat] = useState({});
+  const [editedCat, setEditedCat] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [isOpenDel, setIsOpenDel] = useState(false);
@@ -26,32 +25,32 @@ const Brands = () => {
 
   const openModalEdit = (selectedCate) => {
     setIsOpenEdit(true);
-    setEditedCat(selectedCate)
-  }  
+    setEditedCat(selectedCate);
+  };
   const closeModalEdit = () => setIsOpenEdit(false);
 
   const openModalDel = (selectedCate) => {
-    setIsOpenDel(true)
-    setDeletedCat(selectedCate)
+    setIsOpenDel(true);
+    setDeletedCat(selectedCate);
   };
   const closeModalDel = () => setIsOpenDel(false);
 
   //===================== DATA AND API ===========
   const dispatch = useDispatch();
-  const { data: categories, isLoading } = useGetBrands();
+  const { data: brands, isLoading } = useGetBrands();
 
   useEffect(() => {
-    if (categories?.data) {
-      dispatch(setCategoriesAction(categories?.data?.data));
+    if (brands?.data) {
+      dispatch(setCategoriesAction(brands?.data?.data));
     }
-  }, [categories]);
+  }, [brands, dispatch]);
 
   const columns = getCategoryColumns({
     onEdit: openModalEdit,
     onDelete: openModalDel,
   });
 
-  const rows = categories?.data?.data.map((cat, index) => ({
+  const rows = brands?.data?.data.map((cat, index) => ({
     ...cat,
     id: cat._id || index,
   }));
@@ -59,7 +58,7 @@ const Brands = () => {
   if (isLoading) return <Loading />;
   return (
     <Box sx={{ height: 600, width: "85%", mx: "auto" }}>
-      <TitlePage path={"Dashbord / "} page={"Categories"} />
+      <TitlePage path={"Dashbord / "} page={"Brands"} />
       <AddButton add={openModal} title={"Add New Category"} />
       <DataGrid rows={rows} columns={columns} sx={style} />
       <AddDoctor
@@ -73,7 +72,11 @@ const Brands = () => {
         closeModalEdit={closeModalEdit}
         editedCat={editedCat}
       />
-      <DelDoctor isOpen={isOpenDel} closeModal={closeModalDel} deletedCat={deletedCat} />
+      <DelDoctor
+        isOpen={isOpenDel}
+        closeModal={closeModalDel}
+        deletedCat={deletedCat}
+      />
     </Box>
   );
 };
