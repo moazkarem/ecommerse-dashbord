@@ -68,7 +68,7 @@ const EditBrand = ({ isOpenEdit, closeModalEdit, title, editedBrand }) => {
             <div className="flex justify-center items-center space-x-3">
               <Button
                 loading={isPending}
-                style={`mt-4  text-[#696cff] border w-48 px-12 border-1 border-[#5265FF] py-[6px] flex justify-center items-center rounded-[8px]`}
+                style={`mt-4   text-[#fff] border-[#ff0000cc]  border w-48 px-12 border-1  py-[6px] flex justify-center items-center rounded-[8px]`}
               >
                 Edit
               </Button>

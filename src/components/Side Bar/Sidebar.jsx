@@ -46,7 +46,7 @@ const Drawer = styled(MuiDrawer, {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": {
       ...openedMixin(theme),
-      backgroundColor: "#2a2b40",
+      backgroundColor: "#0F1112",
     }
    
   }),
@@ -54,7 +54,7 @@ const Drawer = styled(MuiDrawer, {
     ...closedMixin(theme),
     "& .MuiDrawer-paper":{
       ...closedMixin(theme),
-       backgroundColor: "#2a2b40",
+       backgroundColor: "#0F1112",
     }
   }),
 }));
@@ -84,9 +84,9 @@ const Sidebar = ({ open, setOpen }) => {
       <DrawerHeader>
         <IconButton onClick={handleDrawerClose}>
           {theme.direction === "rtl" ? (
-            <ChevronRightIcon />
+            <ChevronRightIcon  color="#fff" sx={{bgcolor:"#fff"}}/>
           ) : (
-            <ChevronLeftIcon />
+            <ChevronLeftIcon color="#fff" sx={{bgcolor:"#fff"}}/>
           )}
         </IconButton>
       </DrawerHeader>
@@ -104,15 +104,18 @@ const Sidebar = ({ open, setOpen }) => {
                   bgcolor:
                     pathname === item.path
                       ? theme.palette.mode === "dark"
-                        ? "#6062E8"
-                        : "#6062E8"
+                        ? "#ff0000cc"
+                        : "#ff0000cc"
                       : null,
                   // @ts-ignore
-                  color: "#9B9BB2",
+                  color: "#fff",
                   mb: "5px",
                   width: "95%",
                   mx: "auto",
                   borderRadius: "8px",
+                  '&:hover': {
+                    backgroundColor: '#232425',
+                  },
                 }}
               >
                 <ListItemIcon
@@ -121,9 +124,9 @@ const Sidebar = ({ open, setOpen }) => {
                     mr: open ? 3 : "auto",
                     justifyContent: "center",
                     // @ts-ignore
-                    bgcolor: "#2A2B40",
+                    // bgcolor: "#1E2021",
                     // @ts-ignore
-                    color: "#9B9BB2",
+                    color: "#fff",
                   }}
                 >
                   {item.icon}

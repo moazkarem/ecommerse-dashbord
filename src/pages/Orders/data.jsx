@@ -1,5 +1,5 @@
-import { MdDelete } from "react-icons/md";
-import { FaEdit } from "react-icons/fa";
+import { FaCcAmazonPay } from "react-icons/fa";
+import { MdLocalShipping } from "react-icons/md";
 import { FaEye } from "react-icons/fa";
 export const getCategoryColumns = ({ onEdit, onDelete, onView }) => [
   {
@@ -78,7 +78,7 @@ export const getCategoryColumns = ({ onEdit, onDelete, onView }) => [
     headerAlign: "center",
     renderCell: (order) => (
       <button style={{ lineHeight: "32px" }} onClick={() => onEdit(order.row)}>
-        <FaEdit color="#008000" className="text-[20px]" />
+        <FaCcAmazonPay color="#008000" className="text-[20px]" />
       </button>
     ),
   },
@@ -94,24 +94,24 @@ export const getCategoryColumns = ({ onEdit, onDelete, onView }) => [
         style={{ lineHeight: "32px" }}
         onClick={() => onDelete(order.row)}
       >
-        <MdDelete className="text-[#ff0000cc] text-[20px]" />
+        <MdLocalShipping className="text-[#ff0000cc] text-[20px]" />
       </button>
     ),
   },
 ];
 
 export const style = {
-  backgroundColor: "#232333",
+  backgroundColor: "#1E2021",
   "& .MuiDataGrid-columnHeaders": {
-    backgroundColor: "#232333",
+    backgroundColor: "#1E2021",
     color: "#fff",
   },
-  "& .MuiDataGrid-cell": { backgroundColor: "#232333", color: "#fff" },
-  "& .MuiDataGrid-row:hover": { backgroundColor: "#232333 !important" },
+  "& .MuiDataGrid-cell": { backgroundColor: "#1E2021", color: "#fff" },
+  "& .MuiDataGrid-row:hover": { backgroundColor: "#1E2021 !important" },
   "& .MuiDataGrid-row.Mui-selected": {
-    backgroundColor: "#232333 !important",
+    backgroundColor: "#1E2021 !important",
   },
   "& .MuiDataGrid-row.Mui-selected:hover": {
-    backgroundColor: "#232333 !important",
+    backgroundColor: "#1E2021 !important",
   },
 };

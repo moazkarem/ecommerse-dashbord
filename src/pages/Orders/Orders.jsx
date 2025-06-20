@@ -62,7 +62,7 @@ const Orders = () => {
       <AddButton add={openModal} title={"Add New Order"} />
       <DataGrid rows={rows} columns={columns} sx={style} />
       <AddCoupon
-        title={"Add New Coupon"}
+        title={"Add New Order"}
         isOpen={isOpen}
         closeModal={closeModal}
       />

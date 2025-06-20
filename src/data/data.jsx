@@ -1,31 +1,35 @@
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import { CiLock } from "react-icons/ci";
 import { MdOutlineMarkEmailRead } from "react-icons/md";
+import { FaHome } from "react-icons/fa";
+import { TbCategoryFilled } from "react-icons/tb";
+import { TbBrandAngularFilled } from "react-icons/tb";
+import { MdDiscount } from "react-icons/md";
+import { TbReorder } from "react-icons/tb";
 export const Sidedata = [
   {
     path: "/",
     title: "Dashboard",
-    icon: <InboxIcon />,
+    icon: <FaHome fontSize="20"/>,
   },
   {
     path: "/categories",
     title: "Categories",
-    icon: <InboxIcon />,
+    icon: <TbCategoryFilled  fontSize="20"/>,
   },
   {
     path: "/brands",
     title: "Brands",
-    icon: <InboxIcon />,
+    icon: <TbBrandAngularFilled  fontSize="20"/>,
   },
   {
     path: "/coupons",
     title: "Coupons",
-    icon: <InboxIcon />,
+    icon: <MdDiscount fontSize="20"/>,
   },
   {
     path: "/orders",
     title: "Orders",
-    icon: <InboxIcon />,
+    icon: <TbReorder fontSize="20"/>,
   },
 ];
 

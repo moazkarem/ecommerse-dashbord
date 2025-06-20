@@ -3,14 +3,11 @@ import Toolbar from "@mui/material/Toolbar";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import MuiAppBar from "@mui/material/AppBar";
-import {  Box, Typography } from "@mui/material";
-
-
+import { Box, Typography } from "@mui/material";
 
 const drawerWidth = 240;
 // eslint-disable-next-line react/prop-types
 const Appbar = ({ open, setOpen }) => {
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -40,7 +37,7 @@ const Appbar = ({ open, setOpen }) => {
       // @ts-ignore
       open={open}
     >
-      <Toolbar sx={{ backgroundColor: "#2A2B40" }}>
+      <Toolbar sx={{ backgroundColor: "#0F1112" }}>
         <IconButton
           color="inherit"
           aria-label="open drawer"
@@ -64,10 +61,9 @@ const Appbar = ({ open, setOpen }) => {
             width: "100%",
           }}
         >
-          <Typography variant="h4" color={"#CBCBE2"}>
-            Logo
+          <Typography variant="h6" color={"#CBCBE2"}>
+            Welcome Again In Your Dashbord
           </Typography>
-      
         </Box>
       </Toolbar>
     </AppBar>

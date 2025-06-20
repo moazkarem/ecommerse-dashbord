@@ -1,12 +1,9 @@
-import Typography from "@mui/material/Typography";
-// eslint-disable-next-line react/prop-types
+import { Link } from "react-router-dom";
 const TitlePage = ({ path, page }) => {
   return (
-    <div>
-      <Typography variant="h4" mb={2} color={"#CBCBE2"}>
-        {path}
-        <span className="text-[#ff8800]">{page}</span>
-      </Typography>
+    <div className="mb-12 flex justify-center items-center gap-2">
+      <Link to={'/'} className="text-[#CBCBE2] text-[18px]"> {path}</Link>
+      <span className="text-[#ff0000cc] text-[18px]">{page}</span>
     </div>
   );
 };

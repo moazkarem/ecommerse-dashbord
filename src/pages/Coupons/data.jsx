@@ -60,17 +60,17 @@ export const getCategoryColumns = ({ onEdit, onDelete }) => [
 ];
 
 export const style = {
-  backgroundColor: "#232333",
+  backgroundColor: "#1E2021",
   "& .MuiDataGrid-columnHeaders": {
-    backgroundColor: "#232333",
+    backgroundColor: "#1E2021",
     color: "#fff",
   },
-  "& .MuiDataGrid-cell": { backgroundColor: "#232333", color: "#fff" },
-  "& .MuiDataGrid-row:hover": { backgroundColor: "#232333 !important" },
+  "& .MuiDataGrid-cell": { backgroundColor: "#1E2021", color: "#fff" },
+  "& .MuiDataGrid-row:hover": { backgroundColor: "#1E2021 !important" },
   "& .MuiDataGrid-row.Mui-selected": {
-    backgroundColor: "#232333 !important",
+    backgroundColor: "#1E2021 !important",
   },
   "& .MuiDataGrid-row.Mui-selected:hover": {
-    backgroundColor: "#232333 !important",
+    backgroundColor: "#1E2021 !important",
   },
 };
