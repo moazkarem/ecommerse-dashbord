@@ -8,7 +8,7 @@ import DelCategory from "./DelCategory";
 import Loading from "../../components/Loading/Loading";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setCategoriesAction } from "../../features/categoriesSlice";
+import { setCategoriesAction } from "../../store/features/categoriesSlice";
 import { useGetCategories } from "../../hooks/useCategories";
 import { getCategoryColumns, style } from "./data";
 
@@ -43,7 +43,7 @@ const Doctors = () => {
     if (categories?.data) {
       dispatch(setCategoriesAction(categories?.data?.data));
     }
-  }, [categories]);
+  }, [categories , dispatch]);
 
   const columns = getCategoryColumns({
     onEdit: openModalEdit,

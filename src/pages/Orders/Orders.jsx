@@ -6,16 +6,16 @@ import Loading from "../../components/Loading/Loading";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getCategoryColumns, style } from "./data";
-import { useGetCoupons } from "../../hooks/useCoupons";
-import EditBrand from "./EditCoupon";
-import { setCouponsAction } from "../../store/features/couponsSlice";
+import { useGetOrders } from "../../hooks/useOrders";
+import EditPayment from "./EditPayment";
 import AddCoupon from "./AddCoupon";
 import DelCoupon from "./DelCoupon";
+import { setOrdersAction } from "../../store/features/ordersSlice";
 
-const Coupons = () => {
+const Orders = () => {
   //===================== MODAL STATES ===========
   const [deletedCoupon, setDeletedCoupon] = useState({});
-  const [editedCoupon, setEditedCoupon] = useState({});
+  const [editedOrder, setEditedOrder] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [isOpenDel, setIsOpenDel] = useState(false);
@@ -23,55 +23,55 @@ const Coupons = () => {
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
-  const openModalEdit = (selectedCoupon) => {
+  const openModalEdit = (selectedOrder) => {
     setIsOpenEdit(true);
-    setEditedCoupon(selectedCoupon);
+    setEditedOrder(selectedOrder);
   };
   const closeModalEdit = () => setIsOpenEdit(false);
 
-  const openModalDel = (selectedCoupon) => {
+  const openModalDel = (selectedOrder) => {
     setIsOpenDel(true);
-    setDeletedCoupon(selectedCoupon);
+    setDeletedCoupon(selectedOrder);
   };
   const closeModalDel = () => setIsOpenDel(false);
 
   //===================== DATA AND API ===========
   const dispatch = useDispatch();
-  const { data: coupons, isLoading } = useGetCoupons();
+  const { data: orders, isLoading } = useGetOrders();
 
   useEffect(() => {
-    if (coupons?.data) {
-      dispatch(setCouponsAction(coupons?.data?.data));
+    if (orders?.data) {
+      dispatch(setOrdersAction(orders?.data?.data));
     }
-  }, [coupons, dispatch]);
+  }, [orders, dispatch]);
 
   const columns = getCategoryColumns({
     onEdit: openModalEdit,
     onDelete: openModalDel,
   });
 
-  const rows = coupons?.data?.data.map((coupon, index) => ({
-    ...coupon,
-    id: coupon._id || index,
+  const rows = orders?.data?.data.map((order, index) => ({
+    ...order,
+    id: order._id || index,
   }));
 
   if (isLoading) return <Loading />;
   return (
     <Box sx={{ height: 600, width: "85%", mx: "auto" }}>
-      <TitlePage path={"Dashbord / "} page={"Coupons"} />
-      <AddButton add={openModal} title={"Add New Coupon"} />
+      <TitlePage path={"Dashbord / "} page={"Orders"} />
+      <AddButton add={openModal} title={"Add New Order"} />
       <DataGrid rows={rows} columns={columns} sx={style} />
       <AddCoupon
         title={"Add New Coupon"}
         isOpen={isOpen}
         closeModal={closeModal}
       />
-      <EditBrand
-      key={editedCoupon._id}
-        title={"Edit Coupon "}
+      <EditPayment
+        key={editedOrder._id}
+        title={"Edit Payment Status ?  "}
         isOpenEdit={isOpenEdit}
         closeModalEdit={closeModalEdit}
-        editedCoupon={editedCoupon}
+        editedOrder={editedOrder}
       />
       <DelCoupon
         key={deletedCoupon._id}
@@ -83,4 +83,4 @@ const Coupons = () => {
   );
 };
 
-export default Coupons;
+export default Orders;

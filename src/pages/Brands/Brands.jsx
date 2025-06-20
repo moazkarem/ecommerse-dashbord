@@ -9,7 +9,7 @@ import { getCategoryColumns, style } from "./data";
 import { useGetBrands } from "../../hooks/useBrands";
 import DelBrand from "./DelBrand";
 import EditBrand from "./EditBrand";
-import { setBrandsAction } from "../../features/brandsSlice";
+import { setBrandsAction } from "../../store/features/brandsSlice";
 import AddBrand from "./AddBrand";
 
 const Brands = () => {
