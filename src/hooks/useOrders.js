@@ -3,6 +3,7 @@ import {
   getAllOrdersApi,
   updatePaymentApi,
   updateDeleveryApi,
+  getSingleOrderApi,
 } from "../api/orders";
 
 //============ GET BRANDS HOOK ======
@@ -24,5 +25,13 @@ export const useUpdatePayment = () => {
 export const useUpdateDelevery = () => {
   return useMutation({
     mutationFn: updateDeleveryApi,
+  });
+};
+
+//============ GET SINGLE ORDER HOOK ======
+export const useGetSingleOrders = () => {
+  return useQuery({
+    queryKey: ["singleorder"],
+    queryFn: getSingleOrderApi,
   });
 };

@@ -23,7 +23,7 @@ export const getCategoryColumns = ({ onEdit, onDelete, onView }) => [
   {
     field: "isPaid",
     headerName: "Paid",
-    width: 80,
+    // width: 80,
     flex: 1,
     align: "center",
     headerAlign: "center",
@@ -41,7 +41,7 @@ export const getCategoryColumns = ({ onEdit, onDelete, onView }) => [
   {
     field: "isDelivered",
     headerName: "Delivered",
-    width: 80,
+    // width: 80,
     flex: 1,
     align: "center",
     headerAlign: "center",
@@ -63,8 +63,8 @@ export const getCategoryColumns = ({ onEdit, onDelete, onView }) => [
     flex: 1,
     align: "center",
     headerAlign: "center",
-    renderCell: (coupon) => (
-      <button style={{ lineHeight: "32px" }} onClick={() => onView(coupon.row)}>
+    renderCell: (order) => (
+      <button style={{ lineHeight: "32px" }} onClick={() => onView(order.row)}>
         <FaEye className="text-[20px]" />
       </button>
     ),
@@ -72,7 +72,7 @@ export const getCategoryColumns = ({ onEdit, onDelete, onView }) => [
   {
     field: "Paymeny",
     headerName: "Update Payment",
-    width: 350,
+    // width: 350,
     flex: 1,
     align: "center",
     headerAlign: "center",

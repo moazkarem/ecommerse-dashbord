@@ -32,8 +32,6 @@ export const updatePaymentApi = async (orderId) => {
   return res;
 };
 
-
-
 export const updateDeleveryApi = async (orderId) => {
   const storedKey = localStorage.getItem("userData");
   const userData = storedKey ? JSON.parse(storedKey) : null;
@@ -42,6 +40,24 @@ export const updateDeleveryApi = async (orderId) => {
   const res = server.put(
     `/api/v1/orders/${orderId}/deliver`,
     {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  // console.log(res?.data, "from get update delevery orders");
+  return res;
+};
+
+export const getSingleOrderApi = async (orderId) => {
+  const storedKey = localStorage.getItem("userData");
+  const userData = storedKey ? JSON.parse(storedKey) : null;
+  const token = userData?.token;
+
+  const res = server.get(
+    `/api/v1/orders/${orderId}`,
+ 
     {
       headers: {
         Authorization: `Bearer ${token}`,

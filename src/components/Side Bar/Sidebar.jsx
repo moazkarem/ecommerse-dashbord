@@ -47,18 +47,16 @@ const Drawer = styled(MuiDrawer, {
     "& .MuiDrawer-paper": {
       ...openedMixin(theme),
       backgroundColor: "#0F1112",
-    }
-   
+    },
   }),
   ...(!open && {
     ...closedMixin(theme),
-    "& .MuiDrawer-paper":{
+    "& .MuiDrawer-paper": {
       ...closedMixin(theme),
-       backgroundColor: "#0F1112",
-    }
+      backgroundColor: "#0F1112",
+    },
   }),
 }));
-
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -71,7 +69,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 // eslint-disable-next-line react/prop-types
 const Sidebar = ({ open, setOpen }) => {
- 
   const theme = useTheme();
   const handleDrawerClose = () => {
     setOpen(false);
@@ -80,18 +77,18 @@ const Sidebar = ({ open, setOpen }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   return (
-    <Drawer variant="permanent" open={open} >
+    <Drawer variant="permanent" open={open}>
       <DrawerHeader>
         <IconButton onClick={handleDrawerClose}>
           {theme.direction === "rtl" ? (
-            <ChevronRightIcon  color="#fff" sx={{bgcolor:"#fff"}}/>
+            <ChevronRightIcon />
           ) : (
-            <ChevronLeftIcon color="#fff" sx={{bgcolor:"#fff"}}/>
+            <ChevronLeftIcon />
           )}
         </IconButton>
       </DrawerHeader>
       <Logo open={open} />
-      <List >
+      <List>
         {Sidedata.map((item, index) => (
           <React.Fragment key={index}>
             <ListItem disablePadding sx={{ display: "block" }}>
@@ -113,8 +110,8 @@ const Sidebar = ({ open, setOpen }) => {
                   width: "95%",
                   mx: "auto",
                   borderRadius: "8px",
-                  '&:hover': {
-                    backgroundColor: '#232425',
+                  "&:hover": {
+                    backgroundColor: "#232425",
                   },
                 }}
               >
@@ -132,7 +129,7 @@ const Sidebar = ({ open, setOpen }) => {
                   {item.icon}
                 </ListItemIcon>
                 <ListItemText
-                  primary={item.title }
+                  primary={item.title}
                   sx={{ opacity: open ? 1 : 0 }}
                 />
               </ListItemButton>
