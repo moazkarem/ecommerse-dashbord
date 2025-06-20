@@ -36,7 +36,7 @@ const EditPayment = ({ isOpenEdit, closeModalEdit, title, editedOrder }) => {
                 loading={isPending}
                 style={`mt-4  text-[#696cff] border w-48 px-12 border-1 border-[#5265FF] py-[6px] flex justify-center items-center rounded-[8px]`}
               >
-                Edit
+                Update
               </Button>
               <Button
                 onClick={() => closeModalEdit()}

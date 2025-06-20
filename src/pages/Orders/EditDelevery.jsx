@@ -1,17 +1,17 @@
 /* eslint-disable react/prop-types */
 import Modal from "../../Ui/Modal";
 import Button from "../../Ui/Button";
-import { useDelCoupon } from "../../hooks/useCoupons";
+import { useUpdateDelevery } from "../../hooks/useOrders";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
-const DelCoupon = ({ isOpen, closeModal, deletedCoupon }) => {
+const EditDelevery = ({ isOpen, closeModal, editedDeliverOrder }) => {
   //============= SUBMIT FUNCTION =======
   const { handleSubmit } = useForm({});
   const queryClient = useQueryClient();
-  const { isPending, mutate } = useDelCoupon();
+  const { isPending, mutate } = useUpdateDelevery();
   const onSubmit = () => {
-    mutate(deletedCoupon._id, {
+    mutate(editedDeliverOrder._id, {
       onSuccess: () => {
         toast.success("Coupon deleted successfully");
         closeModal();
@@ -26,7 +26,7 @@ const DelCoupon = ({ isOpen, closeModal, deletedCoupon }) => {
   return (
     <div>
       <Modal
-        title={` Delete ${deletedCoupon?.name} ? `}
+        title={` Update Delevery Status ? `}
         isOpen={isOpen}
         closeModal={closeModal}
       >
@@ -37,7 +37,7 @@ const DelCoupon = ({ isOpen, closeModal, deletedCoupon }) => {
                 loading={isPending}
                 style={`mt-4  text-[#696cff] border w-48 px-12 border-1 border-[#5265FF] py-[6px] flex justify-center items-center rounded-[8px]`}
               >
-                Delete
+                Update
               </Button>
               <Button
                 type="button"
@@ -54,4 +54,4 @@ const DelCoupon = ({ isOpen, closeModal, deletedCoupon }) => {
   );
 };
 
-export default DelCoupon;
+export default EditDelevery;

@@ -9,12 +9,12 @@ import { getCategoryColumns, style } from "./data";
 import { useGetOrders } from "../../hooks/useOrders";
 import EditPayment from "./EditPayment";
 import AddCoupon from "./AddCoupon";
-import DelCoupon from "./DelCoupon";
 import { setOrdersAction } from "../../store/features/ordersSlice";
+import EditDelevery from "./EditDelevery";
 
 const Orders = () => {
   //===================== MODAL STATES ===========
-  const [deletedCoupon, setDeletedCoupon] = useState({});
+  const [editedDeliverOrder, setEditedDeliverOrder] = useState({});
   const [editedOrder, setEditedOrder] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
@@ -31,7 +31,7 @@ const Orders = () => {
 
   const openModalDel = (selectedOrder) => {
     setIsOpenDel(true);
-    setDeletedCoupon(selectedOrder);
+    setEditedDeliverOrder(selectedOrder);
   };
   const closeModalDel = () => setIsOpenDel(false);
 
@@ -73,11 +73,11 @@ const Orders = () => {
         closeModalEdit={closeModalEdit}
         editedOrder={editedOrder}
       />
-      <DelCoupon
-        key={deletedCoupon._id}
+      <EditDelevery
+        key={editedDeliverOrder._id}
         isOpen={isOpenDel}
         closeModal={closeModalDel}
-        deletedCoupon={deletedCoupon}
+        editedDeliverOrder={editedDeliverOrder}
       />
     </Box>
   );
