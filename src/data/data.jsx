@@ -143,3 +143,27 @@ export const userFields = [
     label: "Role",
   },
 ];
+
+export const userEditFields = [
+  {
+    name: "name",
+    type: "text",
+    label: "User Name",
+  },
+  {
+    name: "email",
+    type: "email",
+    label: "Email",
+  },
+
+  {
+    name: "phone",
+    type: "tel",
+    label: "Phone",
+  },
+  {
+    name: "role",
+    type: "text",
+    label: "Role",
+  },
+];

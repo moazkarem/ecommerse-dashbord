@@ -2,57 +2,52 @@ import Modal from "../../Ui/Modal";
 import Input from "../../Ui/Input";
 import Label from "../../Ui/Label";
 import Button from "../../Ui/Button";
-import { addBrandsFields } from "../../data/data";
-import Errormsg from "./../../components/Error/ErrorMsg";
+import { userEditFields } from "../../data/data";
+import Errormsg from "../../components/Error/ErrorMsg";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { categorySchema } from "../../helpers/validation";
-import { useEditBrand } from "../../hooks/useBrands";
+import { userEditSchema } from "../../helpers/validation";
+import { useEditUser } from "../../hooks/useUser";
 import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-const EditBrand = ({ isOpenEdit, closeModalEdit, title, editedBrand }) => {
-  const { isPending, mutate } = useEditBrand();
+const EditUser = ({ isOpenEdit, closeModalEdit, title, editedUser }) => {
+  const { isPending, mutate } = useEditUser();
   const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(categorySchema),
+    resolver: yupResolver(userEditSchema),
   });
 
-  const renderCatFields = addBrandsFields?.map(({ label, name, type }, idx) => (
+  const renderCatFields = userEditFields?.map(({ label, name, type }, idx) => (
     //========= check file type to avoide default value error in file input
     <div key={idx} className="flex gap-2 flex-col">
       <Label htmlFor={label}>{label} : </Label>
-      {type === "file" ? (
-        <Input type="file" id={label} {...register(name)} />
-      ) : (
-        <Input
-          type={type}
-          id={label}
-          defaultValue={editedBrand ? editedBrand[name] : ""}
-          {...register(name)}
-        />
-      )}
+
+      <Input
+        type={type}
+        id={label}
+        defaultValue={editedUser && editedUser[name] }
+        {...register(name)}
+      />
+
       {errors[name] && <Errormsg msg={errors[name]?.message} />}
     </div>
   ));
   const onSubmit = (data) => {
-    const formData = new FormData();
-    formData.append("name", data.name);
-    // formData.append("image", data.image);
-    const catId = editedBrand._id;
+    const userId = editedUser._id;
     mutate(
-      { formData, catId },
+      { data, userId },
       {
         onSuccess: () => {
-          toast.success("Category edited successfully");
-          queryClient.invalidateQueries(["categories"]);
+          toast.success("User edited successfully");
+          queryClient.invalidateQueries(["users"]);
           closeModalEdit();
         },
         onError: (error) => {
-          toast.error("An error occurred, category was not added");
+          toast.error("An error occurred, user was not added");
           console.log(error.message, "error from edit category");
         },
       }
@@ -87,4 +82,4 @@ const EditBrand = ({ isOpenEdit, closeModalEdit, title, editedBrand }) => {
   );
 };
 
-export default EditBrand;
+export default EditUser;

@@ -65,3 +65,19 @@ export const userSchema = yup.object().shape({
     .oneOf(["admin", "user"], "Role must be either 'admin' or 'user'")
     .required("Role is required"),
 });
+
+export const userEditSchema = yup.object().shape({
+  name: yup.string().required("Name is required"),
+
+  email: yup
+    .string()
+    .required("Email is required")
+    .email("Invalid email format"),
+
+  phone: yup.string().required("Phone number is required"),
+
+  role: yup
+    .string()
+    .oneOf(["admin", "user"], "Role must be either 'admin' or 'user'")
+    .required("Role is required"),
+});

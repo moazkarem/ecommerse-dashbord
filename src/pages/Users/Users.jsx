@@ -7,15 +7,15 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getCategoryColumns, style } from "./data";
 import { useGetUsers } from "../../hooks/useUser";
-import DelBrand from "./DelBrand";
-import EditBrand from "./EditBrand";
 import { setUsersAction } from "../../store/features/usersSlice";
 import AddUser from "./AddUser";
+import EditUser from "./EditUser";
+import DelUser from "./DelBrand";
 
 const Users = () => {
   //===================== MODAL STATES ===========
-  const [deletedBrand, setDeletedBrand] = useState({});
-  const [editedBrand, setEditedBrand] = useState({});
+  const [deletedUser, setDeletedUser] = useState({});
+  const [editedUser, setEditedUser] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [isOpenDel, setIsOpenDel] = useState(false);
@@ -25,13 +25,13 @@ const Users = () => {
 
   const openModalEdit = (selectedBrand) => {
     setIsOpenEdit(true);
-    setEditedBrand(selectedBrand);
+    setEditedUser(selectedBrand);
   };
   const closeModalEdit = () => setIsOpenEdit(false);
 
   const openModalDel = (selectedBrand) => {
     setIsOpenDel(true);
-    setDeletedBrand(selectedBrand);
+    setDeletedUser(selectedBrand);
   };
   const closeModalDel = () => setIsOpenDel(false);
 
@@ -61,23 +61,19 @@ const Users = () => {
       <TitlePage path={"Dashbord / "} page={"Users"} />
       <AddButton add={openModal} title={"Add New User"} />
       <DataGrid rows={rows} columns={columns} sx={style} />
-      <AddUser
-        title={"Add New User"}
-        isOpen={isOpen}
-        closeModal={closeModal}
-      />
-      <EditBrand
-      key={editedBrand._id}
-        title={"Edit Brand "}
+      <AddUser title={"Add New User"} isOpen={isOpen} closeModal={closeModal} />
+      <EditUser
+        key={editedUser._id}
+        title={"Edit User "}
         isOpenEdit={isOpenEdit}
         closeModalEdit={closeModalEdit}
-        editedBrand={editedBrand}
+        editedUser={editedUser}
       />
-      <DelBrand
-        key={deletedBrand._id}
+      <DelUser
+        key={deletedUser._id}
         isOpen={isOpenDel}
         closeModal={closeModalDel}
-        deletedBrand={deletedBrand}
+        deletedUser={deletedUser}
       />
     </Box>
   );

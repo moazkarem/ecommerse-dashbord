@@ -98,6 +98,7 @@ const Sidebar = ({ open, setOpen }) => {
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
+                  
                   bgcolor:
                     pathname === item.path
                       ? theme.palette.mode === "dark"
@@ -106,7 +107,7 @@ const Sidebar = ({ open, setOpen }) => {
                       : null,
                   // @ts-ignore
                   color: "#fff",
-                  mb: "5px",
+                  mb: "15px",
                   width: "95%",
                   mx: "auto",
                   borderRadius: "8px",

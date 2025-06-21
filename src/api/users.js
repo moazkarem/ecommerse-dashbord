@@ -24,7 +24,7 @@ export const addUserApi = async (data) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(res, "from add users res");
+  // console.log(res, "from add users res");
   return res;
 };
 
@@ -45,11 +45,11 @@ export const delUserApi = async (UserId) => {
 
 //================ EDIT USERS API ===========
 
-export const editUserApi = async ({ formData, catId }) => {
+export const editUserApi = async ({ data, userId }) => {
   const storedKey = localStorage.getItem("userData");
   const userData = storedKey ? JSON.parse(storedKey) : null;
   const token = userData?.token;
-  const res = await server.put(`/api/v1/users/${catId}`, formData, {
+  const res = await server.put(`/api/v1/users/${userId}`, data, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
