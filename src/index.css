@@ -1,44 +1,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-body{
-  background-color: #17191A !important;
+body {
+  background-color: #17191a !important;
   min-height: 100vh;
 }
-.MuiDataGrid-columnHeaderTitleContainer , .MuiDataGrid-columnHeader {
-  background-color: #1E2021 !important;
+.MuiDataGrid-columnHeaderTitleContainer,
+.MuiDataGrid-columnHeader {
+  background-color: #1e2021 !important;
   color: white !important;
 }
-.MuiDataGrid-columnHeaderTitleContainer:hover{
-  background-color: #1E2021 !important;
+.MuiDataGrid-columnHeaderTitleContainer:hover {
+  background-color: #1e2021 !important;
   color: white !important;
 }
-.MuiPaper-root{
-  box-shadow:none !important
+.MuiPaper-root {
+  box-shadow: none !important;
 }
-.MuiDataGrid-row:hover , .MuiDataGrid-row:active{
-  background-color: #1E2021 !important;
+.MuiDataGrid-row:hover,
+.MuiDataGrid-row:active {
+  background-color: #1e2021 !important;
   color: white !important;
 }
-.MuiDataGrid-row:active{
-  background-color: #1E2021 !important;
+.MuiDataGrid-row:active {
+  background-color: #1e2021 !important;
   color: white !important;
 }
-.MuiDataGrid-row:focus{
-  background-color: #1E2021 !important;
+.MuiDataGrid-row:focus {
+  background-color: #1e2021 !important;
   color: white !important;
 }
-.MuiToolbar-root{
+.MuiToolbar-root {
   color: #fff !important;
 }
-.MuiDataGrid-selectedRowCount{
+.MuiDataGrid-selectedRowCount {
   color: #fff;
 }
-
-
-
-
-
 
 ::-webkit-scrollbar {
   width: 8px;

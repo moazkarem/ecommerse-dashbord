@@ -24,7 +24,7 @@ export const addUserApi = async (data) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  // console.log(res, "from add brand res");
+  console.log(res, "from add users res");
   return res;
 };
 

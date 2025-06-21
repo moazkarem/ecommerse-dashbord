@@ -90,6 +90,7 @@ export const addBrandsFields = [
     label: "Brand Image",
   },
 ];
+//==================== COUPONS =======
 
 export const addCouponsFields = [
   {
@@ -106,5 +107,39 @@ export const addCouponsFields = [
     name: "discount",
     type: "number",
     label: "Discount Date",
+  },
+];
+
+//==================== USERS =======
+export const userFields = [
+  {
+    name: "name",
+    type: "text",
+    label: "User Name",
+  },
+  {
+    name: "email",
+    type: "email",
+    label: "Email",
+  },
+  {
+    name: "password",
+    type: "password",
+    label: "Password",
+  },
+  {
+    name: "passwordConfirm",
+    type: "password",
+    label: "Password Confirm",
+  },
+  {
+    name: "phone",
+    type: "tel",
+    label: "Phone",
+  },
+  {
+    name: "role",
+    type: "text",
+    label: "Role",
   },
 ];

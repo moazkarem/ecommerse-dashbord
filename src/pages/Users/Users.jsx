@@ -9,8 +9,8 @@ import { getCategoryColumns, style } from "./data";
 import { useGetUsers } from "../../hooks/useUser";
 import DelBrand from "./DelBrand";
 import EditBrand from "./EditBrand";
-import AddBrand from "./AddBrand";
 import { setUsersAction } from "../../store/features/usersSlice";
+import AddUser from "./AddUser";
 
 const Users = () => {
   //===================== MODAL STATES ===========
@@ -59,10 +59,10 @@ const Users = () => {
   return (
     <Box sx={{ height: 600, width: "85%", mx: "auto" }}>
       <TitlePage path={"Dashbord / "} page={"Users"} />
-      <AddButton add={openModal} title={"Add New Brand"} />
+      <AddButton add={openModal} title={"Add New User"} />
       <DataGrid rows={rows} columns={columns} sx={style} />
-      <AddBrand
-        title={"Add New Brand"}
+      <AddUser
+        title={"Add New User"}
         isOpen={isOpen}
         closeModal={closeModal}
       />

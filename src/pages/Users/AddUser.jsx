@@ -2,27 +2,27 @@ import Modal from "../../Ui/Modal";
 import Input from "../../Ui/Input";
 import Label from "../../Ui/Label";
 import Button from "../../Ui/Button";
-import { addBrandsFields } from "../../data/data";
+import { userFields } from "../../data/data";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Errormsg from "./../../components/Error/ErrorMsg";
-import { categorySchema } from "../../helpers/validation";
-import { useAddBrand } from "../../hooks/useBrands";
+import Errormsg from "../../components/Error/ErrorMsg";
+import { userSchema } from "../../helpers/validation";
+import { useAddUser } from "../../hooks/useUser";
 import { toast } from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
-const AddBrand = ({ isOpen, closeModal, title }) => {
+const AddUser = ({ isOpen, closeModal, title }) => {
   const queryClient = useQueryClient();
-  const { mutate, isPending } = useAddBrand();
+  const { mutate, isPending } = useAddUser();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(categorySchema),
+    resolver: yupResolver(userSchema),
   });
 
-  const renderCatFields = addBrandsFields?.map(({ label, name, type }, idx) => (
+  const renderCatFields = userFields?.map(({ label, name, type }, idx) => (
     <div key={idx} className="flex gap-2 flex-col">
       <Label htmlFor={label}>{label} : </Label>
       <Input type={type} id={label} {...register(name)} />
@@ -32,19 +32,15 @@ const AddBrand = ({ isOpen, closeModal, title }) => {
 
   //================= SUBMIT DATA ========
   const onSubmit = (data) => {
-    const formData = new FormData();
-    formData.append("name", data.name);
-    // formData.append("name", data.image);
-
-    mutate(formData, {
+    mutate(data, {
       onSuccess: () => {
-        toast.success("Brand added successfully");
+        toast.success("User added successfully");
         closeModal();
         reset();
-        queryClient.invalidateQueries(["brands"]);
+        queryClient.invalidateQueries(["users"]);
       },
       onError: () => {
-        toast.error("An error occurred, brand was not added");
+        toast.error("An error occurred, user was not added");
       },
     });
   };
@@ -74,4 +70,4 @@ const AddBrand = ({ isOpen, closeModal, title }) => {
   );
 };
 
-export default AddBrand;
+export default AddUser;

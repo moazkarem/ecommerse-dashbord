@@ -39,3 +39,29 @@ export const couponsSchema = yup.object({
     .typeError("Discount must be a number")
     .required("Discount is required"),
 });
+
+export const userSchema = yup.object().shape({
+  name: yup.string().required("Name is required"),
+
+  email: yup
+    .string()
+    .required("Email is required")
+    .email("Invalid email format"),
+
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(6, "Password must be at least 6 characters"),
+
+  passwordConfirm: yup
+    .string()
+    .required("Password confirmation is required")
+    .oneOf([yup.ref("password")], "Passwords must match"),
+
+  phone: yup.string().required("Phone number is required"),
+
+  role: yup
+    .string()
+    .oneOf(["admin", "user"], "Role must be either 'admin' or 'user'")
+    .required("Role is required"),
+});
