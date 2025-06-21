@@ -1,11 +1,10 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
- 
-  addBrandApi,
-  editBrandApi,
-  delBrandApi,
-} from "./../api/brands";
-import { getProductsApi } from "../api/products";
+  getProductsApi,
+  addProductApi,
+  delProductApi,
+  editProductApi,
+} from "../api/products";
 
 //============ GET BRANDS HOOK ======
 
@@ -19,14 +18,14 @@ export const useGetProducts = () => {
 
 export const useAddBrand = () => {
   return useMutation({
-    mutationFn: addBrandApi,
+    mutationFn: addProductApi,
   });
 };
 
 //============ DEL BRANDS HOOK ======
-export const useDelBrand = () => {
+export const useDelProduct = () => {
   return useMutation({
-    mutationFn: delBrandApi,
+    mutationFn: delProductApi,
   });
 };
 
@@ -34,6 +33,6 @@ export const useDelBrand = () => {
 
 export const useEditBrand = () => {
   return useMutation({
-    mutationFn: editBrandApi,
+    mutationFn: editProductApi,
   });
 };

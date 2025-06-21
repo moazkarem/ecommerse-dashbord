@@ -61,8 +61,8 @@ export const getCategoryColumns = ({ onEdit, onDelete }) => [
     flex: 1,
     align: "center",
     headerAlign: "center",
-    renderCell: (brand) => (
-      <button style={{ lineHeight: "32px" }} onClick={() => onEdit(brand.row)}>
+    renderCell: (product) => (
+      <button style={{ lineHeight: "32px" }} onClick={() => onEdit(product.row)}>
         <FaEdit color="#008000" className="text-[20px]" />
       </button>
     ),
@@ -74,10 +74,10 @@ export const getCategoryColumns = ({ onEdit, onDelete }) => [
     width: 150,
     align: "center",
     headerAlign: "center",
-    renderCell: (brand) => (
+    renderCell: (product) => (
       <button
         style={{ lineHeight: "32px" }}
-        onClick={() => onDelete(brand.row)}
+        onClick={() => onDelete(product.row)}
       >
         <MdDelete className="text-[#ff0000cc] text-[20px]" />
       </button>

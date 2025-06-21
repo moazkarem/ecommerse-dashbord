@@ -8,7 +8,7 @@ export const getProductsApi = async () => {
 
 //================ ADD BRANDS API ===========
 
-export const addBrandApi = async (data) => {
+export const addProductApi = async (data) => {
   const storedUser = localStorage.getItem("userData");
   const userData = storedUser ? JSON.parse(storedUser) : null;
   const token = userData?.token;
@@ -23,11 +23,11 @@ export const addBrandApi = async (data) => {
 
 //================ DELETE BRANDS API ===========
 
-export const delBrandApi = async (brandId) => {
+export const delProductApi = async (productId) => {
   const storedUser = localStorage.getItem("userData");
   const userData = storedUser ? JSON.parse(storedUser) : null;
   const token = userData?.token;
-  const res = await server.delete(`/api/v1/brands/${brandId}`, {
+  const res = await server.delete(`/api/v1/products/${productId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -38,7 +38,7 @@ export const delBrandApi = async (brandId) => {
 
 //================ EDIT BRANDS API ===========
 
-export const editBrandApi = async ({ formData, catId }) => {
+export const editProductApi = async ({ formData, catId }) => {
   const storedKey = localStorage.getItem("userData");
   const userData = storedKey ? JSON.parse(storedKey) : null;
   const token = userData?.token;

@@ -7,14 +7,14 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getCategoryColumns, style } from "./data";
 import { useGetProducts } from "../../hooks/useProducts";
-import DelBrand from "./DelBrand";
 import EditBrand from "./EditBrand";
 import AddBrand from "./AddBrand";
 import { setProductsAction } from "../../store/features/productsSlice";
+import DelProduct from "./DelProduct";
 
 const Products = () => {
   //===================== MODAL STATES ===========
-  const [deletedBrand, setDeletedBrand] = useState({});
+  const [deletedProduct, setDeletedProduct] = useState({});
   const [editedBrand, setEditedBrand] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
@@ -31,7 +31,7 @@ const Products = () => {
 
   const openModalDel = (selectedBrand) => {
     setIsOpenDel(true);
-    setDeletedBrand(selectedBrand);
+    setDeletedProduct(selectedBrand);
   };
   const closeModalDel = () => setIsOpenDel(false);
 
@@ -73,11 +73,11 @@ const Products = () => {
         closeModalEdit={closeModalEdit}
         editedBrand={editedBrand}
       />
-      <DelBrand
-        key={deletedBrand._id}
+      <DelProduct
+        key={deletedProduct._id}
         isOpen={isOpenDel}
         closeModal={closeModalDel}
-        deletedBrand={deletedBrand}
+        deletedProduct={deletedProduct}
       />
     </Box>
   );
