@@ -31,6 +31,9 @@ body{
 .MuiToolbar-root{
   color: #fff !important;
 }
+.MuiDataGrid-selectedRowCount{
+  color: #fff;
+}
 ::-webkit-scrollbar {
     width: 13px;
   }

@@ -5,11 +5,18 @@ import { TbCategoryFilled } from "react-icons/tb";
 import { TbBrandAngularFilled } from "react-icons/tb";
 import { MdDiscount } from "react-icons/md";
 import { TbReorder } from "react-icons/tb";
+import { BiLogoProductHunt } from "react-icons/bi";
+
 export const Sidedata = [
   {
     path: "/",
     title: "Dashboard",
     icon: <FaHome fontSize="20"/>,
+  },
+  {
+    path: "/products",
+    title: "Products",
+    icon: <BiLogoProductHunt fontSize="20"/>,
   },
   {
     path: "/categories",
