@@ -37,7 +37,7 @@ const Appbar = ({ open, setOpen }) => {
       // @ts-ignore
       open={open}
     >
-      <Toolbar sx={{ backgroundColor: "#0F1112" }}>
+      <Toolbar sx={{ backgroundColor: "#0F1112" , height:'100px' }}>
         <IconButton
           color="inherit"
           aria-label="open drawer"

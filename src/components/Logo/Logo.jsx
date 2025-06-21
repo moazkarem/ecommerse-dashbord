@@ -1,7 +1,11 @@
 import { Avatar } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import logo from "../../../public/logo.png";
 // eslint-disable-next-line react/prop-types
 const Logo = ({ open }) => {
+  const storedUser = localStorage.getItem("userData");
+  const userData = storedUser ? JSON.parse(storedUser) : null;
+  const userName = userData?.data?.name;
   return (
     <>
       <Avatar
@@ -11,25 +15,18 @@ const Logo = ({ open }) => {
           mb: 1,
           width: open ? 88 : 44,
           height: open ? 88 : 44,
-          border: "2px solid gray",
+          // border: "2px solid #",
           transition: ".25s",
         }}
         alt="Travis Howard"
-        src="https://www.wonderslist.com/wp-content/uploads/2021/05/Anastasia-Knyazeva-worlds-most-beautiful-girl.jpg"
+        src={logo}
       />
       <Typography
         align="center"
         fontSize={open ? 17 : 0}
-        sx={{ transition: ".25s", color: "#fff" }}
+        sx={{ transition: ".25s", color: "#fff" ,  mb: 7, }}
       >
-        Moaz Karem
-      </Typography>
-      <Typography
-        align="center"
-        fontSize={open ? 15 : 0}
-        sx={{ mb: 1, transition: ".25s", color: "#fff" }}
-      >
-        Admin
+        {userName}
       </Typography>
     </>
   );

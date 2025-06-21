@@ -1,18 +1,25 @@
 import server from "./server";
 
-//================ GET PRODUCTS API ===========
-export const getProductsApi = async () => {
-  const res = await server.get("/api/v1/products");
-  return res;
-};
-
-//================ ADD PRODUCTS API ===========
-
-export const addProductApi = async (data) => {
+//================ GET USERS API ===========
+export const getUsersApi = async () => {
   const storedUser = localStorage.getItem("userData");
   const userData = storedUser ? JSON.parse(storedUser) : null;
   const token = userData?.token;
-  const res = await server.post("/api/v1/brands", data, {
+  const res = await server.get("/api/v1/users", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res;
+};
+
+//================ ADD USERS API ===========
+
+export const addUserApi = async (data) => {
+  const storedUser = localStorage.getItem("userData");
+  const userData = storedUser ? JSON.parse(storedUser) : null;
+  const token = userData?.token;
+  const res = await server.post("/api/v1/users", data, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -21,13 +28,13 @@ export const addProductApi = async (data) => {
   return res;
 };
 
-//================ DELETE PRODUCTS API ===========
+//================ DELETE USERS API ===========
 
-export const delProductApi = async (productId) => {
+export const delUserApi = async (UserId) => {
   const storedUser = localStorage.getItem("userData");
   const userData = storedUser ? JSON.parse(storedUser) : null;
   const token = userData?.token;
-  const res = await server.delete(`/api/v1/products/${productId}`, {
+  const res = await server.delete(`/api/v1/users/${UserId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -36,13 +43,13 @@ export const delProductApi = async (productId) => {
   return res;
 };
 
-//================ EDIT PRODUCTS API ===========
+//================ EDIT USERS API ===========
 
-export const editProductApi = async ({ formData, catId }) => {
+export const editUserApi = async ({ formData, catId }) => {
   const storedKey = localStorage.getItem("userData");
   const userData = storedKey ? JSON.parse(storedKey) : null;
   const token = userData?.token;
-  const res = await server.put(`/api/v1/brands/${catId}`, formData, {
+  const res = await server.put(`/api/v1/users/${catId}`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

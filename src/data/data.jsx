@@ -6,37 +6,48 @@ import { TbBrandAngularFilled } from "react-icons/tb";
 import { MdDiscount } from "react-icons/md";
 import { TbReorder } from "react-icons/tb";
 import { BiLogoProductHunt } from "react-icons/bi";
-
+import { FiLogOut } from "react-icons/fi";
+import { FaUserFriends } from "react-icons/fa";
 export const Sidedata = [
   {
     path: "/",
     title: "Dashboard",
-    icon: <FaHome fontSize="20"/>,
+    icon: <FaHome fontSize="20" />,
   },
   {
     path: "/products",
     title: "Products",
-    icon: <BiLogoProductHunt fontSize="20"/>,
+    icon: <BiLogoProductHunt fontSize="20" />,
   },
   {
     path: "/categories",
     title: "Categories",
-    icon: <TbCategoryFilled  fontSize="20"/>,
+    icon: <TbCategoryFilled fontSize="20" />,
   },
   {
     path: "/brands",
     title: "Brands",
-    icon: <TbBrandAngularFilled  fontSize="20"/>,
+    icon: <TbBrandAngularFilled fontSize="20" />,
   },
   {
     path: "/coupons",
     title: "Coupons",
-    icon: <MdDiscount fontSize="20"/>,
+    icon: <MdDiscount fontSize="20" />,
   },
   {
     path: "/orders",
     title: "Orders",
-    icon: <TbReorder fontSize="20"/>,
+    icon: <TbReorder fontSize="20" />,
+  },
+  {
+    path: "/users",
+    title: "Users",
+    icon: <FaUserFriends fontSize="20" />,
+  },
+  {
+    path: "/login",
+    title: "Logout",
+    icon: <FiLogOut fontSize="20" />,
   },
 ];
 

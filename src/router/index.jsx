@@ -11,6 +11,7 @@ import Brands from "../pages/Brands/Brands";
 import Coupons from "../pages/Coupons/Coupons";
 import Orders from "../pages/Orders/Orders";
 import Products from "../pages/Products/Products";
+import Users from "../pages/Users/Users";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -21,6 +22,7 @@ const router = createBrowserRouter(
         <Route path="coupons" element={<Coupons />} />
         <Route path="orders" element={<Orders />} />
         <Route path="products" element={<Products />} />
+        <Route path="users" element={<Users />} />
       </Route>
       <Route path="login" element={<Login />} />
     </>

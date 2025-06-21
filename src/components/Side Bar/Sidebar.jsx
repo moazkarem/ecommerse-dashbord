@@ -1,7 +1,7 @@
 import React from "react";
 import List from "@mui/material/List";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { MdKeyboardArrowLeft } from "react-icons/md";
+import { MdKeyboardArrowRight } from "react-icons/md";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -81,9 +81,9 @@ const Sidebar = ({ open, setOpen }) => {
       <DrawerHeader>
         <IconButton onClick={handleDrawerClose}>
           {theme.direction === "rtl" ? (
-            <ChevronRightIcon />
+            <MdKeyboardArrowRight />
           ) : (
-            <ChevronLeftIcon />
+            <MdKeyboardArrowLeft color="#fff" />
           )}
         </IconButton>
       </DrawerHeader>
