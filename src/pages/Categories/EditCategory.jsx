@@ -22,28 +22,41 @@ const EditCategory = ({ isOpenEdit, closeModalEdit, title, editedCat }) => {
   });
 
   const renderCatFields = addCategoriesFields?.map(
-    //========= check file type to avoide default value error in file input
     ({ label, name, type }, idx) => (
-      <div key={idx} className="flex gap-2 flex-col">
-        <Label htmlFor={label}>{label} : </Label>
+      <div key={idx} className="flex gap-2 flex-col mb-3">
+        <Label htmlFor={label}>{label} :</Label>
+
+        {/* File input */}
         {type === "file" ? (
-          <Input type="file" id={label} {...register(name)} />
+          <>
+            {editedCat?.[name] && (
+              <img
+                src={editedCat[name]}
+                alt={`preview-${label}`}
+                className="w-20 h-20 object-cover rounded mb-2"
+              />
+            )}
+
+            <Input type="file" id={label} {...register(name)} />
+          </>
         ) : (
           <Input
             type={type}
             id={label}
-            defaultValue={editedCat ? editedCat[name] : ""}
+            defaultValue={editedCat?.[name] || ""}
             {...register(name)}
           />
         )}
+
         {errors[name] && <Errormsg msg={errors[name]?.message} />}
       </div>
     )
   );
+
   const onSubmit = (data) => {
     const formData = new FormData();
     formData.append("name", data.name);
-    // formData.append("image", data.image);
+    formData.append("image", data.image[0]);
     const catId = editedCat._id;
     mutate(
       { formData, catId },

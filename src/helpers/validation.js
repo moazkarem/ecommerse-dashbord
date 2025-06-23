@@ -40,6 +40,8 @@ export const couponsSchema = yup.object({
     .required("Discount is required"),
 });
 
+//============== USERS
+
 export const userSchema = yup.object().shape({
   name: yup.string().required("Name is required"),
 
@@ -80,4 +82,27 @@ export const userEditSchema = yup.object().shape({
     .string()
     .oneOf(["admin", "user"], "Role must be either 'admin' or 'user'")
     .required("Role is required"),
+});
+
+//============== PRODUCTS
+
+export const productSchema = yup.object().shape({
+  title: yup.string().required("Product title is required"),
+  description: yup.string().required("Description is required"),
+  quantity: yup
+    .number()
+    .typeError("Quantity must be a number")
+    .required("Quantity is required")
+    .positive("Quantity must be greater than zero")
+    .integer("Quantity must be an integer"),
+  price: yup
+    .number()
+    .typeError("Price must be a number")
+    .required("Price is required")
+    .positive("Price must be greater than zero"),
+  imageCover: yup.mixed().required("Cover image is required"),
+
+  images: yup.mixed().required("Images are required"),
+  category: yup.string().required("Category is required"),
+  brand: yup.string().required("Brand is required"),
 });

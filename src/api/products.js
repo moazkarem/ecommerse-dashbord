@@ -8,16 +8,16 @@ export const getProductsApi = async () => {
 
 //================ ADD PRODUCTS API ===========
 
-export const addProductApi = async (data) => {
+export const addProductApi = async (formData) => {
   const storedUser = localStorage.getItem("userData");
   const userData = storedUser ? JSON.parse(storedUser) : null;
   const token = userData?.token;
-  const res = await server.post("/api/v1/brands", data, {
+  const res = await server.post("/api/v1/products", formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-  // console.log(res, "from add brand res");
+  console.log(res, "from add product res");
   return res;
 };
 
@@ -34,7 +34,7 @@ export const delProductApi = async (productId) => {
   });
   // console.log(res, "from del category res");
   return res;
-};
+}; 
 
 //================ EDIT PRODUCTS API ===========
 

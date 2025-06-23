@@ -8,9 +8,10 @@ import { useDispatch } from "react-redux";
 import { getCategoryColumns, style } from "./data";
 import { useGetProducts } from "../../hooks/useProducts";
 import EditBrand from "./EditBrand";
-import AddBrand from "./AddBrand";
+import AddBrand from "./AddProduct";
 import { setProductsAction } from "../../store/features/productsSlice";
 import DelProduct from "./DelProduct";
+import AddProduct from "./AddProduct";
 
 const Products = () => {
   //===================== MODAL STATES ===========
@@ -61,7 +62,7 @@ const Products = () => {
       <TitlePage path={"Dashbord / "} page={"Products"} />
       <AddButton add={openModal} title={"Add New Product"} />
       <DataGrid rows={rows} columns={columns} sx={style} />
-      <AddBrand
+      <AddProduct
         title={"Add New Product"}
         isOpen={isOpen}
         closeModal={closeModal}

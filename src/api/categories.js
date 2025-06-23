@@ -14,7 +14,7 @@ export const addCategoryApi = async (data) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  // console.log(res, "from add category res");
+  console.log(res, "from add category res");
   return res;
 };
 

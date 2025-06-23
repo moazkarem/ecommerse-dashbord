@@ -27,11 +27,11 @@ export const getCategoryColumns = ({ onEdit, onDelete }) => [
     flex: 1,
     align: "center",
     headerAlign: "center",
-    renderCell: () => (
+    renderCell: (row) => (
       <div className="w-full flex justify-center ">
         <img
           className="w-12 h-12 object-contain p-2"
-          src={images[Math.floor(Math.random() * images.length)]}
+          src={row?.row?.image}
         />
       </div>
     ),

@@ -111,6 +111,7 @@ export const addCouponsFields = [
 ];
 
 //==================== USERS =======
+
 export const userFields = [
   {
     name: "name",
@@ -165,5 +166,71 @@ export const userEditFields = [
     name: "role",
     type: "text",
     label: "Role",
+  },
+];
+
+//==================== Products =======
+
+export const productsFields = [
+  {
+    name: "title",
+    type: "text",
+    label: "Product Title",
+    isSelect: false,
+    isImages:false,
+  },
+  {
+    name: "description",
+    type: "text",
+    label: "Description",
+    isSelect: false,
+    isImages:false,
+  },
+  {
+    name: "quantity",
+    type: "number",
+    label: "quantity",
+    isSelect: false,
+    isImages:false,
+  },
+  {
+    name: "price",
+    type: "number",
+    label: "price",
+    isSelect: false,
+    isImages:false,
+  },
+  {
+    name: "availableColors",
+    type: "color",
+    label: "availableColors",
+    isSelect: false,
+    isImages:false,
+  },
+  {
+    name: "imageCover",
+    type: "file",
+    label: "Image Cover",
+    isSelect: false,
+    isImages:false,
+  },
+  {
+    name: "images",
+    type: "file",
+    label: "Images",
+    isSelect: false,
+    isImages:true,
+  },
+  {
+    name: "category",
+    label: "Categorys",
+    isSelect: true,
+   isImages:false
+  },
+  {
+    name: "brand",
+    label: "Brands",
+    isSelect: true,
+    isImages:false
   },
 ];

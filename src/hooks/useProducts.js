@@ -16,7 +16,7 @@ export const useGetProducts = () => {
 };
 //============ ADD BRANDS HOOK ======
 
-export const useAddBrand = () => {
+export const useAddProduct = () => {
   return useMutation({
     mutationFn: addProductApi,
   });
