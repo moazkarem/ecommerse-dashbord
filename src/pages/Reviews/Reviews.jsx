@@ -7,14 +7,14 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getCategoryColumns, style } from "./data";
 import { useGetAllReviews } from "../../hooks/useReviews";
-import DelBrand from "./DelBrand";
 import EditBrand from "./EditBrand";
 import { setBrandsAction } from "../../store/features/brandsSlice";
 import AddBrand from "./AddBrand";
+import DelReview from "./DelReview";
 
 const Reviews = () => {
   //===================== MODAL STATES ===========
-  const [deletedBrand, setDeletedBrand] = useState({});
+  const [deletedReview, setDeletedReview] = useState({});
   const [editedBrand, setEditedBrand] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
@@ -31,7 +31,7 @@ const Reviews = () => {
 
   const openModalDel = (selectedBrand) => {
     setIsOpenDel(true);
-    setDeletedBrand(selectedBrand);
+    setDeletedReview(selectedBrand);
   };
   const closeModalDel = () => setIsOpenDel(false);
 
@@ -67,17 +67,17 @@ const Reviews = () => {
         closeModal={closeModal}
       />
       <EditBrand
-      key={editedBrand._id}
+        key={editedBrand._id}
         title={"Edit Brand "}
         isOpenEdit={isOpenEdit}
         closeModalEdit={closeModalEdit}
         editedBrand={editedBrand}
       />
-      <DelBrand
-        key={deletedBrand._id}
+      <DelReview
+        key={deletedReview._id}
         isOpen={isOpenDel}
         closeModal={closeModalDel}
-        deletedBrand={deletedBrand}
+        deletedReview={deletedReview}
       />
     </Box>
   );
