@@ -12,10 +12,10 @@ import { toast } from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
 import { IoIosArrowDown } from "react-icons/io";
 import { useRef, useState } from "react";
-import { useGetBrands } from './../../hooks/useBrands';
-import { useGetCategories } from './../../hooks/useCategories';
+import { useGetBrands } from "./../../hooks/useBrands";
+import { useGetCategories } from "./../../hooks/useCategories";
 const AddProduct = ({ isOpen, closeModal, title }) => {
-  const { data: categories} = useGetCategories();
+  const { data: categories } = useGetCategories();
   const { data: brands } = useGetBrands();
 
   const [previews, setPreviews] = useState([]);
@@ -28,71 +28,86 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
     register,
     handleSubmit,
     reset,
-    setValue ,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(productSchema),
   });
-  const renderCatFields = productsFields?.map(
-    ({ label, name, type, isSelect, isImages }, idx) => (
-      <div key={idx} className="flex gap-4 flex-col">
-        <Label htmlFor={label}>{label} : </Label>
 
-        {isSelect ? (
-          <div className="relative w-full">
-            <select
-              className="appearance-none w-full border-2 border-[#dbdbebde] bg-[#1E2021] text-white
-                 rounded-md px-3 py-3 pr-10 text-md shadow-md"
-              {...register(name)}
-            >
-              <option value={"test"}>test</option>
-            </select>
-            <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
-              <IoIosArrowDown color="#dbdbebde" />
-            </div>
+  //================= SUBMIT DATA ========
+  const onSubmit = (data) => {
+    const formData = new FormData();
+    formData.append("name", data.title);
+    formData.append("description", data.description);
+    formData.append("quantity", data.quantity);
+    formData.append("price", data.price);
+
+    // send colors array
+    formData.append("availableColors", JSON.stringify(data.availableColors));
+
+    // cover image
+    formData.append("imageCover", data.imageCover[0]);
+
+    // multiple images
+    if (data.images && data.images.length > 0) {
+      Array.from(data.images).forEach((img) => {
+        formData.append("images", img);
+      });
+    }
+
+    formData.append("category", data.category);
+    formData.append("brand", data.brand);
+
+    mutate(formData, {
+      onSuccess: () => {
+        toast.success("Product added successfully");
+        closeModal();
+        reset();
+        queryClient.invalidateQueries(["products"]);
+      },
+      onError: () => {
+        toast.error("An error occurred, product was not added");
+      },
+    });
+  };
+
+  return (
+    <div>
+      <Modal title={title} isOpen={isOpen} closeModal={closeModal}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {/* Product Title */}
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="title">Product Title :</Label>
+            <Input type="text" id="title" {...register("title")} />
+            {errors.title && <Errormsg msg={errors.title.message} />}
           </div>
-        ) : type === "file" && (isImages || name === "imageCover") ? (
-          <>
-            <div
-              onClick={() => fileInputRef.current[name]?.click()}
-              className="w-32 h-32 bg-[#0E1011] text-white flex items-center justify-center rounded-lg cursor-pointer border border-dashed border-[#ed1d24] hover:shadow-md"
-            >
-              <span className="text-sm text-center">Click to upload</span>
-            </div>
 
-            <input
-              type="file"
-              multiple={isImages}
-              accept="image/*"
-              {...register(name)}
-              ref={(el) => (fileInputRef.current[name] = el)}
-              onChange={(e) => {
-                const files = Array.from(e.target.files);
-                const previewsArr = files.map((file) =>
-                  URL.createObjectURL(file)
-                );
-                setPreviews((prev) => ({
-                  ...prev,
-                  [name]: isImages ? previewsArr : [previewsArr[0]],
-                }));
-                setValue(name, e.target.files, { shouldValidate: true });
-              }}
-              className="hidden"
-            />
+          {/* Description */}
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="description">Description :</Label>
+            <Input type="text" id="description" {...register("description")} />
+            {errors.description && (
+              <Errormsg msg={errors.description.message} />
+            )}
+          </div>
 
-            <div className="flex gap-2 mt-2 flex-wrap">
-              {previews[name]?.map((src, i) => (
-                <img
-                  key={i}
-                  src={src}
-                  alt={`preview-${i}`}
-                  className="w-20 h-20 object-cover rounded"
-                />
-              ))}
-            </div>
-          </>
-        ) : type === "color" ? (
-          <>
+          {/* Quantity */}
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="quantity">Quantity :</Label>
+            <Input type="number" id="quantity" {...register("quantity")} />
+            {errors.quantity && <Errormsg msg={errors.quantity.message} />}
+          </div>
+
+          {/* Price */}
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="price">Price :</Label>
+            <Input type="number" id="price" {...register("price")} />
+            {errors.price && <Errormsg msg={errors.price.message} />}
+          </div>
+
+          {/* Available Colors */}
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="availableColors">Available Colors :</Label>
             <div className="flex items-center gap-2">
               <input
                 type="color"
@@ -106,7 +121,7 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
                   if (!colorsList.includes(selectedColor)) {
                     const newColors = [...colorsList, selectedColor];
                     setColorsList(newColors);
-                    setValue(name, newColors); 
+                    setValue("availableColors", newColors);
                   }
                 }}
                 className="bg-[#ed1d24] text-white px-3 py-1 rounded hover:bg-red-700"
@@ -115,7 +130,7 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
               </button>
             </div>
 
-            <input type="hidden" {...register(name)} />
+            <Input type="hidden" {...register("availableColors")} />
 
             <div className="flex gap-2 mt-2 flex-wrap mb-3">
               {colorsList.map((color, i) => (
@@ -134,7 +149,7 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
                     onClick={() => {
                       const updated = colorsList.filter((c) => c !== color);
                       setColorsList(updated);
-                      setValue(name, updated);
+                      setValue("availableColors", updated);
                     }}
                     className="absolute -top-2 -right-2 text-white text-xs bg-red-600 rounded-full w-4 h-4 flex items-center justify-center"
                   >
@@ -143,72 +158,97 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
                 </div>
               ))}
             </div>
-          </>
-        ) : (
-          <Input type={type} id={label} {...register(name)} />
-        )}
 
-        {errors[name] && <Errormsg msg={errors[name]?.message} />}
-      </div>
-    )
-  );
+            {errors.availableColors && (
+              <Errormsg msg={errors.availableColors.message} />
+            )}
+          </div>
 
-  //================= SUBMIT DATA ========
-  const onSubmit = (data) => {
-    const formData = new FormData();
-    formData.append("name", data.title);
-    formData.append("description", data.description);
-    formData.append("quantity", data.quantity);
-    formData.append("price", data.price);
-  
-    // send colors array
-    formData.append("availableColors", JSON.stringify(data.availableColors));
-  
-    // cover image
-    formData.append("imageCover", data.imageCover[0]);
-  
-    // multiple images
-    if (data.images && data.images.length > 0) {
-      Array.from(data.images).forEach((img) => {
-        formData.append("images", img);
-      });
-    }
-  
-    formData.append("category", data.category);
-    formData.append("brand", data.brand);
-  
-    mutate(formData, {
-      onSuccess: () => {
-        toast.success("Product added successfully");
-        closeModal();
-        reset();
-        queryClient.invalidateQueries(["products"]);
-      },
-      onError: () => {
-        toast.error("An error occurred, product was not added");
-      },
-    });
-  };
-  
-  return (
-    <div>
-      <Modal title={title} isOpen={isOpen} closeModal={closeModal}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {renderCatFields}
+          {/* Image Cover */}
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="imageCover">Image Cover :</Label>
+
+            <Input type="file" {...register("imageCover")} />
+
+            {errors.imageCover && <Errormsg msg={errors.imageCover.message} />}
+          </div>
+
+          {/* Images */}
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="images">Images :</Label>
+
+            <Input
+              type="file"
+              accept="image/*"
+              multiple
+              {...register("images")}
+            />
+            <div className="flex gap-2 mt-2 flex-wrap">
+              {previews.images?.map((src, i) => (
+                <img
+                  key={i}
+                  src={src}
+                  alt={`preview-${i}`}
+                  className="w-20 h-20 object-cover rounded"
+                />
+              ))}
+            </div>
+            {errors.images && <Errormsg msg={errors.images.message} />}
+          </div>
+
+          {/* Category */}
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="category">Category :</Label>
+            <div className="relative w-full">
+              <select
+                className="appearance-none w-full border-2 border-[#dbdbebde] bg-[#1E2021] text-white
+          rounded-md px-3 py-3 pr-10 text-md shadow-md"
+                {...register("category")}
+              >
+                <option value={"test"}>test</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+                <IoIosArrowDown color="#dbdbebde" />
+              </div>
+            </div>
+            {errors.category && <Errormsg msg={errors.category.message} />}
+          </div>
+
+          {/* Brand */}
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="brand">Brand :</Label>
+            <div className="relative w-full">
+              <select
+                className="appearance-none w-full border-2 border-[#dbdbebde] bg-[#1E2021] text-white
+          rounded-md px-3 py-3 pr-10 text-md shadow-md"
+                {...register("brand")}
+              >
+                <option value={"test"}>test</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+                <IoIosArrowDown color="#dbdbebde" />
+              </div>
+            </div>
+            {errors.brand && <Errormsg msg={errors.brand.message} />}
+          </div>
+
+          {/* Submit button */}
           <div className="flex justify-center items-center space-x-3">
-            <Button
-              loading={isPending}
-              style={`mt-4   text-[#fff] border-[#ff0000cc]  border w-48 px-12 border-1  py-[6px] flex justify-center items-center  rounded-[8px]`}
-            >
-              Add
-            </Button>
-            <Button
-              type="button"
-              onClick={() => closeModal()}
-              style={`border-[#798594] text-[#dbdbebde]  mt-4   border w-48 px-12 border-1  py-[6px] rounded-[8px]`}
-            >
-              Cancel
-            </Button>
+            <div className="flex justify-center items-center space-x-3">
+              <Button
+                loading={isPending}
+                style={`mt-4   text-[#fff] border-[#ff0000cc]  border w-48 px-12 border-1  py-[6px] flex justify-center items-center rounded-[8px]`}
+              >
+                Add
+              </Button>
+              <Button
+                onClick={() => closeModal()}
+                type="button"
+                style={`border-[#798594] text-[#dbdbebde]  mt-4   border w-48 px-12 border-1  py-[6px] rounded-[8px]`}
+              >
+                Cancel
+              </Button>
+            </div>
           </div>
         </form>
       </Modal>
