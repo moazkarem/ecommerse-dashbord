@@ -9,7 +9,7 @@ import { getCategoryColumns, style } from "./data";
 import { useGetAllReviews } from "../../hooks/useReviews";
 import EditBrand from "./EditBrand";
 import { setBrandsAction } from "../../store/features/brandsSlice";
-import AddBrand from "./AddBrand";
+import AddBrand from "./AddReview";
 import DelReview from "./DelReview";
 
 const Reviews = () => {
@@ -61,7 +61,7 @@ const Reviews = () => {
       <TitlePage path={"Dashbord / "} page={"Brands"} />
       <AddButton add={openModal} title={"Add New Brand"} />
       <DataGrid rows={rows} columns={columns} sx={style} />
-      <AddBrand
+      <AddReview
         title={"Add New Brand"}
         isOpen={isOpen}
         closeModal={closeModal}

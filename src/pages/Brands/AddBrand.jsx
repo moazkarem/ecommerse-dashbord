@@ -46,7 +46,7 @@ const AddBrand = ({ isOpen, closeModal, title }) => {
       onError: () => {
         toast.error("An error occurred, brand was not added");
       },
-    });
+    }); 
   };
   return (
     <div>

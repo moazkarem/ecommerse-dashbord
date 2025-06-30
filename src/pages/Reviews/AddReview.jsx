@@ -5,12 +5,12 @@ import Button from "../../Ui/Button";
 import { addBrandsFields } from "../../data/data";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Errormsg from "./../../components/Error/ErrorMsg";
+import Errormsg from "../../components/Error/ErrorMsg";
 import { categorySchema } from "../../helpers/validation";
 import { useAddBrand } from "../../hooks/useBrands";
 import { toast } from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
-const AddBrand = ({ isOpen, closeModal, title }) => {
+const AddReview = ({ isOpen, closeModal, title }) => {
   const queryClient = useQueryClient();
   const { mutate, isPending } = useAddBrand();
   const {
@@ -52,7 +52,10 @@ const AddBrand = ({ isOpen, closeModal, title }) => {
     <div>
       <Modal title={title} isOpen={isOpen} closeModal={closeModal}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          {renderCatFields}
+        <Label htmlFor='rating'>Rating : </Label>
+        <Input type="number" id='rating' {...register('rating')} />
+        
+        <textarea />
           <div className="flex justify-center items-center space-x-3">
             <Button
               loading={isPending}
@@ -74,4 +77,4 @@ const AddBrand = ({ isOpen, closeModal, title }) => {
   );
 };
 
-export default AddBrand;
+export default AddReview;

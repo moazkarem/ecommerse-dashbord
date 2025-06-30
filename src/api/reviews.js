@@ -26,3 +26,19 @@ export const delReviewApi = async (reviewId) => {
   // console.log(res, "from delete review");
   return res;
 };
+
+// ================= ADD REVIEW
+
+export const addReviewApi = async (formData) => {
+  const storedKey = localStorage.getItem("userData");
+  const userData = storedKey ? JSON.parse(storedKey) : null;
+  const token = userData?.token;
+
+  const res = await server.post("/api/v1/reviews", formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  console.log(res, "from add review");
+  return res;
+};
