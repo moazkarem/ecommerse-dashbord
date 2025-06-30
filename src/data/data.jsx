@@ -8,6 +8,7 @@ import { TbReorder } from "react-icons/tb";
 import { BiLogoProductHunt } from "react-icons/bi";
 import { FiLogOut } from "react-icons/fi";
 import { FaUserFriends } from "react-icons/fa";
+import { MdRateReview } from "react-icons/md";
 export const Sidedata = [
   {
     path: "/",
@@ -43,6 +44,11 @@ export const Sidedata = [
     path: "/users",
     title: "Users",
     icon: <FaUserFriends fontSize="20" />,
+  },
+  {
+    path: "/reviews",
+    title: "Reviews",
+    icon: <MdRateReview fontSize="20" />,
   },
   {
     path: "/login",
@@ -177,60 +183,60 @@ export const productsFields = [
     type: "text",
     label: "Product Title",
     isSelect: false,
-    isImages:false,
+    isImages: false,
   },
   {
     name: "description",
     type: "text",
     label: "Description",
     isSelect: false,
-    isImages:false,
+    isImages: false,
   },
   {
     name: "quantity",
     type: "number",
     label: "quantity",
     isSelect: false,
-    isImages:false,
+    isImages: false,
   },
   {
     name: "price",
     type: "number",
     label: "price",
     isSelect: false,
-    isImages:false,
+    isImages: false,
   },
   {
     name: "availableColors",
     type: "color",
     label: "availableColors",
     isSelect: false,
-    isImages:false,
+    isImages: false,
   },
   {
     name: "imageCover",
     type: "file",
     label: "Image Cover",
     isSelect: false,
-    isImages:false,
+    isImages: false,
   },
   {
     name: "images",
     type: "file",
     label: "Images",
     isSelect: false,
-    isImages:true,
+    isImages: true,
   },
   {
     name: "category",
     label: "Categorys",
     isSelect: true,
-   isImages:false
+    isImages: false,
   },
   {
     name: "brand",
     label: "Brands",
     isSelect: true,
-    isImages:false
+    isImages: false,
   },
 ];

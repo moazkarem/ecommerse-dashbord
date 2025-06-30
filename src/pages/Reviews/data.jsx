@@ -13,26 +13,29 @@ import img10 from "../../../public/images/brands/img10.png";
 export const images = [img1, img2, img3, img4, img5, img6, img7, img9, img10];
 export const getCategoryColumns = ({ onEdit, onDelete }) => [
   {
-    field: "name",
-    headerName: "Name",
+    field: "review",
+    headerName: "Review",
     width: 150,
     align: "center",
     headerAlign: "center",
   },
   {
-    field: "image",
-    headerName: "Image",
+    field: "rating",
+    headerName: "Rating",
     width: 150,
-
+    align: "center",
+    headerAlign: "center",
+  },
+  {
+    field: "user",
+    headerName: "UserName",
+    width: 150,
     flex: 1,
     align: "center",
     headerAlign: "center",
     renderCell: (row) => (
       <div className="w-full flex justify-center ">
-        <img
-          className="w-12 h-12 object-contain p-2"
-          src={images[Math.floor(Math.random() * images.length)]}
-        />
+        <span>{row?.row?.user?.name}</span>
       </div>
     ),
   },
@@ -43,11 +46,8 @@ export const getCategoryColumns = ({ onEdit, onDelete }) => [
     flex: 1,
     align: "center",
     headerAlign: "center",
-    renderCell: (category) => (
-      <button
-        style={{ lineHeight: "32px" }}
-        onClick={() => onEdit(category.row)}
-      >
+    renderCell: (brand) => (
+      <button style={{ lineHeight: "32px" }} onClick={() => onEdit(brand.row)}>
         <FaEdit color="#008000" className="text-[20px]" />
       </button>
     ),
@@ -59,10 +59,10 @@ export const getCategoryColumns = ({ onEdit, onDelete }) => [
     width: 150,
     align: "center",
     headerAlign: "center",
-    renderCell: (category) => (
+    renderCell: (brand) => (
       <button
         style={{ lineHeight: "32px" }}
-        onClick={() => onDelete(category.row)}
+        onClick={() => onDelete(brand.row)}
       >
         <MdDelete className="text-[#ff0000cc] text-[20px]" />
       </button>

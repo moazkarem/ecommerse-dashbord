@@ -2,21 +2,17 @@ import Modal from "../../Ui/Modal";
 import Input from "../../Ui/Input";
 import Label from "../../Ui/Label";
 import Button from "../../Ui/Button";
-import { addCategoriesFields } from "../../data/data";
-import Errormsg from "../../components/Error/ErrorMsg";
+import { addBrandsFields } from "../../data/data";
+import Errormsg from "./../../components/Error/ErrorMsg";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { categorySchema } from "../../helpers/validation";
-import { useEditCategory } from "../../hooks/useCategories";
+import { useEditBrand } from "../../hooks/useBrands";
 import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { useState } from "react";
-import { useEffect } from "react";
-const EditCategory = ({ isOpenEdit, closeModalEdit, title, editedCat }) => {
-  const { isPending, mutate } = useEditCategory();
+const EditBrand = ({ isOpenEdit, closeModalEdit, title, editedBrand }) => {
+  const { isPending, mutate } = useEditBrand();
   const queryClient = useQueryClient();
-  const [imgPreview, setImgPreview] = useState(editedCat?.image || "");
-
   const {
     register,
     handleSubmit,
@@ -24,59 +20,29 @@ const EditCategory = ({ isOpenEdit, closeModalEdit, title, editedCat }) => {
   } = useForm({
     resolver: yupResolver(categorySchema),
   });
-  useEffect(() => {
-    setImgPreview(editedCat?.image);
-  }, [editedCat]);
 
-  const onChangeImgHandeler = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImgPreview(URL.createObjectURL(file));
-    }
-  };
-
-  const renderCatFields = addCategoriesFields?.map(
-    ({ label, name, type }, idx) => (
-      <div key={idx} className="flex gap-2 flex-col mb-3">
-        <Label htmlFor={label}>{label} :</Label>
-
-        {/* File input */}
-        {type === "file" ? (
-          <>
-            {imgPreview && (
-              <img
-                src={imgPreview}
-                alt={`preview-${label}`}
-                className="w-20 h-20 object-cover rounded mb-2"
-              />
-            )}
-
-            <Input
-              type="file"
-              id={label}
-              {...register(name)}
-              onChange={onChangeImgHandeler}
-            />
-          </>
-        ) : (
-          <Input
-            type={type}
-            id={label}
-            defaultValue={editedCat?.[name] || ""}
-            {...register(name)}
-          />
-        )}
-
-        {errors[name] && <Errormsg msg={errors[name]?.message} />}
-      </div>
-    )
-  );
-
+  const renderCatFields = addBrandsFields?.map(({ label, name, type }, idx) => (
+    //========= check file type to avoide default value error in file input
+    <div key={idx} className="flex gap-2 flex-col">
+      <Label htmlFor={label}>{label} : </Label>
+      {type === "file" ? (
+        <Input type="file" id={label} {...register(name)} />
+      ) : (
+        <Input
+          type={type}
+          id={label}
+          defaultValue={editedBrand ? editedBrand[name] : ""}
+          {...register(name)}
+        />
+      )}
+      {errors[name] && <Errormsg msg={errors[name]?.message} />}
+    </div>
+  ));
   const onSubmit = (data) => {
     const formData = new FormData();
     formData.append("name", data.name);
-    formData.append("image", data.image[0]);
-    const catId = editedCat._id;
+    // formData.append("image", data.image);
+    const catId = editedBrand._id;
     mutate(
       { formData, catId },
       {
@@ -121,4 +87,4 @@ const EditCategory = ({ isOpenEdit, closeModalEdit, title, editedCat }) => {
   );
 };
 
-export default EditCategory;
+export default EditBrand;
