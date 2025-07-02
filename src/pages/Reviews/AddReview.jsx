@@ -55,7 +55,7 @@ const AddReview = ({ isOpen, closeModal, title }) => {
         <Label htmlFor='rating'>Rating : </Label>
         <Input type="number" id='rating' {...register('rating')} />
         
-        <textarea />
+        {/* <textarea /> */}
           <div className="flex justify-center items-center space-x-3">
             <Button
               loading={isPending}
