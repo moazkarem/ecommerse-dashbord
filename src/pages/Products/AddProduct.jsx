@@ -92,11 +92,7 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
           </div>
 
           {/* Quantity */}
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="quantity">Quantity :</Label>
-            <Input type="number" id="quantity" {...register("quantity")} />
-            {errors.quantity && <Errormsg msg={errors.quantity.message} />}
-          </div>
+      
 
           {/* Price */}
           <div className="flex flex-col gap-2">
