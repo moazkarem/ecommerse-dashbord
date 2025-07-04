@@ -37,26 +37,39 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
   //================= SUBMIT DATA ========
   const onSubmit = (data) => {
     const formData = new FormData();
-    formData.append("name", data.title);
+    formData.append("title", data.title);
     formData.append("description", data.description);
     formData.append("quantity", data.quantity);
     formData.append("price", data.price);
+    formData.append("ratingsQuantity", data.ratingsQuantity);
+    formData.append("ratingsAverage", data.ratingsAverage);
 
     // send colors array
     formData.append("availableColors", JSON.stringify(data.availableColors));
 
     // cover image
-    formData.append("imageCover", data.imageCover[0]);
+    formData.append(
+      "imageCover",
+      "https://m.media-amazon.com/images/I/512WDTbwHwL._AC_SX569_.jpg"
+    );
 
     // multiple images
     if (data.images && data.images.length > 0) {
       Array.from(data.images).forEach((img) => {
-        formData.append("images", img);
+        formData.append(
+          "images",
+          "https://m.media-amazon.com/images/I/512WDTbwHwL._AC_SX569_.jpg"
+        );
       });
     }
 
     formData.append("category", data.category);
     formData.append("brand", data.brand);
+
+    // console.log("form data");
+    // for(let [key , value] of formData.entries()){
+    //   console.log(`${key} is : ${value}`);
+    // }
 
     mutate(formData, {
       onSuccess: () => {
@@ -92,13 +105,43 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
           </div>
 
           {/* Quantity */}
-      
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="quantity">Quantity :</Label>
+            <Input type="number" id="quantity" {...register("quantity")} />
+            {errors.quantity && <Errormsg msg={errors.quantity.message} />}
+          </div>
 
           {/* Price */}
           <div className="flex flex-col gap-2">
             <Label htmlFor="price">Price :</Label>
             <Input type="number" id="price" {...register("price")} />
             {errors.price && <Errormsg msg={errors.price.message} />}
+          </div>
+
+          {/* Rating */}
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="ratingsQuantity">Rating :</Label>
+            <Input
+              type="number"
+              id="ratingsQuantity"
+              {...register("ratingsQuantity")}
+            />
+            {errors.ratingsQuantity && (
+              <Errormsg msg={errors.ratingsQuantity.message} />
+            )}
+          </div>
+
+          {/* Rating */}
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="ratingsAverage">  Rating Average :</Label>
+            <Input
+              type="number"
+              id="ratingsAverage"
+              {...register("ratingsAverage")}
+            />
+            {errors.ratingsAverage && (
+              <Errormsg msg={errors.ratingsAverage.message} />
+            )}
           </div>
 
           {/* Available Colors */}
@@ -198,10 +241,15 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
             <div className="relative w-full">
               <select
                 className="appearance-none w-full border-2 border-[#dbdbebde] bg-[#1E2021] text-white
-          rounded-md px-3 py-3 pr-10 text-md shadow-md"
+                  rounded-md px-3 py-3 pr-10 text-md shadow-md"
                 {...register("category")}
               >
-                <option value={"test"}>test</option>
+                <option value={"test"}>Select Category</option>
+                {categories?.data?.data?.map(({ _id }) => (
+                  <option key={_id} value={_id}>
+                    {_id}
+                  </option>
+                ))}
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
                 <IoIosArrowDown color="#dbdbebde" />
@@ -219,7 +267,12 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
           rounded-md px-3 py-3 pr-10 text-md shadow-md"
                 {...register("brand")}
               >
-                <option value={"test"}>test</option>
+                <option value={"test"}>Select Brand</option>
+                {brands?.data?.data?.map(({ _id }) => (
+                  <option key={_id} value={_id}>
+                    {_id}
+                  </option>
+                ))}
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
                 <IoIosArrowDown color="#dbdbebde" />

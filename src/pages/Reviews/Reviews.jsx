@@ -11,7 +11,7 @@ import EditBrand from "./EditBrand";
 import { setBrandsAction } from "../../store/features/brandsSlice";
 import AddBrand from "./AddReview";
 import DelReview from "./DelReview";
-
+import AddReview from './AddReview'
 const Reviews = () => {
   //===================== MODAL STATES ===========
   const [deletedReview, setDeletedReview] = useState({});
