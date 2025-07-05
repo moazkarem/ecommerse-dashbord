@@ -240,3 +240,19 @@ export const productsFields = [
     isImages: false,
   },
 ];
+
+// ============ REVIEWS
+
+export const reviewsFields = [
+  {
+    name: "review",
+    label: "review",
+    isTextArea: true,
+  },
+  {
+  name: "rating",
+  label: "rating",
+    isTextArea: false,
+    type: "number",
+  },
+];

@@ -1,5 +1,4 @@
 import { MdDelete } from "react-icons/md";
-import { FaEdit } from "react-icons/fa";
 import img1 from "../../../public/images/brands/img1.png";
 import img2 from "../../../public/images/brands/img3.png";
 import img3 from "../../../public/images/brands/img3.png";
@@ -11,7 +10,7 @@ import img9 from "../../../public/images/brands/img9.png";
 import img10 from "../../../public/images/brands/img10.png";
 
 export const images = [img1, img2, img3, img4, img5, img6, img7, img9, img10];
-export const getCategoryColumns = ({ onEdit, onDelete }) => [
+export const getCategoryColumns = ({ onDelete }) => [
   {
     field: "review",
     headerName: "Review",
@@ -39,19 +38,7 @@ export const getCategoryColumns = ({ onEdit, onDelete }) => [
       </div>
     ),
   },
-  {
-    field: "edit",
-    headerName: "Edit",
-    width: 150,
-    flex: 1,
-    align: "center",
-    headerAlign: "center",
-    renderCell: (review) => (
-      <button style={{ lineHeight: "32px" }} onClick={() => onEdit(review.row)}>
-        <FaEdit color="#008000" className="text-[20px]" />
-      </button>
-    ),
-  },
+
   {
     field: "delete",
     headerName: "Delete",
