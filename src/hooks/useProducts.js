@@ -6,7 +6,7 @@ import {
   editProductApi,
 } from "../api/products";
 
-//============ GET BRANDS HOOK ======
+//============ GET PRODUCTS HOOK ======
 
 export const useGetProducts = () => {
   return useQuery({
@@ -14,7 +14,7 @@ export const useGetProducts = () => {
     queryFn: getProductsApi,
   });
 };
-//============ ADD BRANDS HOOK ======
+//============ ADD PRODUCTS HOOK ======
 
 export const useAddProduct = () => {
   return useMutation({
@@ -22,16 +22,16 @@ export const useAddProduct = () => {
   });
 };
 
-//============ DEL BRANDS HOOK ======
+//============ DEL PRODUCTS HOOK ======
 export const useDelProduct = () => {
   return useMutation({
     mutationFn: delProductApi,
   });
 };
 
-//============ EDIT BRANDS HOOK ======
+//============ EDIT PRODUCTS HOOK ======
 
-export const useEditBrand = () => {
+export const useEditProduct = () => {
   return useMutation({
     mutationFn: editProductApi,
   });

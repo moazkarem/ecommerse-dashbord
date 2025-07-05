@@ -34,19 +34,19 @@ export const delProductApi = async (productId) => {
   });
   // console.log(res, "from del category res");
   return res;
-}; 
+};
 
 //================ EDIT PRODUCTS API ===========
 
-export const editProductApi = async ({ formData, catId }) => {
+export const editProductApi = async ({ formData, productId }) => {
   const storedKey = localStorage.getItem("userData");
   const userData = storedKey ? JSON.parse(storedKey) : null;
   const token = userData?.token;
-  const res = await server.put(`/api/v1/brands/${catId}`, formData, {
+  const res = await server.put(`/api/v1/products/${productId}`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-  // console.log(res?.data, "from edit categories api ");
+  console.log(res?.data, "from edit product api ");
   return res;
 };

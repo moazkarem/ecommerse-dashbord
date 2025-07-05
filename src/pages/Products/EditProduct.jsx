@@ -2,58 +2,41 @@ import Modal from "../../Ui/Modal";
 import Input from "../../Ui/Input";
 import Label from "../../Ui/Label";
 import Button from "../../Ui/Button";
-// import { productsFields } from "../../data/data";
+// import { addBrandsFields } from "../../data/data";
+import Errormsg from "./../../components/Error/ErrorMsg";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import Errormsg from "../../components/Error/ErrorMsg";
-import { productSchema } from "../../helpers/validation";
-import { useAddProduct } from "../../hooks/useProducts";
-import { toast } from "react-hot-toast";
+import { useEditProduct } from "../../hooks/useProducts";
 import { useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import { IoIosArrowDown } from "react-icons/io";
-import { useState } from "react";
 import { useGetBrands } from "./../../hooks/useBrands";
 import { useGetCategories } from "./../../hooks/useCategories";
-const AddProduct = ({ isOpen, closeModal, title }) => {
+const EditProduct = ({ isOpenEdit, closeModalEdit, title, editedProduct }) => {
+  console.log( editedProduct,'editedProduct');
   const { data: categories } = useGetCategories();
   const { data: brands } = useGetBrands();
-
-  // const [previews, setPreviews] = useState([]);
-  const [colorsList, setColorsList] = useState([]);
-  const [selectedColor, setSelectedColor] = useState("#000000");
-  // const fileInputRef = useRef({});
+  const { isPending, mutate } = useEditProduct();
   const queryClient = useQueryClient();
-  const { mutate, isPending } = useAddProduct();
   const {
     register,
     handleSubmit,
-    reset,
-    setValue,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(productSchema),
-  });
+  } = useForm({});
 
-  //================= SUBMIT DATA ========
   const onSubmit = (data) => {
     const formData = new FormData();
+    console.log(data , 'edit form');
     formData.append("title", data.title);
     formData.append("description", data.description);
     formData.append("quantity", data.quantity);
     formData.append("price", data.price);
     formData.append("ratingsQuantity", data.ratingsQuantity);
     formData.append("ratingsAverage", data.ratingsAverage);
-
-    // send colors array
     formData.append("availableColors", JSON.stringify(data.availableColors));
-
-    // cover image
     formData.append(
       "imageCover",
       "https://m.media-amazon.com/images/I/512WDTbwHwL._AC_SX569_.jpg"
     );
-
-    // multiple images
     if (data.images && data.images.length > 0) {
       Array.from(data.images).forEach(() => {
         formData.append(
@@ -62,43 +45,50 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
         );
       });
     }
-
     formData.append("category", data.category);
     formData.append("brand", data.brand);
-
-    // console.log("form data");
-    // for(let [key , value] of formData.entries()){
-    //   console.log(`${key} is : ${value}`);
-    // }
-
-    mutate(formData, {
-      onSuccess: () => {
-        toast.success("Product added successfully");
-        closeModal();
-        reset();
-        queryClient.invalidateQueries(["products"]);
-      },
-      onError: () => {
-        toast.error("An error occurred, product was not added");
-      },
-    });
+    const productId = editedProduct._id;
+    mutate(
+      { formData, productId },
+      {
+        onSuccess: () => {
+          toast.success("Product edited successfully");
+          queryClient.invalidateQueries(["categories"]);
+          closeModalEdit();
+        },
+        onError: (error) => {
+          toast.error("An error occurred, product was not added");
+          console.log(error.message, "error from edit product");
+        },
+      }
+    );
   };
 
   return (
     <div>
-      <Modal title={title} isOpen={isOpen} closeModal={closeModal}>
+      <Modal title={title} isOpen={isOpenEdit} closeModal={closeModalEdit}>
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* Product Title */}
           <div className="flex flex-col gap-2">
             <Label htmlFor="title">Product Title :</Label>
-            <Input type="text" id="title" {...register("title")} />
+            <Input
+              type="text"
+              id="title"
+              {...register("title")}
+              defaultValue={editedProduct ? editedProduct["title"] : ""}
+            />
             {errors.title && <Errormsg msg={errors.title.message} />}
           </div>
 
           {/* Description */}
           <div className="flex flex-col gap-2">
             <Label htmlFor="description">Description :</Label>
-            <Input type="text" id="description" {...register("description")} />
+            <Input
+              type="text"
+              id="description"
+              {...register("description")}
+              defaultValue={editedProduct ? editedProduct["description"] : ""}
+            />
             {errors.description && (
               <Errormsg msg={errors.description.message} />
             )}
@@ -107,14 +97,24 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
           {/* Quantity */}
           <div className="flex flex-col gap-2">
             <Label htmlFor="quantity">Quantity :</Label>
-            <Input type="number" id="quantity" {...register("quantity")} />
+            <Input
+              type="number"
+              id="quantity"
+              {...register("quantity")}
+              defaultValue={editedProduct ? editedProduct["quantity"] : ""}
+            />
             {errors.quantity && <Errormsg msg={errors.quantity.message} />}
           </div>
 
           {/* Price */}
           <div className="flex flex-col gap-2">
             <Label htmlFor="price">Price :</Label>
-            <Input type="number" id="price" {...register("price")} />
+            <Input
+              type="number"
+              id="price"
+              {...register("price")}
+              defaultValue={editedProduct ? editedProduct["price"] : ""}
+            />
             {errors.price && <Errormsg msg={errors.price.message} />}
           </div>
 
@@ -125,6 +125,9 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
               type="number"
               id="ratingsQuantity"
               {...register("ratingsQuantity")}
+              defaultValue={
+                editedProduct ? editedProduct["ratingsQuantity"] : ""
+              }
             />
             {errors.ratingsQuantity && (
               <Errormsg msg={errors.ratingsQuantity.message} />
@@ -138,6 +141,9 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
               type="number"
               id="ratingsAverage"
               {...register("ratingsAverage")}
+              defaultValue={
+                editedProduct ? editedProduct["ratingsAverage"] : ""
+              }
             />
             {errors.ratingsAverage && (
               <Errormsg msg={errors.ratingsAverage.message} />
@@ -145,69 +151,73 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
           </div>
 
           {/* Available Colors */}
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="availableColors">Available Colors :</Label>
-            <div className="flex items-center gap-2">
-              <input
-                type="color"
-                value={selectedColor}
-                onChange={(e) => setSelectedColor(e.target.value)}
-                className="w-10 h-10 p-0 border-none bg-transparent cursor-pointer"
-              />
-              <button
-                type="button"
-                onClick={() => {
-                  if (!colorsList.includes(selectedColor)) {
-                    const newColors = [...colorsList, selectedColor];
-                    setColorsList(newColors);
-                    setValue("availableColors", newColors);
-                  }
-                }}
-                className="bg-[#ed1d24] text-white px-3 py-1 rounded hover:bg-red-700"
-              >
-                Add
-              </button>
-            </div>
-
-            <Input type="hidden" {...register("availableColors")} />
-
-            <div className="flex gap-2 mt-2 flex-wrap mb-3">
-              {colorsList.map((color, i) => (
-                <div key={i} className="relative">
-                  <div
-                    className="rounded"
-                    style={{
-                      backgroundColor: color,
-                      width: "20px",
-                      height: "20px",
-                      border: "1px solid #fff",
-                    }}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const updated = colorsList.filter((c) => c !== color);
-                      setColorsList(updated);
-                      setValue("availableColors", updated);
-                    }}
-                    className="absolute -top-2 -right-2 text-white text-xs bg-red-600 rounded-full w-4 h-4 flex items-center justify-center"
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
-            </div>
-
-            {errors.availableColors && (
-              <Errormsg msg={errors.availableColors.message} />
-            )}
-          </div>
+          {/* <div className="flex flex-col gap-2">
+                   <Label htmlFor="availableColors">Available Colors :</Label>
+                   <div className="flex items-center gap-2">
+                     <input
+                       type="color"
+                       value={selectedColor}
+                       onChange={(e) => setSelectedColor(e.target.value)}
+                       className="w-10 h-10 p-0 border-none bg-transparent cursor-pointer"
+                     />
+                     <button
+                       type="button"
+                       onClick={() => {
+                         if (!colorsList.includes(selectedColor)) {
+                           const newColors = [...colorsList, selectedColor];
+                           setColorsList(newColors);
+                           setValue("availableColors", newColors);
+                         }
+                       }}
+                       className="bg-[#ed1d24] text-white px-3 py-1 rounded hover:bg-red-700"
+                     >
+                       Add
+                     </button>
+                   </div>
+       
+                   <Input type="hidden" {...register("availableColors")} />
+       
+                   <div className="flex gap-2 mt-2 flex-wrap mb-3">
+                     {colorsList.map((color, i) => (
+                       <div key={i} className="relative">
+                         <div
+                           className="rounded"
+                           style={{
+                             backgroundColor: color,
+                             width: "20px",
+                             height: "20px",
+                             border: "1px solid #fff",
+                           }}
+                         />
+                         <button
+                           type="button"
+                           onClick={() => {
+                             const updated = colorsList.filter((c) => c !== color);
+                             setColorsList(updated);
+                             setValue("availableColors", updated);
+                           }}
+                           className="absolute -top-2 -right-2 text-white text-xs bg-red-600 rounded-full w-4 h-4 flex items-center justify-center"
+                         >
+                           ×
+                         </button>
+                       </div>
+                     ))}
+                   </div>
+       
+                   {errors.availableColors && (
+                     <Errormsg msg={errors.availableColors.message} />
+                   )}
+                 </div> */}
 
           {/* Image Cover */}
           <div className="flex flex-col gap-2">
             <Label htmlFor="imageCover">Image Cover :</Label>
 
-            <Input type="file" {...register("imageCover")} />
+            <Input
+              type="file"
+              {...register("imageCover")}
+              //  defaultValue={editedProduct ? editedProduct["imageCover"] : ""}
+            />
 
             {errors.imageCover && <Errormsg msg={errors.imageCover.message} />}
           </div>
@@ -221,18 +231,19 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
               accept="image/*"
               multiple
               {...register("images")}
+              //  defaultValue={editedProduct ? editedProduct["images"] : ""}
             />
             <div className="flex gap-2 mt-2 flex-wrap">
               {/* {previews.images?.map((src, i) => (
-                <img
-                  key={i}
-                  src={src}
-                  alt={`preview-${i}`}
-                  className="w-20 h-20 object-cover rounded"
-                />
-              ))} */}
+                       <img
+                         key={i}
+                         src={src}
+                         alt={`preview-${i}`}
+                         className="w-20 h-20 object-cover rounded"
+                       />
+                     ))} */}
             </div>
-            {errors.images && <Errormsg msg={errors.images.message} />}
+            {errors?.images && <Errormsg msg={errors.images.message} />}
           </div>
 
           {/* Category */}
@@ -241,10 +252,10 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
             <div className="relative w-full">
               <select
                 className="appearance-none w-full border-2 border-[#dbdbebde] bg-[#1E2021] text-white
-                  rounded-md px-3 py-3 pr-10 text-md shadow-md"
+                         rounded-md px-3 py-3 pr-10 text-md shadow-md"
                 {...register("category")}
               >
-                <option value={"test"}>Select Category</option>
+                <option value={editedProduct?.category}>{editedProduct?.category}</option>
                 {categories?.data?.data?.map(({ _id }) => (
                   <option key={_id} value={_id}>
                     {_id}
@@ -264,10 +275,10 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
             <div className="relative w-full">
               <select
                 className="appearance-none w-full border-2 border-[#dbdbebde] bg-[#1E2021] text-white
-          rounded-md px-3 py-3 pr-10 text-md shadow-md"
+                     rounded-md px-3 py-3 pr-10 text-md shadow-md"
                 {...register("brand")}
               >
-                <option value={"test"}>Select Brand</option>
+                <option value={editedProduct?.category}>{editedProduct?.brand}</option>
                 {brands?.data?.data?.map(({ _id }) => (
                   <option key={_id} value={_id}>
                     {_id}
@@ -285,13 +296,14 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
           <div className="flex justify-center items-center space-x-3">
             <div className="flex justify-center items-center space-x-3">
               <Button
+              type="submit"
                 loading={isPending}
                 style={`mt-4   text-[#fff] border-[#ff0000cc]  border w-48 px-12 border-1  py-[6px] flex justify-center items-center rounded-[8px]`}
               >
-                Add
+                Edit
               </Button>
               <Button
-                onClick={() => closeModal()}
+                onClick={() => closeModalEdit()}
                 type="button"
                 style={`border-[#798594] text-[#dbdbebde]  mt-4   border w-48 px-12 border-1  py-[6px] rounded-[8px]`}
               >
@@ -305,4 +317,4 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
   );
 };
 
-export default AddProduct;
+export default EditProduct;

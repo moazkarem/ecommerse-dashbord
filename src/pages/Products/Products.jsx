@@ -7,8 +7,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getCategoryColumns, style } from "./data";
 import { useGetProducts } from "../../hooks/useProducts";
-import EditBrand from "./EditBrand";
-import AddBrand from "./AddProduct";
+import EditProduct from "./EditProduct";
 import { setProductsAction } from "../../store/features/productsSlice";
 import DelProduct from "./DelProduct";
 import AddProduct from "./AddProduct";
@@ -16,7 +15,7 @@ import AddProduct from "./AddProduct";
 const Products = () => {
   //===================== MODAL STATES ===========
   const [deletedProduct, setDeletedProduct] = useState({});
-  const [editedBrand, setEditedBrand] = useState({});
+  const [editedProduct, setEditedProduct] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [isOpenDel, setIsOpenDel] = useState(false);
@@ -26,7 +25,7 @@ const Products = () => {
 
   const openModalEdit = (selectedBrand) => {
     setIsOpenEdit(true);
-    setEditedBrand(selectedBrand);
+    setEditedProduct(selectedBrand);
   };
   const closeModalEdit = () => setIsOpenEdit(false);
 
@@ -67,12 +66,12 @@ const Products = () => {
         isOpen={isOpen}
         closeModal={closeModal}
       />
-      <EditBrand
-        key={editedBrand._id}
+      <EditProduct
+        key={editedProduct._id}
         title={"Edit Brand "}
         isOpenEdit={isOpenEdit}
         closeModalEdit={closeModalEdit}
-        editedBrand={editedBrand}
+        editedProduct={editedProduct}
       />
       <DelProduct
         key={deletedProduct._id}
