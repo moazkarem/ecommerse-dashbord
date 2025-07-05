@@ -10,6 +10,7 @@ import { couponsSchema } from "../../helpers/validation";
 import { useEditCoupon } from "../../hooks/useCoupons";
 import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { useEffect } from "react";
 const EditCoupon = ({ isOpenEdit, closeModalEdit, title, editedCoupon }) => {
   const { isPending, mutate } = useEditCoupon();
   const queryClient = useQueryClient();
@@ -17,37 +18,40 @@ const EditCoupon = ({ isOpenEdit, closeModalEdit, title, editedCoupon }) => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(couponsSchema),
+    defaultValues: {
+      name: "",
+      expire: "",
+      discount: "",
+    },
   });
+
+  useEffect(() => {
+    reset({
+      name: editedCoupon?.name || "",
+      expire: editedCoupon.expire?.slice(0, 10) || "",
+      discount: editedCoupon?.discount || "",
+    });
+  }, [editedCoupon, reset]);
 
   const renderCatFields = addCouponsFields?.map(
     ({ label, name, type }, idx) => (
       <div key={idx} className="flex gap-2 flex-col">
         <Label htmlFor={label}>{label} :</Label>
-  
+
         {type === "file" ? (
           <Input type="file" id={label} {...register(name)} />
         ) : (
-          <Input
-            type={type}
-            id={label}
-            defaultValue={
-              editedCoupon && editedCoupon[name]
-                ? type === "date"
-                  ? editedCoupon[name].slice(0, 10) // YYYY-MM-DD
-                  : editedCoupon[name]
-                : ""
-            }
-            {...register(name)}
-          />
+          <Input type={type} id={label} {...register(name)} />
         )}
-  
+
         {errors[name] && <Errormsg msg={errors[name]?.message} />}
       </div>
     )
   );
-  
+
   const onSubmit = (data) => {
     const couponId = editedCoupon._id;
     mutate(
