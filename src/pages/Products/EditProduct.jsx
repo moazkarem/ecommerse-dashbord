@@ -11,21 +11,49 @@ import toast from "react-hot-toast";
 import { IoIosArrowDown } from "react-icons/io";
 import { useGetBrands } from "./../../hooks/useBrands";
 import { useGetCategories } from "./../../hooks/useCategories";
+import { useEffect, useState } from "react";
 const EditProduct = ({ isOpenEdit, closeModalEdit, title, editedProduct }) => {
-  console.log( editedProduct,'editedProduct');
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({
+
+  });
+  const [colorsList, setColorsList] = useState(
+    editedProduct?.availableColors || []
+  );
+
+  useEffect(() => {
+    if (editedProduct?.availableColors?.[0]) {
+      try {
+        // Parse the string inside the array
+        const parsedColors = JSON.parse(editedProduct.availableColors[0]);
+  
+        setColorsList(parsedColors);
+        setValue("availableColors", parsedColors);
+      } catch (err) {
+        console.error("Failed to parse colors", err);
+        setColorsList([]); // fallback
+        setValue("availableColors", []);
+      }
+    }
+  }, [editedProduct, setValue]);
+  
+
+
+
+  const [selectedColor, setSelectedColor] = useState("#000000");
+  console.log(editedProduct, "editedProduct");
   const { data: categories } = useGetCategories();
   const { data: brands } = useGetBrands();
   const { isPending, mutate } = useEditProduct();
   const queryClient = useQueryClient();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({});
 
   const onSubmit = (data) => {
     const formData = new FormData();
-    console.log(data , 'edit form');
+    console.log(data.availableColors, "edit form");
     formData.append("title", data.title);
     formData.append("description", data.description);
     formData.append("quantity", data.quantity);
@@ -151,63 +179,67 @@ const EditProduct = ({ isOpenEdit, closeModalEdit, title, editedProduct }) => {
           </div>
 
           {/* Available Colors */}
-          {/* <div className="flex flex-col gap-2">
-                   <Label htmlFor="availableColors">Available Colors :</Label>
-                   <div className="flex items-center gap-2">
-                     <input
-                       type="color"
-                       value={selectedColor}
-                       onChange={(e) => setSelectedColor(e.target.value)}
-                       className="w-10 h-10 p-0 border-none bg-transparent cursor-pointer"
-                     />
-                     <button
-                       type="button"
-                       onClick={() => {
-                         if (!colorsList.includes(selectedColor)) {
-                           const newColors = [...colorsList, selectedColor];
-                           setColorsList(newColors);
-                           setValue("availableColors", newColors);
-                         }
-                       }}
-                       className="bg-[#ed1d24] text-white px-3 py-1 rounded hover:bg-red-700"
-                     >
-                       Add
-                     </button>
-                   </div>
-       
-                   <Input type="hidden" {...register("availableColors")} />
-       
-                   <div className="flex gap-2 mt-2 flex-wrap mb-3">
-                     {colorsList.map((color, i) => (
-                       <div key={i} className="relative">
-                         <div
-                           className="rounded"
-                           style={{
-                             backgroundColor: color,
-                             width: "20px",
-                             height: "20px",
-                             border: "1px solid #fff",
-                           }}
-                         />
-                         <button
-                           type="button"
-                           onClick={() => {
-                             const updated = colorsList.filter((c) => c !== color);
-                             setColorsList(updated);
-                             setValue("availableColors", updated);
-                           }}
-                           className="absolute -top-2 -right-2 text-white text-xs bg-red-600 rounded-full w-4 h-4 flex items-center justify-center"
-                         >
-                           ×
-                         </button>
-                       </div>
-                     ))}
-                   </div>
-       
-                   {errors.availableColors && (
-                     <Errormsg msg={errors.availableColors.message} />
-                   )}
-                 </div> */}
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="availableColors">Available Colors :</Label>
+
+            <div className="flex items-center gap-2">
+              <input
+                type="color"
+                value={selectedColor}
+                onChange={(e) => setSelectedColor(e.target.value)}
+                className="w-10 h-10 p-0 border-none bg-transparent cursor-pointer"
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  if (!colorsList.includes(selectedColor)) {
+                    const newColors = [...colorsList, selectedColor];
+                    setColorsList(newColors);
+                    setValue("availableColors", newColors); 
+                  }
+                }}
+                className="bg-[#ed1d24] text-white px-3 py-1 rounded hover:bg-red-700"
+              >
+                Add
+              </button>
+            </div>
+
+          
+            <Input type="hidden" {...register("availableColors")} />
+
+            
+            <div className="flex gap-2 mt-2 flex-wrap mb-3">
+              {colorsList.map((color, i) => (
+                <div key={i} className="relative">
+                  <div
+                    className="rounded"
+                    style={{
+                      backgroundColor: color,
+                      width: "20px",
+                      height: "20px",
+                      border: "1px solid #fff",
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const updated = colorsList.filter((c) => c !== color);
+                      setColorsList(updated);
+                      setValue("availableColors", updated); // التزامن مع الفورم
+                    }}
+                    className="absolute -top-2 -right-2 text-white text-xs bg-red-600 rounded-full w-4 h-4 flex items-center justify-center"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            {/* رسالة الخطأ */}
+            {errors.availableColors && (
+              <Errormsg msg={errors.availableColors.message} />
+            )}
+          </div>
 
           {/* Image Cover */}
           <div className="flex flex-col gap-2">
@@ -255,7 +287,9 @@ const EditProduct = ({ isOpenEdit, closeModalEdit, title, editedProduct }) => {
                          rounded-md px-3 py-3 pr-10 text-md shadow-md"
                 {...register("category")}
               >
-                <option value={editedProduct?.category}>{editedProduct?.category}</option>
+                <option value={editedProduct?.category}>
+                  {editedProduct?.category}
+                </option>
                 {categories?.data?.data?.map(({ _id }) => (
                   <option key={_id} value={_id}>
                     {_id}
@@ -278,7 +312,9 @@ const EditProduct = ({ isOpenEdit, closeModalEdit, title, editedProduct }) => {
                      rounded-md px-3 py-3 pr-10 text-md shadow-md"
                 {...register("brand")}
               >
-                <option value={editedProduct?.category}>{editedProduct?.brand}</option>
+                <option value={editedProduct?.category}>
+                  {editedProduct?.brand}
+                </option>
                 {brands?.data?.data?.map(({ _id }) => (
                   <option key={_id} value={_id}>
                     {_id}
@@ -296,7 +332,7 @@ const EditProduct = ({ isOpenEdit, closeModalEdit, title, editedProduct }) => {
           <div className="flex justify-center items-center space-x-3">
             <div className="flex justify-center items-center space-x-3">
               <Button
-              type="submit"
+                type="submit"
                 loading={isPending}
                 style={`mt-4   text-[#fff] border-[#ff0000cc]  border w-48 px-12 border-1  py-[6px] flex justify-center items-center rounded-[8px]`}
               >
