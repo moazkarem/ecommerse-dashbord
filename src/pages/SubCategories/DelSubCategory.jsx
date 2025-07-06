@@ -1,32 +1,32 @@
 /* eslint-disable react/prop-types */
 import Modal from "../../Ui/Modal";
 import Button from "../../Ui/Button";
-import { useDelCategory } from "../../hooks/useCategories";
+import { useDelSubCategory } from "../../hooks/useSubCategories";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
-const DelCategory = ({ isOpen, closeModal, deletedCat }) => {
+const DelSubCategory = ({ isOpen, closeModal, deletedSubCat }) => {
   //============= SUBMIT FUNCTION =======
   const { handleSubmit } = useForm({});
   const queryClient = useQueryClient();
-  const { isPending, mutate } = useDelCategory();
+  const { isPending, mutate } = useDelSubCategory();
   const onSubmit = () => {
-    mutate(deletedCat._id, {
+    mutate(deletedSubCat._id, {
       onSuccess: () => {
-        toast.success("Category deleted successfully");
+        toast.success("Sub Category deleted successfully");
         closeModal();
-        queryClient.invalidateQueries(["categories"]);
+        queryClient.invalidateQueries(["subcategories"]);
       },
       onError: (err) => {
         console.log(err, "err del");
-        toast.error("An error occurred, category was not deleted");
+        toast.error("An error occurred,sub category was not deleted");
       },
     });
   };
   return (
     <div>
       <Modal
-        title={` Delete ${deletedCat.name} ? `}
+        title={` Delete ${deletedSubCat.name} ? `}
         isOpen={isOpen}
         closeModal={closeModal}
       >
@@ -54,4 +54,4 @@ const DelCategory = ({ isOpen, closeModal, deletedCat }) => {
   );
 };
 
-export default DelCategory;
+export default DelSubCategory;

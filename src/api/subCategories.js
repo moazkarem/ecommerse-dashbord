@@ -18,11 +18,11 @@ export const addCategoryApi = async (data) => {
   return res;
 };
 
-export const delCategoryApi = async (catId) => {
+export const delSubCategoryApi = async (subCatId) => {
   const storedUser = localStorage.getItem("userData");
   const userData = storedUser ? JSON.parse(storedUser) : null;
   const token = userData?.token;
-  const res = await server.delete(`/api/v1/categories/${catId}`, {
+  const res = await server.delete(`/api/v1/subcategories/${subCatId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

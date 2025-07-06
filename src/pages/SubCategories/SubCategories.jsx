@@ -4,15 +4,15 @@ import TitlePage from "../../components/Title page/TitlePage";
 import AddButton from "../../components/Add Button/AddButton";
 import AddCategory from "./AddCategory";
 import EditCategory from "./EditCategory";
-import DelCategory from "./DelCategory";
 import Loading from "../../components/Loading/Loading";
 import {  useState } from "react";
 import { UseGetSubCategories } from "../../hooks/useSubCategories";
 import { getCategoryColumns, style } from "./data";
+import DelSubCategory from "./DelSubCategory";
 
 const SubCategories = () => {
   //===================== MODAL STATES ===========
-  const [deletedCat, setDeletedCat] = useState({});
+  const [deletedSubCat, setDeletedSubCat] = useState({});
   const [editedCat, setEditedCat] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
@@ -29,7 +29,7 @@ const SubCategories = () => {
 
   const openModalDel = (selectedCate) => {
     setIsOpenDel(true);
-    setDeletedCat(selectedCate);
+    setDeletedSubCat(selectedCate);
   };
   const closeModalDel = () => setIsOpenDel(false);
 
@@ -63,11 +63,11 @@ const SubCategories = () => {
         closeModalEdit={closeModalEdit}
         editedCat={editedCat}
       />
-      <DelCategory
-        key={deletedCat._id} //To force the component to update with the new object.
+      <DelSubCategory
+        key={deletedSubCat._id} //To force the component to update with the new object.
         isOpen={isOpenDel}
         closeModal={closeModalDel}
-        deletedCat={deletedCat}
+        deletedSubCat={deletedSubCat}
       />
     </Box>
   );
