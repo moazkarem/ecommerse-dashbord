@@ -9,6 +9,8 @@ import { BiLogoProductHunt } from "react-icons/bi";
 import { FiLogOut } from "react-icons/fi";
 import { FaUserFriends } from "react-icons/fa";
 import { MdRateReview } from "react-icons/md";
+import { BsListNested } from "react-icons/bs";
+
 export const Sidedata = [
   {
     path: "/",
@@ -24,6 +26,11 @@ export const Sidedata = [
     path: "/categories",
     title: "Categories",
     icon: <TbCategoryFilled fontSize="20" />,
+  },
+  {
+    path: "/categories/subcategories",
+    title: "Sub Categorie",
+    icon: <BsListNested fontSize="20" />,
   },
   {
     path: "/brands",

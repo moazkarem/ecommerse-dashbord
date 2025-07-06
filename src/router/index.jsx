@@ -13,12 +13,14 @@ import Orders from "../pages/Orders/Orders";
 import Products from "../pages/Products/Products";
 import Users from "../pages/Users/Users";
 import Reviews from "../pages/Reviews/Reviews";
+import SubCategories from "../pages/SubCategories/SubCategories";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<Rootlayout />}>
         <Route index element={<Home />} />
         <Route path="categories" element={<Categories />} />
+        <Route path="/categories/subcategories" element={<SubCategories />} />
         <Route path="brands" element={<Brands />} />
         <Route path="coupons" element={<Coupons />} />
         <Route path="orders" element={<Orders />} />
