@@ -3,6 +3,7 @@ import {
   getSubCategoriesApi,
   delSubCategoryApi,
   addSubCategoryApi,
+  editSubCatApi,
 } from "../api/subCategories";
 
 export const UseGetSubCategories = () => {
@@ -31,6 +32,6 @@ export const useDelSubCategory = () => {
 
 export const useEditCategory = () => {
   return useMutation({
-    // mutationFn: editCatApi,
+    mutationFn: editSubCatApi,
   });
 };

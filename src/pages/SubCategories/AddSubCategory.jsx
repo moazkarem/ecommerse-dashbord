@@ -26,7 +26,7 @@ const AddSubCategory = ({ isOpen, closeModal, title }) => {
 
   //=================== FIELDS RENDERING
 
-  const renderCatFields = subCategoriesFields?.map(
+  const renderSubCatFields = subCategoriesFields?.map(
     ({ label, name, type, isSelect }, idx) =>
       isSelect ? (
         <div key={idx} className="flex gap-2 flex-col">
@@ -74,7 +74,7 @@ const AddSubCategory = ({ isOpen, closeModal, title }) => {
     <div>
       <Modal title={title} isOpen={isOpen} closeModal={closeModal}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          {renderCatFields}
+          {renderSubCatFields}
           <div className="flex justify-center items-center space-x-3">
             <Button
               loading={isPending}

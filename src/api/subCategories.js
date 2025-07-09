@@ -14,7 +14,7 @@ export const addSubCategoryApi = async (data) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(res, "from add sub category res");
+  // console.log(res, "from add sub category res");
   return res;
 };
 
@@ -31,15 +31,15 @@ export const delSubCategoryApi = async (subCatId) => {
   return res;
 };
 
-export const editCatApi = async ({ formData, catId }) => {
+export const editSubCatApi = async ({ data, subcatId }) => {
   const storedKey = localStorage.getItem("userData");
   const userData = storedKey ? JSON.parse(storedKey) : null;
   const token = userData?.token;
-  const res = await server.put(`/api/v1/categories/${catId}`, formData, {
+  const res = await server.put(`/api/v1/subcategories/${subcatId}`, data, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(res?.data, "from edit categories api ");
+  // console.log(res, "from edit sub categories api ");
   return res;
 };
