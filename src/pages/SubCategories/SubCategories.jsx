@@ -46,6 +46,7 @@ const SubCategories = () => {
   }));
 
   if (isLoading) return <Loading />;
+  
   return (
     <Box sx={{ height: 600, width: "85%", mx: "auto" }}>
       <TitlePage path={"Dashbord / "} page={"Sub Categories"} />
