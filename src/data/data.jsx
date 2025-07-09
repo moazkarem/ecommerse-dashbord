@@ -257,9 +257,23 @@ export const reviewsFields = [
     isTextArea: true,
   },
   {
-  name: "rating",
-  label: "rating",
+    name: "rating",
+    label: "rating",
     isTextArea: false,
     type: "number",
+  },
+];
+
+//==================== CATEGORIES =======
+export const subCategoriesFields = [
+  {
+    name: "name",
+    label: "name",
+    type: "text",
+  },
+  {
+    name: "category",
+    label: "category",
+    isSelect: true,
   },
 ];

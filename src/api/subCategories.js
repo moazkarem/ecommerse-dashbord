@@ -5,16 +5,16 @@ export const getSubCategoriesApi = async () => {
   return res;
 };
 
-export const addCategoryApi = async (data) => {
+export const addSubCategoryApi = async (data) => {
   const storedUser = localStorage.getItem("userData");
   const userData = storedUser ? JSON.parse(storedUser) : null;
   const token = userData?.token;
-  const res = await server.post("/api/v1/categories", data, {
+  const res = await server.post("/api/v1/subcategories", data, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(res, "from add category res");
+  console.log(res, "from add sub category res");
   return res;
 };
 

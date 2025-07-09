@@ -2,13 +2,13 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 import TitlePage from "../../components/Title page/TitlePage";
 import AddButton from "../../components/Add Button/AddButton";
-import AddCategory from "./AddCategory";
 import EditCategory from "./EditCategory";
 import Loading from "../../components/Loading/Loading";
 import {  useState } from "react";
 import { UseGetSubCategories } from "../../hooks/useSubCategories";
 import { getCategoryColumns, style } from "./data";
 import DelSubCategory from "./DelSubCategory";
+import AddSubCategory from './AddSubCategory';
 
 const SubCategories = () => {
   //===================== MODAL STATES ===========
@@ -51,8 +51,8 @@ const SubCategories = () => {
       <TitlePage path={"Dashbord / "} page={"Categories"} />
       <AddButton add={openModal} title={"Add New Category"} />
       <DataGrid rows={rows} columns={columns} sx={style} />
-      <AddCategory
-        title={"Add New Category"}
+      <AddSubCategory
+        title={"Add New Sub Category"}
         isOpen={isOpen}
         closeModal={closeModal}
       />

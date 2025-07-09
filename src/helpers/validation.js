@@ -24,6 +24,12 @@ export const categorySchema = yup.object({
     }),
 });
 
+//==============Sub Categories & Brands
+
+export const subCategorySchema = yup.object({
+  name: yup.string().required(" Name Is Required"),
+  category: yup.string().required("Category is required"),
+});
 //============== Coupons
 
 export const couponsSchema = yup.object({
