@@ -5,6 +5,9 @@ body {
   background-color: #17191a !important;
   min-height: 100vh;
 }
+.ql-editor{
+  min-height: 150px !important;
+}
 .MuiDataGrid-columnHeaderTitleContainer,
 .MuiDataGrid-columnHeader {
   background-color: #1e2021 !important;
