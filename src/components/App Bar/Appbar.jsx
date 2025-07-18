@@ -5,7 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import MuiAppBar from "@mui/material/AppBar";
 import { Box, Typography } from "@mui/material";
 
-const drawerWidth = 240;
+const drawerWidth = 280;
 // eslint-disable-next-line react/prop-types
 const Appbar = ({ open, setOpen }) => {
   const handleDrawerOpen = () => {
@@ -37,7 +37,7 @@ const Appbar = ({ open, setOpen }) => {
       // @ts-ignore
       open={open}
     >
-      <Toolbar sx={{ backgroundColor: "#0F1112" , height:'100px' }}>
+      <Toolbar sx={{ backgroundColor: "#0F1112", height: "100px" }}>
         <IconButton
           color="inherit"
           aria-label="open drawer"

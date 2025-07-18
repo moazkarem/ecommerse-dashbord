@@ -14,6 +14,11 @@ import Products from "../pages/Products/Products";
 import Users from "../pages/Users/Users";
 import Reviews from "../pages/Reviews/Reviews";
 import SubCategories from "../pages/SubCategories/SubCategories";
+// import FrontPages from "../pages/FrontPages/FrontPages";
+import HomePage from "../pages/FrontPages/HomePage/HomePage";
+import AboutPage from "../pages/FrontPages/AboutPage/AboutPage";
+import BlogsPage from "../pages/FrontPages/BlogsPage/BlogsPage";
+import ContactPage from "../pages/FrontPages/ContactPage/Contact";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -27,6 +32,12 @@ const router = createBrowserRouter(
         <Route path="products" element={<Products />} />
         <Route path="users" element={<Users />} />
         <Route path="reviews" element={<Reviews />} />
+        <Route path="/pages" >
+          <Route path="homepage" element={<HomePage />} />
+          <Route path="about" element={<AboutPage />} />
+          <Route path="blogs" element={<BlogsPage />} />
+          <Route path="contact" element={<ContactPage />} />
+        </Route>
       </Route>
       <Route path="login" element={<Login />} />
     </>

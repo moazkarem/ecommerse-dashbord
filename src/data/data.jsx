@@ -10,12 +10,41 @@ import { FiLogOut } from "react-icons/fi";
 import { FaUserFriends } from "react-icons/fa";
 import { MdRateReview } from "react-icons/md";
 import { BsListNested } from "react-icons/bs";
-
+import { FaBloggerB, FaInfoCircle, FaEnvelope } from "react-icons/fa";
+import { MdAddToHomeScreen } from "react-icons/md";
+import { FaPager } from "react-icons/fa6";
 export const Sidedata = [
   {
     path: "/",
     title: "Dashboard",
     icon: <FaHome fontSize="20" />,
+  },
+  {
+    path: "/pages",
+    title: "Front Pages",
+    icon: <FaPager fontSize="20" />,
+    pages: [
+      {
+        path: "/pages/homepage",
+        title: "Home Page",
+        icon: <MdAddToHomeScreen fontSize="20" />,
+      },
+      {
+        path: "/pages/about",
+        title: "About Page",
+        icon: <FaInfoCircle fontSize="20" />,
+      },
+      {
+        path: "/pages/blogs",
+        title: "Blogs Page",
+        icon: <FaBloggerB fontSize="20" />,
+      },
+      {
+        path: "/pages/contact",
+        title: "Contact Page",
+        icon: <FaEnvelope fontSize="20" />,
+      },
+    ],
   },
   {
     path: "/products",
