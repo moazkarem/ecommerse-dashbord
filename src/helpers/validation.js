@@ -112,3 +112,13 @@ export const productSchema = yup.object().shape({
   category: yup.string().required("Category is required"),
   brand: yup.string().required("Brand is required"),
 });
+
+//============== hero section
+
+export const herosectionSchema = yup.object({
+  image: yup.string().required(" Image Is Required"),
+  title: yup.string().required(" Title Is Required"),
+  description: yup.string().required(" description Is Required"),
+  oldPrice: yup.string().required(" old Price Is Required"),
+  newPrice: yup.string().required(" New Price Is Required"),
+});

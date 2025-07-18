@@ -19,7 +19,7 @@ import HomePage from "../pages/FrontPages/HomePage/HomePage";
 import AboutPage from "../pages/FrontPages/AboutPage/AboutPage";
 import BlogsPage from "../pages/FrontPages/BlogsPage/BlogsPage";
 import ContactPage from "../pages/FrontPages/ContactPage/Contact";
-import HeroSection from "../pages/FrontPages/HomePage/HeroSection";
+import HeroSection from "../pages/FrontPages/HomePage/Hero/HeroSection";
 import BannerOne from "../pages/FrontPages/HomePage/BannerOne";
 import BannerTwo from "../pages/FrontPages/HomePage/BannerTwo";
 const router = createBrowserRouter(
