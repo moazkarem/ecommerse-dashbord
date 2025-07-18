@@ -75,7 +75,7 @@ const EditCategory = ({ isOpenEdit, closeModalEdit, title, editedCat }) => {
   const onSubmit = (data) => {
     const formData = new FormData();
     formData.append("name", data.name);
-    formData.append("image", data.image[0]);
+    // formData.append("image", data.image[0]);
     const catId = editedCat._id;
     mutate(
       { formData, catId },

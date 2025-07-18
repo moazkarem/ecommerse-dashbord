@@ -36,7 +36,7 @@ const AddCategory = ({ isOpen, closeModal, title }) => {
   const onSubmit = (data) => {
     const formData = new FormData();
     formData.append("name", data.name);
-    formData.append("image", data.image[0]);
+    // formData.append("image", data.image[0]);
 
     mutate(formData, {
       onSuccess: () => {

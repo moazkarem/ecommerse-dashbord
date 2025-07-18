@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import List from "@mui/material/List";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
@@ -6,6 +6,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import { Collapse } from "@mui/material";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { styled, useTheme } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
@@ -13,7 +15,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Sidedata } from "../../data/data";
 import Logo from "../Logo/Logo";
 
-const drawerWidth = 240;
+const drawerWidth = 280;
 const openedMixin = (theme) => ({
   width: drawerWidth,
   transition: theme.transitions.create("width", {
@@ -76,6 +78,16 @@ const Sidebar = ({ open, setOpen }) => {
 
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
+  const [openAccordion, setOpenAccordion] = useState({});
+
+  const toggleAccordion = (index) => {
+    setOpenAccordion((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
+
   return (
     <Drawer variant="permanent" open={open}>
       <DrawerHeader>
@@ -89,54 +101,113 @@ const Sidebar = ({ open, setOpen }) => {
       </DrawerHeader>
       <Logo open={open} />
       <List>
-        {Sidedata.map((item, index) => (
-          <React.Fragment key={index}>
-            <ListItem disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                onClick={() => navigate(item.path)}
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                  
-                  bgcolor:
-                    pathname === item.path
-                      ? theme.palette.mode === "dark"
-                        ? "#ff0000cc"
-                        : "#ff0000cc"
-                      : null,
-                  // @ts-ignore
-                  color: "#fff",
-                  mb: "15px",
-                  width: "95%",
-                  mx: "auto",
-                  borderRadius: "8px",
-                  "&:hover": {
-                    backgroundColor: "#232425",
-                  },
-                }}
-              >
-                <ListItemIcon
+        {Sidedata.map((item, index) => {
+          const hasChildren = item.pages && item.pages.length > 0;
+          const isAccordionOpen = openAccordion[index] || false;
+
+          return (
+            <div key={index}>
+              <ListItem disablePadding sx={{ display: "block" }}>
+                <ListItemButton
+                  onClick={() =>
+                    hasChildren ? toggleAccordion(index) : navigate(item.path)
+                  }
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                    // @ts-ignore
-                    // bgcolor: "#1E2021",
-                    // @ts-ignore
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
+                    bgcolor:
+                      pathname === item.path
+                        ? theme.palette.mode === "dark"
+                          ? "#ff0000cc"
+                          : "#ff0000cc"
+                        : null,
                     color: "#fff",
+                    mb: "15px",
+                    width: "95%",
+                    mx: "auto",
+                    borderRadius: "8px",
+                    "&:hover": {
+                      backgroundColor: "#232425",
+                    },
                   }}
                 >
-                  {item.icon}
-                </ListItemIcon>
-                <ListItemText
-                  primary={item.title}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem>
-          </React.Fragment>
-        ))}
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                      color: "#fff",
+                    }}
+                  >
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item.title}
+                    sx={{ opacity: open ? 1 : 0 }}
+                  />
+                  {hasChildren &&
+                    (isAccordionOpen ? <ExpandLess /> : <ExpandMore />)}
+                </ListItemButton>
+              </ListItem>
+
+              {/* Nested Items */}
+              {hasChildren && (
+                <Collapse in={isAccordionOpen} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    {item.pages.map((sub, idx) => (
+                      <ListItem
+                        key={idx}
+                        disablePadding
+                        sx={{ display: "block", pl: 2 }}
+                      >
+                        <ListItemButton
+                          onClick={() => navigate(sub.path)}
+                          sx={{
+                            minHeight: 48,
+                            justifyContent: open ? "initial" : "center",
+                            px: 2.5,
+                            bgcolor:
+                              pathname === sub.path
+                                ? theme.palette.mode === "dark"
+                                  ? "#ff0000cc"
+                                  : "#ff0000cc"
+                                : null,
+                            color: "#fff",
+                            mb: "15px",
+                         
+                            width: "95%",
+                            mx: "auto",
+                            borderRadius: "8px",
+                            "&:hover": {
+                              backgroundColor: "#232425",
+                             pl:3
+                            },
+                          }}
+                        >
+                          <ListItemIcon
+                            sx={{
+                              minWidth: 0,
+                              mr: open ? 3 : "auto",
+                              justifyContent: "center",
+                              color: "#fff",
+                            }}
+                          >
+                            {sub.icon}
+                          </ListItemIcon>
+                          <ListItemText
+                            primary={sub.title}
+                            sx={{ opacity: open ? 1 : 0 }}
+                          />
+                        </ListItemButton>
+                      </ListItem>
+                    ))}
+                  </List>
+                </Collapse>
+              )}
+            </div>
+          );
+        })}
       </List>
     </Drawer>
   );
