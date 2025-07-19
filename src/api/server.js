@@ -2,7 +2,7 @@ import axios from "axios";
 
 const server = axios.create({
   // baseURL: "http://127.0.0.1:8000",
-  baseURL: "https://backende-gold.vercel.app",
+  baseURL: import.meta.env.VITE_PRODUCTION_DOMAIN,
 });
 
 export default server;
