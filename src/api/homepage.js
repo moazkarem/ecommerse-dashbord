@@ -2,8 +2,19 @@ import axios from "axios";
 
 export const getHeroData = async () => {
   const res = await axios.get(
-    "http://localhost:1337/api/herosections?populate=*"
+    `${import.meta.env.VITE_SECOND_DOMAIN}/herosections?populate=*`
   );
   // console.log(res, "get hero section data in home page ");
   return res?.data?.data;
+};
+
+export const updateHeroApi = async (data, id) => {
+  const res = await axios.put(
+    `${import.meta.env.VITE_SECOND_DOMAIN}/herosections/${id}`,
+    {
+      data: data,
+    }
+  );
+  console.log(res, "update hero date ");
+  return res;
 };

@@ -3,15 +3,17 @@ import Button from "../../../../Ui/Button.jsx";
 import Input from "../../../../Ui/Input.jsx";
 import Label from "../../../../Ui/Label.jsx";
 import Editor from "../../../../Ui/Editor.jsx";
-import { useGetHero } from "../../../../hooks/useHomePage.js";
+// import { useGetHero } from "../../../../hooks/useHomePage.js";
 import imgplaceholder from "../../../../../public/images/placeholder.jpeg";
 import { HeroData } from "../data.jsx";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Errormsg from "../../../../Components/Error/Errormsg.jsx";
 import { herosectionSchema } from "../../../../helpers/validation.js";
+import { useUpdateHero } from "../../../../hooks/useHomePage.js";
+import toast from "react-hot-toast";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 const HeroForm = ({ slider }) => {
-  console.log(`http://localhost:1337/${slider?.image?.url}` , 'sliddddd');
   const {
     register,
     setValue,
@@ -22,19 +24,41 @@ const HeroForm = ({ slider }) => {
     resolver: yupResolver(herosectionSchema),
     defaultValues: slider,
   });
-
+  const queryClient = useQueryClient();
   const [preview, setPreview] = useState("");
-
+  const { mutate } = useUpdateHero();
   const handelChange = (e, name) => {
     const file = e.target.files[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setPreview(imageUrl);
-      setValue(name, file); // ← دي مهمة لو عايز ترسل الملف
+      setValue(name, file, { shouldValidate: true }); // مهم
     }
   };
   const onSubmit = (data) => {
-    console.log(data);
+    const id = slider?.documentId;
+    const formData = new FormData();
+    formData.append("image", data.image);
+    formData.append("title", data.title);
+    formData.append("description", data.description);
+    formData.append("oldPrice", data.oldPrice);
+    formData.append("newPrice", data.newPrice);
+    // for (let [key, value] of formData.entries()) {
+    //   console.log(`${key} :`, value);
+    // }
+    console.log(data.image);
+    // mutate(
+    //   { formData, id },
+    //   {
+    //     onSuccess: () => {
+    //       queryClient.invalidateQueries("herosection");
+    //       toast.success("Hero Data Updated Successfully");
+    //     },
+    //     onError: () => {
+    //       toast.error("Error In Update Hero Data ");
+    //     },
+    //   }
+    // );
   };
 
   const renderFields = HeroData?.map(
@@ -51,7 +75,7 @@ const HeroForm = ({ slider }) => {
                 accept="image/*"
                 onChange={(e) => handelChange(e, name)}
                 name={name}
-                {...register(name)}
+                // {...register(name)}
               />
               <img
                 className="w-full p-3 h-full object-contain"
