@@ -12,7 +12,7 @@ import Errormsg from "../../../../Components/Error/Errormsg.jsx";
 import { herosectionSchema } from "../../../../helpers/validation.js";
 import { useUpdateHero } from "../../../../hooks/useHomePage.js";
 import toast from "react-hot-toast";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {  useQueryClient } from "@tanstack/react-query";
 const HeroForm = ({ slider }) => {
   const {
     register,
@@ -27,15 +27,16 @@ const HeroForm = ({ slider }) => {
   const queryClient = useQueryClient();
   const [preview, setPreview] = useState("");
   const { mutate } = useUpdateHero();
-  const handelChange = (e, name) => {
-    const file = e.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setPreview(imageUrl);
-      setValue(name, file, { shouldValidate: true }); // مهم
-    }
-  };
+  // const handelChange = (e, name) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     const imageUrl = URL.createObjectURL(file);
+  //     setPreview(imageUrl);
+  //     setValue(name, file, { shouldValidate: true }); // مهم
+  //   }
+  // };
   const onSubmit = (data) => {
+    console.log(typeof data.image, "formmm");
     const id = slider?.documentId;
     const formData = new FormData();
     formData.append("image", data.image);
@@ -46,19 +47,19 @@ const HeroForm = ({ slider }) => {
     // for (let [key, value] of formData.entries()) {
     //   console.log(`${key} :`, value);
     // }
-    console.log(data.image);
-    // mutate(
-    //   { formData, id },
-    //   {
-    //     onSuccess: () => {
-    //       queryClient.invalidateQueries("herosection");
-    //       toast.success("Hero Data Updated Successfully");
-    //     },
-    //     onError: () => {
-    //       toast.error("Error In Update Hero Data ");
-    //     },
-    //   }
-    // );
+
+    mutate(
+      { formData, id },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries("herosection");
+          toast.success("Hero Data Updated Successfully");
+        },
+        onError: () => {
+          toast.error("Error In Update Hero Data ");
+        },
+      }
+    );
   };
 
   const renderFields = HeroData?.map(
@@ -68,24 +69,38 @@ const HeroForm = ({ slider }) => {
           <div className={`flex gap-4 flex-col col-span-${col}`}>
             <Label htmlFor={label}>{label} : </Label>
             <div className="w-80   h-36 rounded-[10px] overflow-hidden bg-[#1E2021] cursor-pointer relative mb-5">
-              <input
-                id={label}
-                className="absolute inset-0 opacity-0 cursor-pointer"
-                type="file"
-                accept="image/*"
-                onChange={(e) => handelChange(e, name)}
+              <Controller
                 name={name}
+                control={control}
                 // {...register(name)}
+                render={({ field }) => (
+                  <>
+                    <Input
+                      id={label}
+                      className="absolute inset-0 opacity-0 cursor-pointer"
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          setPreview(URL.createObjectURL(file));
+                          field.onChange(file); // دا المهم
+                          setValue(name, file); // برضو مفيد لو بتستخدمه فى الفورم بشكل عام
+                        }
+                      }}
+                    />
+                    <img
+                      className="w-full p-3 h-full object-contain"
+                      src={
+                        preview ||
+                        `http://localhost:1337${slider?.image?.url} ` ||
+                        imgplaceholder
+                      }
+                    />
+                    <Errormsg msg={errors[name]?.message} />
+                  </>
+                )}
               />
-              <img
-                className="w-full p-3 h-full object-contain"
-                src={
-                  preview ||
-                  `http://localhost:1337${slider?.image?.url} ` ||
-                  imgplaceholder
-                }
-              />
-              <Errormsg msg={errors[name]?.message} />
             </div>
           </div>
         ) : isEditor ? (
@@ -104,7 +119,7 @@ const HeroForm = ({ slider }) => {
         ) : (
           <div className={`flex gap-4 flex-col col-span-${col || 6}`}>
             <Label htmlFor={label}>{label} : </Label>
-            <Input type={"text"} id={label} name={name} {...register(name)} />
+            <Input type={type} id={label} name={name} {...register(name)} />
             <Errormsg msg={errors[name]?.message} />
           </div>
         )}
