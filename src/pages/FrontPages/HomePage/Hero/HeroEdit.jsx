@@ -60,11 +60,14 @@ const HeroForm = ({ slider }) => {
       const file = e.target.files[0];
       const formData = new FormData();
       formData.append("files", file);
-      formData.append("fileInfo", JSON.stringify({
-        name: "image.jpeg",
-      }));
+      formData.append(
+        "fileInfo",
+        JSON.stringify({
+          name: file?.name,
+        })
+      );
       const res = await axios.post(
-        `http://localhost:1337/api/upload?id=${data.image.id}`,
+        `http://localhost:1337/api/upload?id=${data?.image?.id}`,
         formData,
         {
           headers: {
@@ -72,47 +75,36 @@ const HeroForm = ({ slider }) => {
           },
         }
       );
-      console.log(res);
+
+      console.log(res, "changee");
+      data.image = res?.data;
       setPreview(URL.createObjectURL(file));
-      setFileImage(file);
+      setFileImage(res?.data?.id);
     }
   };
   const onSubmit = async (data) => {
-    const formData = new FormData();
-    formData.append("data", JSON.stringify(data));
-    if (fileImage) {
-      formData.append("files", fileImage);
-    }
-    const response = await fetch(
-      `${import.meta.env.VITE_SECOND_DOMAIN}/herosections/${id}`,
+    const finalData = {
+      title: data?.title,
+      description: data?.description,
+      oldPrice: data?.oldPrice,
+      newPrice: data?.newPrice,
+      image: fileImage,
+    };
+    console.log(typeof fileImage , 'fiii')
+    mutate(
+      { finalData, id },
       {
-        method: "PUT",
-        body: formData,
-        headers: {
-          "Content-Type": "multipart/form-data",
+        onSuccess: () => {
+          queryClient.invalidateQueries("herosection");
+          toast.success("Hero Data Updated Successfully");
+          navigate("/pages/homepage/hero");
+        },
+        onError: (error) => {
+          console.error("Update error:", error.response?.data || error.message);
+          toast.error("Error In Update Hero Data");
         },
       }
     );
-    const json = await response.json();
-    // if (response.ok) {
-    //   console.log(json);
-    // }
-
-    console.log(json);
-    // mutate(
-    //   { data, id },
-    //   {
-    //     onSuccess: () => {
-    //       queryClient.invalidateQueries("herosection");
-    //       toast.success("Hero Data Updated Successfully");
-    //       navigate("/pages/homepage/hero");
-    //     },
-    //     onError: (error) => {
-    //       console.error("Update error:", error.response?.data || error.message);
-    //       toast.error("Error In Update Hero Data");
-    //     },
-    //   }
-    // );
   };
 
   const renderFields = HeroData?.map(

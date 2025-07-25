@@ -2,9 +2,9 @@ import { useNavigate } from "react-router-dom";
 import { useGetHero } from "../../../../hooks/useHomePage";
 
 const HeroSection = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { data } = useGetHero();
-  console.log(data, "data heroo ");
+  console.table(data, "data heroo ");
   const renderSections = data?.map((slider, idx) => (
     <div
       key={idx}
@@ -22,13 +22,20 @@ const HeroSection = () => {
         <p className="text-[#FF0000] text-start text-[16px] font-bold">
           {slider?.title}
         </p>
-        <p className="text-[#eaeaea] text-start text-[14px] line-clamp-3">
-        {slider?.description}
-        </p>
+
+        <div
+          className="text-[#eaeaea] text-start text-[14px] line-clamp-3"
+          dangerouslySetInnerHTML={{
+            __html: slider?.description,
+          }}
+        />
       </div>
 
       <div className="flex justify-between items-center">
-        <button onClick={()=>navigate(`/pages/homepage/hero/${slider?.documentId}`)} className="mt-2 self-start border border-[#008000] text-white px-4 py-1 rounded-[10px] text-sm">
+        <button
+          onClick={() => navigate(`/pages/homepage/hero/${slider?.documentId}`)}
+          className="mt-2 self-start border border-[#008000] text-white px-4 py-1 rounded-[10px] text-sm"
+        >
           Edit
         </button>
         <button className="mt-2 self-start border border-[#FF0000] text-white px-4 py-1 rounded-[10px] text-sm">

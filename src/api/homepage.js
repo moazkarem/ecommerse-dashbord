@@ -17,10 +17,10 @@ export const getSingleSlider = async (id) => {
 };
 
 //=============UPDATE HERO
-export const updateHeroApi = async ({ data, id }) => {
+export const updateHeroApi = async ({ finalData, id }) => {
   const res = await axios.put(
     `${import.meta.env.VITE_SECOND_DOMAIN}/herosections/${id}`,
-    {data}
+    {data : finalData}
   );
 
   console.log(res, "update hero data");
