@@ -1,65 +1,118 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Button from "../../../../Ui/Button.jsx";
 import Input from "../../../../Ui/Input.jsx";
 import Label from "../../../../Ui/Label.jsx";
 import Editor from "../../../../Ui/Editor.jsx";
-// import { useGetHero } from "../../../../hooks/useHomePage.js";
 import imgplaceholder from "../../../../../public/images/placeholder.jpeg";
 import { HeroData } from "../data.jsx";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Errormsg from "../../../../Components/Error/Errormsg.jsx";
 import { herosectionSchema } from "../../../../helpers/validation.js";
-import { useUpdateHero } from "../../../../hooks/useHomePage.js";
+import {
+  useGetSingleSlider,
+  useUpdateHero,
+} from "../../../../hooks/useHomePage.js";
 import toast from "react-hot-toast";
-import {  useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+
 const HeroForm = ({ slider }) => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const { data } = useGetSingleSlider(id);
+
   const {
     register,
-    setValue,
     handleSubmit,
     formState: { errors },
     control,
+    reset,
   } = useForm({
-    resolver: yupResolver(herosectionSchema),
+    // resolver: yupResolver(herosectionSchema),
     defaultValues: slider,
   });
+
   const queryClient = useQueryClient();
   const [preview, setPreview] = useState("");
-  const { mutate } = useUpdateHero();
-  // const handelChange = (e, name) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     const imageUrl = URL.createObjectURL(file);
-  //     setPreview(imageUrl);
-  //     setValue(name, file, { shouldValidate: true }); // مهم
-  //   }
-  // };
-  const onSubmit = (data) => {
-    console.log(typeof data.image, "formmm");
-    const id = slider?.documentId;
-    const formData = new FormData();
-    formData.append("image", data.image);
-    formData.append("title", data.title);
-    formData.append("description", data.description);
-    formData.append("oldPrice", data.oldPrice);
-    formData.append("newPrice", data.newPrice);
-    // for (let [key, value] of formData.entries()) {
-    //   console.log(`${key} :`, value);
-    // }
+  const [fileImage, setFileImage] = useState("");
+  const { mutate, isPending } = useUpdateHero();
 
-    mutate(
-      { formData, id },
+  // Reset form when data changes
+  useEffect(() => {
+    reset({
+      title: data?.title,
+      description: data?.description,
+      oldPrice: data?.oldPrice,
+      newPrice: data?.newPrice,
+      image: null,
+    });
+
+    if (data?.image?.url) {
+      setPreview(`http://localhost:1337${data.image.url}`);
+    }
+  }, [reset, data]);
+
+  // Handle image selection and preview
+  const handleChangeImage = async (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      const formData = new FormData();
+      formData.append("files", file);
+      formData.append("fileInfo", JSON.stringify({
+        name: "image.jpeg",
+      }));
+      const res = await axios.post(
+        `http://localhost:1337/api/upload?id=${data.image.id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(res);
+      setPreview(URL.createObjectURL(file));
+      setFileImage(file);
+    }
+  };
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(data));
+    if (fileImage) {
+      formData.append("files", fileImage);
+    }
+    const response = await fetch(
+      `${import.meta.env.VITE_SECOND_DOMAIN}/herosections/${id}`,
       {
-        onSuccess: () => {
-          queryClient.invalidateQueries("herosection");
-          toast.success("Hero Data Updated Successfully");
-        },
-        onError: () => {
-          toast.error("Error In Update Hero Data ");
+        method: "PUT",
+        body: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
         },
       }
     );
+    const json = await response.json();
+    // if (response.ok) {
+    //   console.log(json);
+    // }
+
+    console.log(json);
+    // mutate(
+    //   { data, id },
+    //   {
+    //     onSuccess: () => {
+    //       queryClient.invalidateQueries("herosection");
+    //       toast.success("Hero Data Updated Successfully");
+    //       navigate("/pages/homepage/hero");
+    //     },
+    //     onError: (error) => {
+    //       console.error("Update error:", error.response?.data || error.message);
+    //       toast.error("Error In Update Hero Data");
+    //     },
+    //   }
+    // );
   };
 
   const renderFields = HeroData?.map(
@@ -68,11 +121,10 @@ const HeroForm = ({ slider }) => {
         {type === "file" ? (
           <div className={`flex gap-4 flex-col col-span-${col}`}>
             <Label htmlFor={label}>{label} : </Label>
-            <div className="w-80   h-36 rounded-[10px] overflow-hidden bg-[#1E2021] cursor-pointer relative mb-5">
+            <div className="w-80 h-36 rounded-[10px] overflow-hidden bg-[#1E2021] cursor-pointer relative mb-5">
               <Controller
                 name={name}
                 control={control}
-                // {...register(name)}
                 render={({ field }) => (
                   <>
                     <Input
@@ -81,21 +133,14 @@ const HeroForm = ({ slider }) => {
                       type="file"
                       accept="image/*"
                       onChange={(e) => {
-                        const file = e.target.files[0];
-                        if (file) {
-                          setPreview(URL.createObjectURL(file));
-                          field.onChange(file); // دا المهم
-                          setValue(name, file); // برضو مفيد لو بتستخدمه فى الفورم بشكل عام
-                        }
+                        handleChangeImage(e);
+                        field.onChange(e.target.files[0]); // Update form state
                       }}
                     />
                     <img
                       className="w-full p-3 h-full object-contain"
-                      src={
-                        preview ||
-                        `http://localhost:1337${slider?.image?.url} ` ||
-                        imgplaceholder
-                      }
+                      src={preview || imgplaceholder}
+                      alt="Preview"
                     />
                     <Errormsg msg={errors[name]?.message} />
                   </>
@@ -109,11 +154,9 @@ const HeroForm = ({ slider }) => {
             <Controller
               control={control}
               name={name}
-              {...register(name)}
               render={({ field }) => <Editor {...field} />}
               defaultValue={slider?.[name] || ""}
             />
-
             <Errormsg msg={errors[name]?.message} />
           </div>
         ) : (
@@ -126,19 +169,19 @@ const HeroForm = ({ slider }) => {
       </Fragment>
     )
   );
+
   return (
     <div className="mt-6 px-10">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        // key={idx}
-        className="grid grid-cols-12 gap-5  border-b border-[#ff0000] py-24 "
+        className="grid grid-cols-12 gap-5 py-24"
       >
         {renderFields}
         <div className="col-span-12">
           <Button
             type="submit"
-            // loading={isPending}
-            style={`mt-4   text-[#fff] border-[#ff0000cc]  border w-48 px-12 border-1  py-[6px] flex justify-center items-center  rounded-[8px]`}
+            loading={isPending}
+            style={`mt-4 text-[#fff] border-[#ff0000cc] border w-48 px-12 border-1 py-[6px] flex justify-center items-center rounded-[8px]`}
           >
             Save
           </Button>

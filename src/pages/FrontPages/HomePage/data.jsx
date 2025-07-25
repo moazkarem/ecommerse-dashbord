@@ -51,3 +51,58 @@ export const HeroData = [
     col: 12,
   },
 ];
+
+import { MdDelete } from "react-icons/md";
+
+export const getCategoryColumns = () => [
+  {
+    field: "title",
+    headerName: "Title",
+    width: 150,
+    align: "center",
+    headerAlign: "center",
+  },
+  {
+    field: "image",
+    headerName: "Image",
+    width: 150,
+    align: "center",
+    headerAlign: "center",
+    renderCell: (row) => (
+      <img src={import.meta.env.VITE_SECOND_DOMAIN / `${row?.row?.image}`} />
+    ),
+  },
+
+  {
+    field: "delete",
+    headerName: "Delete",
+    flex: 1,
+    width: 150,
+    align: "center",
+    headerAlign: "center",
+    renderCell: () => (
+      <button
+        style={{ lineHeight: "32px" }}
+       
+      >
+        <MdDelete className="text-[#ff0000cc] text-[20px]" />
+      </button>
+    ),
+  },
+];
+
+export const style = {
+  backgroundColor: "#1E2021",
+  "& .MuiDataGrid-columnHeaders": {
+    backgroundColor: "#1E2021",
+    color: "#fff",
+  },
+  "& .MuiDataGrid-cell": { backgroundColor: "#1E2021", color: "#fff" },
+  "& .MuiDataGrid-row:hover": { backgroundColor: "#1E2021 !important" },
+  "& .MuiDataGrid-row.Mui-selected": {
+    backgroundColor: "#1E2021 !important",
+  },
+  "& .MuiDataGrid-row.Mui-selected:hover": {
+    backgroundColor: "#1E2021 !important",
+  },
+};
