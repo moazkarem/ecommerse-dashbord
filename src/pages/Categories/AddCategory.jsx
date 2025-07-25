@@ -37,7 +37,7 @@ const AddCategory = ({ isOpen, closeModal, title }) => {
     const formData = new FormData();
     formData.append("name", data.name);
     // formData.append("image", data.image[0]);
-
+    // console.log(data.image[0]);
     mutate(formData, {
       onSuccess: () => {
         toast.success("Category added successfully");

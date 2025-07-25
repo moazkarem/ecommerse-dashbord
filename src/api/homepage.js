@@ -8,14 +8,21 @@ export const getHeroData = async () => {
   return res?.data?.data;
 };
 
-export const updateHeroApi = async ({formData, id}) => {
-  console.log(formData,'dataaa');
+export const getSingleSlider = async (id) => {
+  const res = await axios.get(
+    `${import.meta.env.VITE_SECOND_DOMAIN}/herosections/${id}?populate=*`
+  );
+  // console.log(res, "get hero section data in home page ");
+  return res?.data?.data;
+};
+
+//=============UPDATE HERO
+export const updateHeroApi = async ({ data, id }) => {
   const res = await axios.put(
     `${import.meta.env.VITE_SECOND_DOMAIN}/herosections/${id}`,
-    {
-      data: formData,
-    }
+    {data}
   );
-  console.log(res, "update hero date ");
+
+  console.log(res, "update hero data");
   return res;
 };

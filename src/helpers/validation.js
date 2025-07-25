@@ -116,7 +116,7 @@ export const productSchema = yup.object().shape({
 //============== hero section
 
 export const herosectionSchema = yup.object({
-  image: yup.string().required(" Image Is Required"),
+  image: yup.mixed().required(" Image Is Required"),
   title: yup.string().required(" Title Is Required"),
   description: yup.string().required(" description Is Required"),
   oldPrice: yup.string().required(" old Price Is Required"),
