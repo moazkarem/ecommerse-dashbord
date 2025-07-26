@@ -29,14 +29,14 @@ export const updateHeroApi = async ({ finalData, id }) => {
 
 //=============ADD HERO
 
-export const addHeroApi = async (data) => {
+export const addBlogApi = async (data) => {
   const res = await axios.post(
     `${import.meta.env.VITE_SECOND_DOMAIN}/blogs`,
     { data }
   );
 
-  // console.log(res, "add hero data");
-  return res;
+  console.log(res, "add hero data");
+  return res?.data;
 };
 
 //=============DELETE HERO

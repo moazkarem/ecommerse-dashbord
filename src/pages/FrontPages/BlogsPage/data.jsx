@@ -11,7 +11,7 @@ import img9 from "../../../../public/images/brands/img9.png";
 import img10 from "../../../../public/images/brands/img10.png";
 
 export const images = [img1, img2, img3, img4, img5, img6, img7, img9, img10];
-export const getCategoryColumns = ({ onDelete , onEdit }) => [
+export const getCategoryColumns = ({ onDelete, onEdit }) => [
   {
     field: "title",
     headerName: "Title",
@@ -27,8 +27,11 @@ export const getCategoryColumns = ({ onDelete , onEdit }) => [
     flex: 1,
     align: "center",
     headerAlign: "center",
-    renderCell: (row) =>{
-      console.log(`${import.meta.env.VITE_IMAGE_DOMAIN}${row?.row?.image?.url}` , 'my ro');
+    renderCell: (row) => {
+      console.log(
+        `${import.meta.env.VITE_IMAGE_DOMAIN}${row?.row?.image?.url}`,
+        "my ro"
+      );
       return (
         <div className="w-full flex justify-center ">
           <img
@@ -36,9 +39,8 @@ export const getCategoryColumns = ({ onDelete , onEdit }) => [
             src={`${import.meta.env.VITE_IMAGE_DOMAIN}${row?.row?.image?.url}`}
           />
         </div>
-      )
-    }
-      
+      );
+    },
   },
   {
     field: "edit",
@@ -48,10 +50,7 @@ export const getCategoryColumns = ({ onDelete , onEdit }) => [
     align: "center",
     headerAlign: "center",
     renderCell: (brand) => (
-      <button
-        style={{ lineHeight: "32px" }}
-        onClick={() => onEdit(brand.row)}
-      >
+      <button style={{ lineHeight: "32px" }} onClick={() => onEdit(brand.row)}>
         <FaEdit color="#008000" className="text-[20px]" />
       </button>
     ),
@@ -89,3 +88,24 @@ export const style = {
     backgroundColor: "#1E2021 !important",
   },
 };
+
+export const blogsData = [
+  {
+    name: "image",
+    type: "file",
+    label: "Slider Image",
+    col: 12,
+  },
+  {
+    name: "title",
+    type: "text",
+    label: "Title",
+    col: 12,
+  },
+  {
+    name: "description",
+    isEditor: true,
+    label: "Description",
+    col: 12,
+  },
+];
