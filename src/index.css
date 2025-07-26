@@ -20,6 +20,11 @@ body {
 .MuiPaper-root {
   box-shadow: none !important;
 }
+.MuiDataGrid-row{
+  /* padding-block: 20px !important; */
+  /* padding-top: 50px;
+  padding-bottom: 50px; */
+}
 .MuiDataGrid-row:hover,
 .MuiDataGrid-row:active {
   background-color: #1e2021 !important;

@@ -6,9 +6,7 @@ import Editor from "../../../../Ui/Editor.jsx";
 import imgplaceholder from "../../../../../public/images/placeholder.jpeg";
 import { HeroData } from "../data.jsx";
 import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import Errormsg from "../../../../Components/Error/Errormsg.jsx";
-import { herosectionSchema } from "../../../../helpers/validation.js";
 import {
   useGetSingleSlider,
   useUpdateHero,
