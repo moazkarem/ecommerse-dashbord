@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { delHeroApi, getSingleSlider, updateHeroApi } from "../api/homepage";
-import { addBlogApi, getAllBlogsApi } from "../api/blogsPage";
+import { delHeroApi, updateHeroApi } from "../api/homepage";
+import { addBlogApi, getAllBlogsApi, getSingleBlog, updateBlogApi } from "../api/blogsPage";
 
 //========= use get all heros
 
@@ -15,7 +15,7 @@ export const useGetAllBlogs = () => {
 export const useGetSingleBlog = (id) => {
   return useQuery({
     queryKey: ["singleblog", id],
-    queryFn: () => getSingleSlider(id),
+    queryFn: () => getSingleBlog(id),
   });
 };
 
@@ -23,7 +23,7 @@ export const useGetSingleBlog = (id) => {
 
 export const useUpdateBlog = () => {
   return useMutation({
-    mutationFn: updateHeroApi,
+    mutationFn: updateBlogApi,
   });
 };
 

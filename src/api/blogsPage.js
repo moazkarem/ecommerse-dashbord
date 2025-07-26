@@ -8,16 +8,16 @@ export const getAllBlogsApi = async () => {
   return res?.data?.data;
 };
 
-export const getSingleSlider = async (id) => {
+export const getSingleBlog = async (id) => {
   const res = await axios.get(
     `${import.meta.env.VITE_SECOND_DOMAIN}/blogs/${id}?populate=*`
   );
-  // console.log(res, "get hero section data in home page ");
+  console.log(res, "get single blog data  ");
   return res?.data?.data;
 };
 
 //=============UPDATE HERO
-export const updateHeroApi = async ({ finalData, id }) => {
+export const updateBlogApi = async ({ finalData, id }) => {
   const res = await axios.put(
     `${import.meta.env.VITE_SECOND_DOMAIN}/blogs/${id}`,
     { data: finalData }
@@ -30,10 +30,9 @@ export const updateHeroApi = async ({ finalData, id }) => {
 //=============ADD HERO
 
 export const addBlogApi = async (data) => {
-  const res = await axios.post(
-    `${import.meta.env.VITE_SECOND_DOMAIN}/blogs`,
-    { data }
-  );
+  const res = await axios.post(`${import.meta.env.VITE_SECOND_DOMAIN}/blogs`, {
+    data,
+  });
 
   console.log(res, "add hero data");
   return res?.data;

@@ -6,7 +6,7 @@ import Editor from "../../../../Ui/Editor.jsx";
 import imgplaceholder from "../../../../../public/images/placeholder.jpeg";
 import { HeroData } from "../data.jsx";
 import { Controller, useForm } from "react-hook-form";
-import Errormsg from "../../../../Components/Error/Errormsg.jsx";
+import Errormsg from "../../../../components/Error/ErrorMsg.jsx";
 import {
   useGetSingleSlider,
   useUpdateHero,
@@ -88,7 +88,7 @@ const HeroForm = ({ slider }) => {
       newPrice: data?.newPrice,
       image: fileImage,
     };
-    console.log(typeof fileImage , 'fiii')
+    console.log(typeof fileImage, "fiii");
     mutate(
       { finalData, id },
       {
