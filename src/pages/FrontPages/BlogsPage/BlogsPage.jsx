@@ -8,19 +8,18 @@ import { getCategoryColumns, style } from "./data";
 import { useState } from "react";
 import { useGetAllBlogs } from "../../../hooks/useBlogs";
 import { useNavigate } from "react-router-dom";
-// import { useGetBrands } from "../../hooks/useBrands";
-// import DelBrand from "./DelBrand";
+import DelBlog from "./DelBlog";
 
 const BlogsPage = () => {
   const navigate = useNavigate();
   //===================== MODAL STATES ===========
-  const [deletedBrand, setDeletedBrand] = useState({});
+  const [deletedBlog, setDeletedBlog] = useState({});
 
   const [isOpenDel, setIsOpenDel] = useState(false);
 
   const openModalDel = (selectedBrand) => {
     setIsOpenDel(true);
-    setDeletedBrand(selectedBrand);
+    setDeletedBlog(selectedBrand);
   };
   const closeModalDel = () => setIsOpenDel(false);
 
@@ -29,7 +28,7 @@ const BlogsPage = () => {
     navigate(`/pages/blogs/${blog?.documentId}`);
   };
 
-  const handelAdd = (blog) => {
+  const handelAdd = () => {
     navigate(`/pages/blogs/add`);
   };
 
@@ -51,13 +50,13 @@ const BlogsPage = () => {
       <TitlePage path={"Dashbord / Front Pages  "} page={"Blogs"} />
       <AddButton add={handelAdd} title={"Add New Brand"} />
       <DataGrid rows={rows} columns={columns} sx={style} />
-      {/* 
-      <DelBrand
-        key={deletedBrand._id}
+
+      <DelBlog
+        key={deletedBlog._id}
         isOpen={isOpenDel}
         closeModal={closeModalDel}
-        deletedBrand={deletedBrand}
-      /> */}
+        deletedBlog={deletedBlog}
+      />
     </Box>
   );
 };

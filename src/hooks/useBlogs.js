@@ -1,6 +1,11 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { delHeroApi, updateHeroApi } from "../api/homepage";
-import { addBlogApi, getAllBlogsApi, getSingleBlog, updateBlogApi } from "../api/blogsPage";
+import {
+  addBlogApi,
+  delBlogApi,
+  getAllBlogsApi,
+  getSingleBlog,
+  updateBlogApi,
+} from "../api/blogsPage";
 
 //========= use get all heros
 
@@ -39,6 +44,6 @@ export const useAddBlog = () => {
 
 export const useDelBlog = () => {
   return useMutation({
-    mutationFn: delHeroApi,
+    mutationFn: delBlogApi,
   });
 };

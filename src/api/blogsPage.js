@@ -34,17 +34,17 @@ export const addBlogApi = async (data) => {
     data,
   });
 
-  console.log(res, "add hero data");
+  // console.log(res, "add hero data");
   return res?.data;
 };
 
 //=============DELETE HERO
 
-export const delHeroApi = async (id) => {
+export const delBlogApi = async (id) => {
   const res = await axios.delete(
     `${import.meta.env.VITE_SECOND_DOMAIN}/blogs/${id}`
   );
 
-  console.log(res, "del hero data");
+  console.log(res, "del blog data");
   return res;
 };
