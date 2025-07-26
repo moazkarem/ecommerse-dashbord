@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   addHeroApi,
+  delHeroApi,
   getHeroData,
   getSingleSlider,
   updateHeroApi,
@@ -39,5 +40,13 @@ export const useUpdateHero = () => {
 export const useAddHero = () => {
   return useMutation({
     mutationFn: addHeroApi,
+  });
+};
+
+//========= use add hero 
+
+export const useDelHero = () => {
+  return useMutation({
+    mutationFn: delHeroApi,
   });
 };

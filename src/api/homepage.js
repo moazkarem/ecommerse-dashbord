@@ -28,12 +28,24 @@ export const updateHeroApi = async ({ finalData, id }) => {
 };
 
 //=============ADD HERO
+
 export const addHeroApi = async (data) => {
   const res = await axios.post(
     `${import.meta.env.VITE_SECOND_DOMAIN}/herosections`,
     { data }
   );
 
-  console.log(res, "add hero data");
+  // console.log(res, "add hero data");
+  return res;
+};
+
+//=============DELETE HERO
+
+export const delHeroApi = async (id) => {
+  const res = await axios.delete(
+    `${import.meta.env.VITE_SECOND_DOMAIN}/herosections/${id}`
+  );
+
+  console.log(res, "del hero data");
   return res;
 };

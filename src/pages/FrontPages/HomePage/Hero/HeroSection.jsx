@@ -1,12 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import { useGetHero } from "../../../../hooks/useHomePage";
 import AddButton from "../../../../components/Add Button/AddButton";
+import { useState } from "react";
+import DelHero from "./DelHero";
 
 const HeroSection = () => {
   const navigate = useNavigate();
   const { data } = useGetHero();
-  
-  //============ RENDER HERO SLIDERS 
+  const [deletedSlider, setDeletedSlider] = useState({});
+  const [isOpenDel, setIsOpenDel] = useState(false);
+  const openModalDel = (selectedSlirer) => {
+    setIsOpenDel(true);
+    setDeletedSlider(selectedSlirer);
+  };
+  const closeModalDel = () => setIsOpenDel(false);
+
+  //============ RENDER HERO SLIDERS
 
   const renderSections = data?.map((slider, idx) => (
     <div
@@ -41,14 +50,17 @@ const HeroSection = () => {
         >
           Edit
         </button>
-        <button className="mt-2 self-start border border-[#FF0000] text-white px-4 py-1 rounded-[10px] text-sm">
+        <button
+          onClick={() => openModalDel(slider)}
+          className="mt-2 self-start border border-[#FF0000] text-white px-4 py-1 rounded-[10px] text-sm"
+        >
           Delete
         </button>
       </div>
     </div>
   ));
 
-  //============ ADD NAVIGATE HANDELER 
+  //============ ADD NAVIGATE HANDELER
   const addNavigate = () => {
     navigate("/pages/homepage/hero/addhero");
   };
@@ -60,6 +72,13 @@ const HeroSection = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 py-4">
         {renderSections}
       </div>
+
+      <DelHero
+        key={deletedSlider._id}
+        isOpen={isOpenDel}
+        closeModal={closeModalDel}
+        deletedSlider={deletedSlider}
+      />
     </div>
   );
 };
