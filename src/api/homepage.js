@@ -20,9 +20,20 @@ export const getSingleSlider = async (id) => {
 export const updateHeroApi = async ({ finalData, id }) => {
   const res = await axios.put(
     `${import.meta.env.VITE_SECOND_DOMAIN}/herosections/${id}`,
-    {data : finalData}
+    { data: finalData }
   );
 
-  console.log(res, "update hero data");
+  // console.log(res, "update hero data");
+  return res;
+};
+
+//=============ADD HERO
+export const addHeroApi = async (data) => {
+  const res = await axios.post(
+    `${import.meta.env.VITE_SECOND_DOMAIN}/herosections`,
+    { data }
+  );
+
+  console.log(res, "add hero data");
   return res;
 };

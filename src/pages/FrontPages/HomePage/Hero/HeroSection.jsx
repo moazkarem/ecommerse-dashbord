@@ -1,10 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useGetHero } from "../../../../hooks/useHomePage";
+import AddButton from "../../../../components/Add Button/AddButton";
 
 const HeroSection = () => {
   const navigate = useNavigate();
   const { data } = useGetHero();
-  console.table(data, "data heroo ");
+  
+  //============ RENDER HERO SLIDERS 
+
   const renderSections = data?.map((slider, idx) => (
     <div
       key={idx}
@@ -44,9 +47,17 @@ const HeroSection = () => {
       </div>
     </div>
   ));
+
+  //============ ADD NAVIGATE HANDELER 
+  const addNavigate = () => {
+    navigate("/pages/homepage/hero/addhero");
+  };
   return (
-    <div className="mt-6 ">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 p-4">
+    <div className="mt-12 ">
+      <div>
+        <AddButton title={"Add New Hero  Slider"} add={addNavigate} />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 py-4">
         {renderSections}
       </div>
     </div>

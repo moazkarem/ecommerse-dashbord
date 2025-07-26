@@ -1,5 +1,13 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getHeroData, getSingleSlider, updateHeroApi } from "../api/homepage";
+import {
+  addHeroApi,
+  getHeroData,
+  getSingleSlider,
+  updateHeroApi,
+} from "../api/homepage";
+
+
+//========= use get all heros  
 
 export const useGetHero = () => {
   return useQuery({
@@ -7,16 +15,29 @@ export const useGetHero = () => {
     queryFn: getHeroData,
   });
 };
+//========= use getsingle 
 
 export const useGetSingleSlider = (id) => {
   return useQuery({
-    queryKey: ["singleheroslider" , id],
-    queryFn: ()=>getSingleSlider(id),
+    queryKey: ["singleheroslider", id],
+    queryFn: () => getSingleSlider(id),
   });
 };
+
+//========= use edit hero 
+
 
 export const useUpdateHero = () => {
   return useMutation({
     mutationFn: updateHeroApi,
+  });
+};
+
+
+//========= use add hero 
+
+export const useAddHero = () => {
+  return useMutation({
+    mutationFn: addHeroApi,
   });
 };
