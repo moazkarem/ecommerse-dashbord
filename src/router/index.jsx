@@ -25,6 +25,8 @@ import AddHero from "../pages/FrontPages/HomePage/Hero/AddHero";
 
 import BannerOne from "../pages/FrontPages/HomePage/BannerOne/BannerOne";
 import BannerTwo from "../pages/FrontPages/HomePage/Banner2/BannerTwo";
+import AddBlog from "../pages/FrontPages/BlogsPage/AddBlog";
+import EditBlog from "../pages/FrontPages/BlogsPage/EditBlog";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -47,6 +49,8 @@ const router = createBrowserRouter(
           <Route path="/pages/homepage/banner2" element={<BannerTwo />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="blogs" element={<BlogsPage />} />
+          <Route path="blogs/add" element={<AddBlog />} />
+          <Route path="blogs/:id" element={<EditBlog />} />
           <Route path="contact" element={<ContactPage />} />
         </Route>
       </Route>

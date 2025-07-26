@@ -122,3 +122,11 @@ export const herosectionSchema = yup.object({
   oldPrice: yup.string().required(" old Price Is Required"),
   newPrice: yup.string().required(" New Price Is Required"),
 });
+
+//============== blogs schema
+
+export const blogsSchema = yup.object({
+  image: yup.mixed().required(" Image Is Required"),
+  title: yup.string().required(" Title Is Required"),
+  description: yup.string().required(" description Is Required"),
+});

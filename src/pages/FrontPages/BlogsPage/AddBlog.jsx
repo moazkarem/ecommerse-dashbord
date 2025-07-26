@@ -1,56 +1,36 @@
-import { Fragment, useEffect, useState } from "react";
-import Button from "../../../../Ui/Button.jsx";
-import Input from "../../../../Ui/Input.jsx";
-import Label from "../../../../Ui/Label.jsx";
-import Editor from "../../../../Ui/Editor.jsx";
-import imgplaceholder from "../../../../../public/images/placeholder.jpeg";
-import { HeroData } from "../data.jsx";
+import { Fragment, useState } from "react";
+import Button from "../../../Ui/Button.jsx";
+import Input from "../../../Ui/Input.jsx";
+import Label from "../../../Ui/Label.jsx";
+import Editor from "../../../Ui/Editor.jsx";
+import imgplaceholder from "../../../../public/images/placeholder.jpeg";
+import { blogsData } from "./data.jsx";
 import { Controller, useForm } from "react-hook-form";
-import Errormsg from "../../../../components/Error/ErrorMsg.jsx";
-import {
-  useGetSingleSlider,
-  useUpdateHero,
-} from "../../../../hooks/useHomePage.js";
+import { yupResolver } from "@hookform/resolvers/yup";
+import Errormsg from "../../../components/Error/ErrorMsg.jsx";
+import { blogsSchema } from "../../../helpers/validation.js";
+import { useAddBlog } from "../../../hooks/useBlogs.js";
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const HeroForm = ({ slider }) => {
+const AddBlog = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
-  const { data } = useGetSingleSlider(id);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     control,
-    reset,
   } = useForm({
-    // resolver: yupResolver(herosectionSchema),
-    defaultValues: slider,
+    resolver: yupResolver(blogsSchema),
   });
 
   const queryClient = useQueryClient();
   const [preview, setPreview] = useState("");
   const [fileImage, setFileImage] = useState("");
-  const { mutate, isPending } = useUpdateHero();
-
-  // Reset form when data changes
-  useEffect(() => {
-    reset({
-      title: data?.title,
-      description: data?.description,
-      oldPrice: data?.oldPrice,
-      newPrice: data?.newPrice,
-      image: null,
-    });
-
-    if (data?.image?.url) {
-      setPreview(`http://localhost:1337${data.image.url}`);
-    }
-  }, [reset, data]);
+  const { mutate, isPending } = useAddBlog();
 
   // Handle image selection and preview
   const handleChangeImage = async (e) => {
@@ -65,7 +45,7 @@ const HeroForm = ({ slider }) => {
         })
       );
       const res = await axios.post(
-        `http://localhost:1337/api/upload?id=${data?.image?.id}`,
+        `http://localhost:1337/api/upload`,
         formData,
         {
           headers: {
@@ -74,38 +54,33 @@ const HeroForm = ({ slider }) => {
         }
       );
 
-      console.log(res, "changee");
-      data.image = res?.data;
+      // console.log(res, "changee");
+
       setPreview(URL.createObjectURL(file));
-      setFileImage(res?.data?.id);
+      setFileImage(res?.data[0]?.id);
     }
   };
   const onSubmit = async (data) => {
     const finalData = {
       title: data?.title,
       description: data?.description,
-      oldPrice: data?.oldPrice,
-      newPrice: data?.newPrice,
       image: fileImage,
     };
     console.log(typeof fileImage, "fiii");
-    mutate(
-      { finalData, id },
-      {
-        onSuccess: () => {
-          queryClient.invalidateQueries("herosection");
-          toast.success("Hero Data Updated Successfully");
-          navigate("/pages/homepage/hero");
-        },
-        onError: (error) => {
-          console.error("Update error:", error.response?.data || error.message);
-          toast.error("Error In Update Hero Data");
-        },
-      }
-    );
+    mutate(finalData, {
+      onSuccess: () => {
+        queryClient.invalidateQueries("blogs");
+        toast.success("Blog Added Successfully");
+        navigate("/pages/blogs");
+      },
+      onError: (error) => {
+        console.error("Update error:", error.response?.data || error.message);
+        toast.error("Error In Add Blog");
+      },
+    });
   };
 
-  const renderFields = HeroData?.map(
+  const renderFields = blogsData?.map(
     ({ type, name, label, isEditor, col }, idx) => (
       <Fragment key={idx}>
         {type === "file" ? (
@@ -145,7 +120,6 @@ const HeroForm = ({ slider }) => {
               control={control}
               name={name}
               render={({ field }) => <Editor {...field} />}
-              defaultValue={slider?.[name] || ""}
             />
             <Errormsg msg={errors[name]?.message} />
           </div>
@@ -181,4 +155,4 @@ const HeroForm = ({ slider }) => {
   );
 };
 
-export default HeroForm;
+export default AddBlog;

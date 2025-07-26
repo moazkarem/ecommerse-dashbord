@@ -16,8 +16,10 @@ const HeroSection = () => {
   const closeModalDel = () => setIsOpenDel(false);
 
   //============ RENDER HERO SLIDERS
-
-  const renderSections = data?.map((slider, idx) => (
+  const sortedData = data?.sort(
+    (x, y) => new Date(y.createdAt) - new Date(x.createdAt)
+  );
+  const renderSections = sortedData?.map((slider, idx) => (
     <div
       key={idx}
       className="bg-[#0E1011] cursor-pointer rounded-xl w-full shadow-lg  p-6   flex flex-col gap-6
