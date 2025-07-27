@@ -18,7 +18,7 @@ import SubCategories from "../pages/SubCategories/SubCategories";
 import HomePage from "../pages/FrontPages/HomePage/HomePage";
 import AboutPage from "../pages/FrontPages/AboutPage/AboutPage";
 import BlogsPage from "../pages/FrontPages/BlogsPage/BlogsPage";
-import ContactPage from "../pages/FrontPages/ContactPage/Contact";
+import ContactPage from "../pages/FrontPages/ContactPage/ContactPage";
 import HeroSection from "../pages/FrontPages/HomePage/Hero/HeroSection";
 import HeroEdit from "../pages/FrontPages/HomePage/Hero/HeroEdit";
 import AddHero from "../pages/FrontPages/HomePage/Hero/AddHero";
