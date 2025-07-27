@@ -47,8 +47,8 @@ const BlogsPage = () => {
   if (isLoading) return <Loading />;
   return (
     <Box sx={{ height: 600, width: "85%", mx: "auto" }}>
-      <TitlePage path={"Dashbord / Front Pages  "} page={"Blogs"} />
-      <AddButton add={handelAdd} title={"Add New Brand"} />
+      <TitlePage path={"Dashbord / Front Pages / "} page={"Blogs"} />
+      <AddButton add={handelAdd} title={"Add New Blog"} />
       <DataGrid rows={rows} columns={columns} sx={style} />
 
       <DelBlog
