@@ -40,10 +40,11 @@ const HeroForm = ({ slider }) => {
   // Reset form when data changes
   useEffect(() => {
     reset({
-      title: data?.title,
-      description: data?.description,
-      oldPrice: data?.oldPrice,
-      newPrice: data?.newPrice,
+      title: data?.title || "",
+      description: data?.description || "",
+      oldPrice: data?.oldPrice || "",
+      newPrice: data?.newPrice || "",
+      category: data?.category || "",
       image: null,
     });
 
@@ -86,6 +87,7 @@ const HeroForm = ({ slider }) => {
       description: data?.description,
       oldPrice: data?.oldPrice,
       newPrice: data?.newPrice,
+      category: data?.category,
       image: fileImage,
     };
     console.log(typeof fileImage, "fiii");

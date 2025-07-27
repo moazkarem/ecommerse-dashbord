@@ -50,6 +50,12 @@ export const HeroData = [
     label: "New Pric",
     col: 12,
   },
+  {
+    name: "category",
+    type: "text",
+    label: "Title",
+    col: 12,
+  },
 ];
 
 import { MdDelete } from "react-icons/md";
