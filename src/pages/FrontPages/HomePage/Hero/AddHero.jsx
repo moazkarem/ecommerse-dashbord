@@ -66,6 +66,7 @@ const AddHero = () => {
       description: data?.description,
       oldPrice: data?.oldPrice,
       newPrice: data?.newPrice,
+      category: data?.category,
       image: fileImage,
     };
     console.log(typeof fileImage, "fiii");
