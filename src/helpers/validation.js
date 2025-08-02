@@ -19,9 +19,7 @@ export const categorySchema = yup.object({
   image: yup
     .mixed()
     .required(" Image Is Required")
-    .test("fileExist", "Image is required", (value) => {
-      return value && value.length > 0;
-    }),
+
 });
 
 //==============Sub Categories & Brands

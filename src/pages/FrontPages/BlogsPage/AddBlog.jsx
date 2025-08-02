@@ -66,7 +66,6 @@ const AddBlog = () => {
       description: data?.description,
       image: fileImage,
     };
-    console.log(typeof fileImage, "fiii");
     mutate(finalData, {
       onSuccess: () => {
         queryClient.invalidateQueries("blogs");

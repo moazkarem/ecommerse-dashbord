@@ -9,6 +9,7 @@ import img6 from "../../../public/images/brands/img6.png";
 import img7 from "../../../public/images/brands/img7.png";
 import img9 from "../../../public/images/brands/img9.png";
 import img10 from "../../../public/images/brands/img10.png";
+import { imageClean } from "../../helpers/imageClean";
 
 export const images = [img1, img2, img3, img4, img5, img6, img7, img9, img10];
 export const getCategoryColumns = ({ onEdit, onDelete }) => [
@@ -31,7 +32,10 @@ export const getCategoryColumns = ({ onEdit, onDelete }) => [
       <div className="w-full flex justify-center ">
         <img
           className="w-12 h-12 object-contain p-2"
-          src={images[Math.floor(Math.random() * images.length)]}
+          src={`${
+            import.meta.env.VITE_IMAGE_DOMAIN +
+            imageClean(row?.row?.image, "categories")
+          }`}
         />
       </div>
     ),
