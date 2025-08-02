@@ -2,9 +2,11 @@ import Modal from "../../Ui/Modal";
 import Input from "../../Ui/Input";
 import Label from "../../Ui/Label";
 import Button from "../../Ui/Button";
+import imgplaceholder from "../../../public/images/placeholder.jpeg";
+
 import { addCategoriesFields } from "../../data/data";
 import Errormsg from "../../components/Error/ErrorMsg";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { categorySchema } from "../../helpers/validation";
 import { useEditCategory } from "../../hooks/useCategories";
@@ -12,50 +14,96 @@ import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { useEffect } from "react";
+
+import axios from "axios";
+import { imageClean } from "../../helpers/imageClean";
 const EditCategory = ({ isOpenEdit, closeModalEdit, title, editedCat }) => {
   const { isPending, mutate } = useEditCategory();
   const queryClient = useQueryClient();
-  const [imgPreview, setImgPreview] = useState(editedCat?.image || "");
-
+  const [imgPreview, setImgPreview] = useState("");
+  const [fileImg, setFileImage] = useState("");
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(categorySchema),
   });
   useEffect(() => {
-    setImgPreview(editedCat?.image);
-  }, [editedCat]);
-
-  const onChangeImgHandeler = (e) => {
-    const file = e.target.files[0];
-    if (file) {
+    reset({
+      name: editedCat?.name || "",
+      image: null,
+    });
+    if (editedCat?.image) {
+      setImgPreview(imageClean(editedCat?.image, "categories"));
+    }
+  }, [editedCat, reset]);
+  // http://localhost:1337/uploads/Screenshot_2025_08_02_195600_1_ed2d66fa57.png
+  const changeHandeler = async (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
       setImgPreview(URL.createObjectURL(file));
+      const formData = new FormData();
+      formData.append("files", file);
+      formData.append(
+        "fileInfo",
+        JSON.stringify({
+          name: file.name,
+        })
+      );
+      try {
+        const res = await axios.post(
+          "http://localhost:1337/api/upload",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form*data",
+            },
+          }
+        );
+        setFileImage(res?.data[0]?.url);
+        toast.success("Success Image Upload");
+      } catch (err) {
+        toast.error("Erro In  Image Upload");
+
+        console.log(err?.message);
+      }
     }
   };
-
   const renderCatFields = addCategoriesFields?.map(
     ({ label, name, type }, idx) => (
       <div key={idx} className="flex gap-2 flex-col mb-3">
         <Label htmlFor={label}>{label} :</Label>
 
-        {/* File input */}
         {type === "file" ? (
           <>
-            {imgPreview && (
-              <img
-                src={imgPreview}
-                alt={`preview-${label}`}
-                className="w-20 h-20 object-cover rounded mb-2"
-              />
-            )}
-
-            <Input
-              type="file"
-              id={label}
-              {...register(name)}
-              onChange={onChangeImgHandeler}
+            <Controller
+              name={name}
+              control={control}
+              render={({ field }) => (
+                <div className="relative">
+                  <Input
+                    type="file"
+                    id={label}
+                    className="absolute inset-0 opacity-0 cursor-pointer"
+                    onChange={(e) => {
+                      changeHandeler(e);
+                      field.onChange(e.target.files[0]);
+                    }}
+                  />
+                  <img
+                    src={
+                      imgPreview
+                        ? import.meta.env.VITE_IMAGE_DOMAIN + imgPreview
+                        : imgplaceholder
+                    }
+                    alt={`preview-${label}`}
+                    className="w-1/2 p-3 h-[150px] object-contain rounded-md"
+                  />
+                </div>
+              )}
             />
           </>
         ) : (
@@ -73,9 +121,7 @@ const EditCategory = ({ isOpenEdit, closeModalEdit, title, editedCat }) => {
   );
 
   const onSubmit = (data) => {
-    const formData = new FormData();
-    formData.append("name", data.name);
-    // formData.append("image", data.image[0]);
+    const formData = { ...data, image: fileImg };
     const catId = editedCat._id;
     mutate(
       { formData, catId },
