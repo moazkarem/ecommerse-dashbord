@@ -6,6 +6,7 @@ export const getCategoriesApi = async () => {
 };
 
 export const addCategoryApi = async (data) => {
+  console.log(data , 'befooor send ');
   const storedUser = localStorage.getItem("userData");
   const userData = storedUser ? JSON.parse(storedUser) : null;
   const token = userData?.token;

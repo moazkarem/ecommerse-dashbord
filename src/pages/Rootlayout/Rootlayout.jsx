@@ -5,7 +5,7 @@ import { useState } from "react";
  import Sidebar from "../../components/Side Bar/Sidebar";
  import Contentdashbord from "../../components/Content dashbord/Contentdashbord";
  const Rootlayout = () => {
-   const [open, setOpen] = useState(true);
+   const [open, setOpen] = useState(false);
    return (
     
        <Box sx={{ display: "flex" }}>
