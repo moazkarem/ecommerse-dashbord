@@ -40,7 +40,7 @@ const EditCategory = ({ isOpenEdit, closeModalEdit, title, editedCat }) => {
       setImgPreview(imageClean(editedCat?.image, "categories"));
     }
   }, [editedCat, reset]);
-  // http://localhost:1337/uploads/Screenshot_2025_08_02_195600_1_ed2d66fa57.png
+
   const changeHandeler = async (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
@@ -72,6 +72,8 @@ const EditCategory = ({ isOpenEdit, closeModalEdit, title, editedCat }) => {
       }
     }
   };
+
+  
   const renderCatFields = addCategoriesFields?.map(
     ({ label, name, type }, idx) => (
       <div key={idx} className="flex gap-2 flex-col mb-3">
