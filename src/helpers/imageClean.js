@@ -1,4 +1,5 @@
-export const imageClean = (image , end)=>{
-  const newImg = image.slice(end.length + 23 , image.length)
-  return newImg
-}
+export const imageClean = (image) => {
+  if (typeof image !== "string") return image;
+  const idx = image.indexOf("/uploads");
+  return idx !== -1 ? image.substring(idx) : image;
+};
