@@ -41,6 +41,6 @@ export const editCatApi = async ({ formData, catId }) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(res?.data, "from edit categories api ");
+  // console.log(res?.data, "from edit categories api ");
   return res;
 };

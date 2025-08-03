@@ -3,8 +3,9 @@ import Toolbar from "@mui/material/Toolbar";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import MuiAppBar from "@mui/material/AppBar";
-import { Box, Typography } from "@mui/material";
 
+import { FiLogOut } from "react-icons/fi";
+import toast from "react-hot-toast";
 const drawerWidth = 280;
 // eslint-disable-next-line react/prop-types
 const Appbar = ({ open, setOpen }) => {
@@ -31,6 +32,14 @@ const Appbar = ({ open, setOpen }) => {
     }),
   }));
 
+  const logoutHandeler = () => {
+    localStorage.removeItem("userData");
+    setTimeout(() => {
+      location.replace("/login");
+    }, 500);
+    toast.success("Success Logout");
+  };
+
   return (
     <AppBar
       position="fixed"
@@ -53,18 +62,22 @@ const Appbar = ({ open, setOpen }) => {
           <MenuIcon />
         </IconButton>
 
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            width: "100%",
-          }}
-        >
-          <Typography variant="h6" color={"#CBCBE2"}>
+        <div className="flex justify-between items-center w-full">
+          <h6 className="text-[#CBCBE2] text-[18px]">
             Welcome Again In Your Dashbord
-          </Typography>
-        </Box>
+          </h6>
+
+          <button
+            onClick={logoutHandeler}
+            className="flex justify-center items-center gap-2 py-2 px-16 rounded-[8px] bg-[#ff0000cc] text-white text-[18px]"
+          >
+            <span>Logout</span>
+            <san>
+              {" "}
+              <FiLogOut fontSize="20" />{" "}
+            </san>
+          </button>
+        </div>
       </Toolbar>
     </AppBar>
   );

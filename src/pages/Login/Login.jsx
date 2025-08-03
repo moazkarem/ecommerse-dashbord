@@ -1,11 +1,10 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { signIn } from "../../data/data";
 import Button from "../../Ui/Button";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../../helpers/validation";
-import Errormsg from "../../Components/Error/Errormsg";
+import Errormsg from "../../components/Error/ErrorMsg";
 import { useAuthQuery } from "./../../hooks/useAuth";
 import toast from "react-hot-toast";
 
@@ -35,18 +34,24 @@ const Login = () => {
   ));
   //============================HANDEL SUBMIT DATA ===========
   const { mutate, isPending } = useAuthQuery();
-  const navigate = useNavigate();
   const onSubmit = (data) => {
     mutate(data, {
       onSuccess: (res) => {
-        // console.log(res?.data?.data, "from login ");
-        localStorage.setItem("userData", JSON.stringify(res?.data));
-        toast.success("Login Success");
-        setTimeout(() => {
-          navigate("/");
-        }, 1500);
+        // console.log(res?.data?.data?.role , 'rolll');
+        if (res?.data?.data?.role === "admin") {
+          localStorage.setItem("userData", JSON.stringify(res?.data));
+          toast.success("Login Success");
+          setTimeout(() => {
+            location.replace("/");
+          }, 1500);
+
+          // return;
+        } else {
+          toast.error("You Are Not Authrized");
+        }
       },
-      onError: () => {
+      onError: (err) => {
+        console.log(err, "errrr");
         toast.error("Login Failed");
       },
     });

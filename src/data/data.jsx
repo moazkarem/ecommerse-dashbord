@@ -6,7 +6,7 @@ import { TbBrandAngularFilled } from "react-icons/tb";
 import { MdDiscount } from "react-icons/md";
 import { TbReorder } from "react-icons/tb";
 import { BiLogoProductHunt } from "react-icons/bi";
-import { FiLogOut } from "react-icons/fi";
+// import { FiLogOut } from "react-icons/fi";
 import { FaUserFriends } from "react-icons/fa";
 import { MdRateReview } from "react-icons/md";
 import { BsListNested } from "react-icons/bs";
@@ -86,11 +86,11 @@ export const Sidedata = [
     title: "Reviews",
     icon: <MdRateReview fontSize="20" />,
   },
-  {
-    path: "/login",
-    title: "Logout",
-    icon: <FiLogOut fontSize="20" />,
-  },
+  // {
+  //   path: "/login",
+  //   title: "Logout",
+  //   icon: <FiLogOut fontSize="20" />,
+  // },
 ];
 
 export const signIn = [
