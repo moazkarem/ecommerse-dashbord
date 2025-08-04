@@ -9,6 +9,7 @@ export const getProductsApi = async () => {
 //================ ADD PRODUCTS API ===========
 
 export const addProductApi = async (formData) => {
+  console.log(formData , 'formmmmmdata');
   const storedUser = localStorage.getItem("userData");
   const userData = storedUser ? JSON.parse(storedUser) : null;
   const token = userData?.token;

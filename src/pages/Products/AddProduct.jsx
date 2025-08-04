@@ -3,7 +3,9 @@ import Input from "../../Ui/Input";
 import Label from "../../Ui/Label";
 import Button from "../../Ui/Button";
 // import { productsFields } from "../../data/data";
-import { useForm } from "react-hook-form";
+import imgplaceholder from "../../../public/images/placeholder.jpeg";
+
+import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Errormsg from "../../components/Error/ErrorMsg";
 import { productSchema } from "../../helpers/validation";
@@ -14,6 +16,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { useState } from "react";
 import { useGetBrands } from "./../../hooks/useBrands";
 import { useGetCategories } from "./../../hooks/useCategories";
+import axios from "axios";
 const AddProduct = ({ isOpen, closeModal, title }) => {
   const { data: categories } = useGetCategories();
   const { data: brands } = useGetBrands();
@@ -29,48 +32,89 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
     handleSubmit,
     reset,
     setValue,
+    control,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(productSchema),
+    // resolver: yupResolver(productSchema),
   });
+
+  const [imageCoverPreview, setImageCoverPreview] = useState("");
+  const [imgCoverFile, setImgCoverFile] = useState("");
+  const changeHandeler = async (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      const formData = new FormData();
+      formData.append("files", file);
+      formData.append(
+        "fileInfo",
+        JSON.stringify({
+          name: file.name,
+        })
+      );
+      try {
+        const res = await axios.post(
+          "http://localhost:1337/api/upload",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form*data",
+            },
+          }
+        );
+        setImageCoverPreview(URL.createObjectURL(file));
+        setImgCoverFile(res?.data[0]?.url);
+        toast.success("Success Image Upload");
+      } catch (err) {
+        toast.error("Erro In  Image Upload");
+
+        console.log(err?.message);
+      }
+    }
+  };
 
   //================= SUBMIT DATA ========
   const onSubmit = (data) => {
-    const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("description", data.description);
-    formData.append("quantity", data.quantity);
-    formData.append("price", data.price);
-    formData.append("ratingsQuantity", data.ratingsQuantity);
-    formData.append("ratingsAverage", data.ratingsAverage);
+    // const formData = new FormData();
+    // formData.append("title", data.title);
+    // formData.append("description", data.description);
+    // formData.append("quantity", data.quantity);
+    // formData.append("price", data.price);
+    // formData.append("ratingsQuantity", data.ratingsQuantity);
+    // formData.append("ratingsAverage", data.ratingsAverage);
 
-    // send colors array
-    formData.append("availableColors", JSON.stringify(data.availableColors));
+    // // send colors array
+    // formData.append("availableColors", JSON.stringify(data.availableColors));
 
-    // cover image
-    formData.append(
-      "imageCover",
-      "https://m.media-amazon.com/images/I/512WDTbwHwL._AC_SX569_.jpg"
-    );
+    // // cover image
+    // formData.append(
+    //   "imageCover",
+    //   "https://m.media-amazon.com/images/I/512WDTbwHwL._AC_SX569_.jpg"
+    // );
 
     // multiple images
-    if (data.images && data.images.length > 0) {
-      Array.from(data.images).forEach(() => {
-        formData.append(
-          "images",
-          "https://m.media-amazon.com/images/I/512WDTbwHwL._AC_SX569_.jpg"
-        );
-      });
-    }
+    // if (data.images && data.images.length > 0) {
+    //   Array.from(data.images).forEach(() => {
+    //     formData.append(
+    //       "images",
+    //       "https://m.media-amazon.com/images/I/512WDTbwHwL._AC_SX569_.jpg"
+    //     );
+    //   });
+    // }
 
-    formData.append("category", data.category);
-    formData.append("brand", data.brand);
+    // formData.append("category", data.category);
+    // formData.append("brand", data.brand);
 
     // console.log("form data");
     // for(let [key , value] of formData.entries()){
     //   console.log(`${key} is : ${value}`);
     // }
 
+    const formData = {
+      ...data,
+      // imageCover: `http://localhost:1337${imgCoverFile}`,
+      imageCover: "http://localhost:1337/uploads/Screenshot_2025_08_02_195600_5b6a173e63.png",
+      images: "https://m.media-amazon.com/images/I/512WDTbwHwL._AC_SX569_.jpg",
+    };
     mutate(formData, {
       onSuccess: () => {
         toast.success("Product added successfully");
@@ -204,10 +248,30 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
           </div>
 
           {/* Image Cover */}
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 ">
             <Label htmlFor="imageCover">Image Cover :</Label>
-
-            <Input type="file" {...register("imageCover")} />
+            <Controller
+              name="imageCover"
+              control={control}
+              render={({ field }) => (
+                <div className="relative">
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    className="inset-0 opacity-0 cursor-pointer absolute rounded-[10px]"
+                    onChange={(e) => {
+                      changeHandeler(e);
+                      field.onChange(e.target.files[0]);
+                    }}
+                  />
+                  <img
+                    src={imageCoverPreview || imgplaceholder}
+                    alt={`preview-cover`}
+                    className="w-1/2 p-3 h-[150px] object-contain rounded-[10px]"
+                  />
+                </div>
+              )}
+            />
 
             {errors.imageCover && <Errormsg msg={errors.imageCover.message} />}
           </div>
@@ -245,9 +309,9 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
                 {...register("category")}
               >
                 <option value={"test"}>Select Category</option>
-                {categories?.data?.data?.map(({ _id }) => (
+                {categories?.data?.data?.map(({ _id, name }) => (
                   <option key={_id} value={_id}>
-                    {_id}
+                    {name}
                   </option>
                 ))}
               </select>
@@ -268,9 +332,9 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
                 {...register("brand")}
               >
                 <option value={"test"}>Select Brand</option>
-                {brands?.data?.data?.map(({ _id }) => (
+                {brands?.data?.data?.map(({ _id, name }) => (
                   <option key={_id} value={_id}>
-                    {_id}
+                    {name}
                   </option>
                 ))}
               </select>

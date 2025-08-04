@@ -84,18 +84,14 @@ const EditBrand = ({ isOpenEdit, closeModalEdit, title, editedBrand }) => {
                 <Input
                   type="file"
                   id={label}
-                  className="absolute inset-0 opacity-0 cursor-pointer"
+                  classname="inset-0 opacity-0 cursor-pointer absolute"
                   onChange={(e) => {
                     changeHandeler(e);
                     field.onChange(e.target.files[0]);
                   }}
                 />
                 <img
-                  src={
-                    imgPreview
-                      ? import.meta.env.VITE_IMAGE_DOMAIN + imgPreview
-                      : imgplaceholder
-                  }
+                  src={imgPreview ? imgPreview : imgplaceholder}
                   alt={`preview-${label}`}
                   className="w-1/2 p-3 h-[150px] object-contain rounded-md"
                 />
@@ -119,8 +115,8 @@ const EditBrand = ({ isOpenEdit, closeModalEdit, title, editedBrand }) => {
       { formData, catId },
       {
         onSuccess: () => {
-          toast.success("Category edited successfully");
-          queryClient.invalidateQueries(["categories"]);
+          toast.success("Brand edited successfully");
+          queryClient.invalidateQueries(["brands"]);
           closeModalEdit();
         },
         onError: (error) => {
