@@ -73,7 +73,6 @@ const EditCategory = ({ isOpenEdit, closeModalEdit, title, editedCat }) => {
     }
   };
 
-  
   const renderCatFields = addCategoriesFields?.map(
     ({ label, name, type }, idx) => (
       <div key={idx} className="flex gap-2 flex-col mb-3">
@@ -96,11 +95,7 @@ const EditCategory = ({ isOpenEdit, closeModalEdit, title, editedCat }) => {
                     }}
                   />
                   <img
-                    src={
-                      imgPreview
-                        ? import.meta.env.VITE_IMAGE_DOMAIN + imgPreview
-                        : imgplaceholder
-                    }
+                    src={imgPreview ? imgPreview : imgplaceholder}
                     alt={`preview-${label}`}
                     className="w-1/2 p-3 h-[150px] object-contain rounded-md"
                   />
