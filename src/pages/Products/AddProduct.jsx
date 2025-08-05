@@ -43,6 +43,7 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
   const changeHandeler = async (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
+      
       const formData = new FormData();
       formData.append("files", file);
       formData.append(
@@ -51,6 +52,41 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
           name: file.name,
         })
       );
+      try {
+        const res = await axios.post(
+          "http://localhost:1337/api/upload",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form*data",
+            },
+          }
+        );
+        setImageCoverPreview(URL.createObjectURL(file));
+        setImgCoverFile(res?.data[0]?.url);
+        toast.success("Success Image Upload");
+      } catch (err) {
+        toast.error("Erro In  Image Upload");
+
+        console.log(err?.message);
+      }
+    }
+  };
+
+
+  const changeMultiHandeler = async (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files;
+      file.forEach((item) => {
+        const formData = new FormData();
+        formData.append("files", item);
+        formData.append(
+          "fileInfo",
+          JSON.stringify({
+            name: file.name,   
+          })
+        );
+      });
       try {
         const res = await axios.post(
           "http://localhost:1337/api/upload",
@@ -112,7 +148,7 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
     const formData = {
       ...data,
       // imageCover: `http://localhost:1337${imgCoverFile}`,
-      imageCover: "http://localhost:1337/uploads/Screenshot_2025_08_02_195600_5b6a173e63.png",
+      imageCover: '/ipload/umoaz',
       images: "https://m.media-amazon.com/images/I/512WDTbwHwL._AC_SX569_.jpg",
     };
     mutate(formData, {
