@@ -43,7 +43,7 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
   const changeHandeler = async (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      
+
       const formData = new FormData();
       formData.append("files", file);
       formData.append(
@@ -73,83 +73,49 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
     }
   };
 
+  const [multiImagePreviews, setMultiImagePreviews] = useState([]);
+  const [multiImageFiles, setMultiImageFiles] = useState([]);
 
   const changeMultiHandeler = async (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files;
-      file.forEach((item) => {
+    const files = Array.from(e.target.files);
+
+    const previews = [];
+    const urls = [];
+
+    try {
+      for (const file of files) {
         const formData = new FormData();
-        formData.append("files", item);
-        formData.append(
-          "fileInfo",
-          JSON.stringify({
-            name: file.name,   
-          })
-        );
-      });
-      try {
+        formData.append("files", file);
+        formData.append("fileInfo", JSON.stringify({ name: file.name }));
+
         const res = await axios.post(
           "http://localhost:1337/api/upload",
           formData,
           {
-            headers: {
-              "Content-Type": "multipart/form*data",
-            },
+            headers: { "Content-Type": "multipart/form-data" },
           }
         );
-        setImageCoverPreview(URL.createObjectURL(file));
-        setImgCoverFile(res?.data[0]?.url);
-        toast.success("Success Image Upload");
-      } catch (err) {
-        toast.error("Erro In  Image Upload");
 
-        console.log(err?.message);
+        previews.push(URL.createObjectURL(file));
+        urls.push(res?.data[0]?.url);
       }
+
+      setMultiImagePreviews(previews);
+      setMultiImageFiles(urls); // this will be array of strings (URLs)
+
+      toast.success("Uploaded multiple images successfully");
+    } catch (err) {
+      toast.error("Error in uploading multiple images");
+      console.error(err);
     }
   };
 
   //================= SUBMIT DATA ========
   const onSubmit = (data) => {
-    // const formData = new FormData();
-    // formData.append("title", data.title);
-    // formData.append("description", data.description);
-    // formData.append("quantity", data.quantity);
-    // formData.append("price", data.price);
-    // formData.append("ratingsQuantity", data.ratingsQuantity);
-    // formData.append("ratingsAverage", data.ratingsAverage);
-
-    // // send colors array
-    // formData.append("availableColors", JSON.stringify(data.availableColors));
-
-    // // cover image
-    // formData.append(
-    //   "imageCover",
-    //   "https://m.media-amazon.com/images/I/512WDTbwHwL._AC_SX569_.jpg"
-    // );
-
-    // multiple images
-    // if (data.images && data.images.length > 0) {
-    //   Array.from(data.images).forEach(() => {
-    //     formData.append(
-    //       "images",
-    //       "https://m.media-amazon.com/images/I/512WDTbwHwL._AC_SX569_.jpg"
-    //     );
-    //   });
-    // }
-
-    // formData.append("category", data.category);
-    // formData.append("brand", data.brand);
-
-    // console.log("form data");
-    // for(let [key , value] of formData.entries()){
-    //   console.log(`${key} is : ${value}`);
-    // }
-
     const formData = {
       ...data,
-      // imageCover: `http://localhost:1337${imgCoverFile}`,
-      imageCover: '/ipload/umoaz',
-      images: "https://m.media-amazon.com/images/I/512WDTbwHwL._AC_SX569_.jpg",
+      imageCover: imgCoverFile,
+      images: multiImageFiles,
     };
     mutate(formData, {
       onSuccess: () => {
@@ -314,25 +280,45 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
 
           {/* Images */}
           <div className="flex flex-col gap-2">
-            <Label htmlFor="images">Images :</Label>
-
-            <Input
-              type="file"
-              accept="image/*"
-              multiple
-              {...register("images")}
+            <Label htmlFor="imageCover">Images :</Label>
+            <Controller
+              name="images"
+              control={control}
+              render={({ field }) => (
+                <div className="relative">
+                  <Input
+                    multiple
+                    type="file"
+                    accept="image/*"
+                    className="inset-0 opacity-0 cursor-pointer absolute rounded-[10px]"
+                    onChange={(e) => {
+                      changeMultiHandeler(e);
+                      field.onChange(e.target.files);
+                    }}
+                  />
+                  <div className="flex flex-wrap gap-4 p-3">
+                    {multiImagePreviews.length > 0 ? (
+                      multiImagePreviews.map((img, i) => (
+                        <img
+                          key={i}
+                          src={img}
+                          alt={`preview-${i}`}
+                          className="w-[120px] h-[120px] object-contain rounded-[10px]"
+                        />
+                      ))
+                    ) : (
+                      <img
+                        src={imgplaceholder}
+                        alt="placeholder"
+                        className="w-[120px] h-[120px] object-contain rounded-[10px]"
+                      />
+                    )}
+                  </div>
+                </div>
+              )}
             />
-            <div className="flex gap-2 mt-2 flex-wrap">
-              {/* {previews.images?.map((src, i) => (
-                <img
-                  key={i}
-                  src={src}
-                  alt={`preview-${i}`}
-                  className="w-20 h-20 object-cover rounded"
-                />
-              ))} */}
-            </div>
-            {errors.images && <Errormsg msg={errors.images.message} />}
+
+            {errors.imageCover && <Errormsg msg={errors.images.message} />}
           </div>
 
           {/* Category */}
