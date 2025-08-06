@@ -52,29 +52,36 @@ const EditProduct = ({ isOpenEdit, closeModalEdit, title, editedProduct }) => {
   const queryClient = useQueryClient();
 
   const onSubmit = (data) => {
-    const formData = new FormData();
-    console.log(data.availableColors, "edit form");
-    formData.append("title", data.title);
-    formData.append("description", data.description);
-    formData.append("quantity", data.quantity);
-    formData.append("price", data.price);
-    formData.append("ratingsQuantity", data.ratingsQuantity);
-    formData.append("ratingsAverage", data.ratingsAverage);
-    formData.append("availableColors", JSON.stringify(data.availableColors));
-    formData.append(
-      "imageCover",
-      "https://m.media-amazon.com/images/I/512WDTbwHwL._AC_SX569_.jpg"
-    );
-    if (data.images && data.images.length > 0) {
-      Array.from(data.images).forEach(() => {
-        formData.append(
-          "images",
-          "https://m.media-amazon.com/images/I/512WDTbwHwL._AC_SX569_.jpg"
-        );
-      });
-    }
-    formData.append("category", data.category);
-    formData.append("brand", data.brand);
+    // const formData = new FormData();
+    // console.log(data.availableColors, "edit form");
+    // formData.append("title", data.title);
+    // formData.append("description", data.description);
+    // formData.append("quantity", data.quantity);
+    // formData.append("price", data.price);
+    // formData.append("ratingsQuantity", data.ratingsQuantity);
+    // formData.append("ratingsAverage", data.ratingsAverage);
+    // formData.append("availableColors", JSON.stringify(data.availableColors));
+    // formData.append(
+    //   "imageCover",
+    //   "https://m.media-amazon.com/images/I/512WDTbwHwL._AC_SX569_.jpg"
+    // );
+    // if (data.images && data.images.length > 0) {
+    //   Array.from(data.images).forEach(() => {
+    //     formData.append(
+    //       "images",
+    //       "https://m.media-amazon.com/images/I/512WDTbwHwL._AC_SX569_.jpg"
+    //     );
+    //   });
+    // }
+    // formData.append("category", data.category);
+    // formData.append("brand", data.brand);
+    const formData = {
+      ...data,
+      // imageCover: imgCoverFile,
+      // images: multiImageFiles,
+       imageCover: '/upload test',
+      images: ['teset' , 'test2' , 'test3'],
+    };
     const productId = editedProduct._id;
     mutate(
       { formData, productId },

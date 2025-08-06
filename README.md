@@ -85,3 +85,5 @@ Built using modern technologies like **React**, **Vite**, **MUI**, **Redux Toolk
    ```bash
    git clone https://github.com/your-username/z-line-dashboard.git
    cd z-line-dashboard
+   npm install
+   npm run dev

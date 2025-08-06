@@ -77,6 +77,7 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
   const [multiImageFiles, setMultiImageFiles] = useState([]);
 
   const changeMultiHandeler = async (e) => {
+    // Array.from({length:10})
     const files = Array.from(e.target.files);
 
     const previews = [];
@@ -101,7 +102,7 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
       }
 
       setMultiImagePreviews(previews);
-      setMultiImageFiles(urls); // this will be array of strings (URLs)
+      setMultiImageFiles(urls); 
 
       toast.success("Uploaded multiple images successfully");
     } catch (err) {
@@ -114,8 +115,10 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
   const onSubmit = (data) => {
     const formData = {
       ...data,
-      imageCover: imgCoverFile,
-      images: multiImageFiles,
+      // imageCover: imgCoverFile,
+      // images: multiImageFiles,
+       imageCover: '/upload test',
+      images: ['teset' , 'test2' , 'test3'],
     };
     mutate(formData, {
       onSuccess: () => {
