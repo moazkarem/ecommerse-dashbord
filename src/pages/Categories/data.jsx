@@ -22,10 +22,7 @@ export const getCategoryColumns = ({ onEdit, onDelete }) => [
       <div className="w-full flex justify-center ">
         <img
           className="w-12 h-12 object-contain p-2"
-          src={`${
-            import.meta.env.VITE_IMAGE_DOMAIN +
-            imageClean(row?.row?.image, "categories")
-          }`}
+          src={`${imageClean(row?.row?.image)}`}
         />
       </div>
     ),

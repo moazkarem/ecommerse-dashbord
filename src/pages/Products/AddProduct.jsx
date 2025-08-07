@@ -115,10 +115,10 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
   const onSubmit = (data) => {
     const formData = {
       ...data,
-      // imageCover: imgCoverFile,
-      // images: multiImageFiles,
-       imageCover: '/upload test',
-      images: ['teset' , 'test2' , 'test3'],
+      imageCover: imgCoverFile,
+      images: multiImageFiles,
+      //  imageCover: '/upload test',
+      // images: ['teset' , 'test2' , 'test3'],
     };
     mutate(formData, {
       onSuccess: () => {

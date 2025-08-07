@@ -12,15 +12,23 @@ import { IoIosArrowDown } from "react-icons/io";
 import { useGetBrands } from "./../../hooks/useBrands";
 import { useGetCategories } from "./../../hooks/useCategories";
 import { useEffect, useState } from "react";
+import axios from "axios";
+import imgplaceholder from "../../../public/images/placeholder.jpeg";
+import { Controller } from "react-hook-form";
+import { imageClean } from "../../helpers/imageClean";
 const EditProduct = ({ isOpenEdit, closeModalEdit, title, editedProduct }) => {
+  const [imageCoverPreview, setImageCoverPreview] = useState("");
+  const [imgCoverFile, setImgCoverFile] = useState("");
+  const [multiImages, setMultiImages] = useState([]);
+  // const [multiImageFiles, setMultiImageFiles] = useState([]);
   const {
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
-  } = useForm({
+    control,
 
-  });
+    formState: { errors },
+  } = useForm({});
   const [colorsList, setColorsList] = useState(
     editedProduct?.availableColors || []
   );
@@ -30,7 +38,7 @@ const EditProduct = ({ isOpenEdit, closeModalEdit, title, editedProduct }) => {
       try {
         // Parse the string inside the array
         const parsedColors = JSON.parse(editedProduct.availableColors[0]);
-  
+
         setColorsList(parsedColors);
         setValue("availableColors", parsedColors);
       } catch (err) {
@@ -39,48 +47,137 @@ const EditProduct = ({ isOpenEdit, closeModalEdit, title, editedProduct }) => {
         setValue("availableColors", []);
       }
     }
+
+    if (editedProduct?.imageCover) {
+      setImageCoverPreview(imageClean(editedProduct?.imageCover));
+    }
+    if (editedProduct?.images) {
+      const cleanedImages = imageClean(editedProduct.images);
+      const formatted = cleanedImages.map((img) => ({
+        preview: img,
+        url: img,
+        file: null,
+      }));
+      setMultiImages(formatted);
+    }
   }, [editedProduct, setValue]);
-  
-
-
 
   const [selectedColor, setSelectedColor] = useState("#000000");
-  console.log(editedProduct, "editedProduct");
+
   const { data: categories } = useGetCategories();
   const { data: brands } = useGetBrands();
   const { isPending, mutate } = useEditProduct();
   const queryClient = useQueryClient();
 
+  const changeHandeler = async (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+
+      const formData = new FormData();
+      formData.append("files", file);
+      formData.append(
+        "fileInfo",
+        JSON.stringify({
+          name: file.name,
+        })
+      );
+      try {
+        const res = await axios.post(
+          "http://localhost:1337/api/upload",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form*data",
+            },
+          }
+        );
+        setImageCoverPreview(URL.createObjectURL(file));
+        setImgCoverFile(res?.data[0]?.url);
+        toast.success("Success Image Upload");
+      } catch (err) {
+        toast.error("Erro In  Image Upload");
+
+        console.log(err?.message);
+      }
+    }
+  };
+
+  const handleSingleImageChange = async (e, index) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("files", file);
+    formData.append("fileInfo", JSON.stringify({ name: file.name }));
+
+    try {
+      const res = await axios.post(
+        "http://localhost:1337/api/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      const updatedImages = [...multiImages];
+      updatedImages[index] = {
+        preview: URL.createObjectURL(file),
+        url: res?.data[0]?.url,
+        file,
+      };
+      setMultiImages(updatedImages);
+
+      toast.success("Image updated");
+    } catch (err) {
+      toast.error("Error updating image");
+      console.error(err);
+    }
+  };
+
+  // const changeMultiHandeler = async (e) => {
+  //   // Array.from({length:10})
+  //   const files = Array.from(e.target.files);
+
+  //   const previews = [];
+  //   const urls = [];
+
+  //   try {
+  //     for (const file of files) {
+  //       const formData = new FormData();
+  //       formData.append("files", file);
+  //       formData.append("fileInfo", JSON.stringify({ name: file.name }));
+
+  //       const res = await axios.post(
+  //         "http://localhost:1337/api/upload",
+  //         formData,
+  //         {
+  //           headers: { "Content-Type": "multipart/form-data" },
+  //         }
+  //       );
+
+  //       previews.push(URL.createObjectURL(file));
+  //       urls.push(res?.data[0]?.url);
+  //     }
+
+  //     setMultiImagePreviews(previews);
+  //     setMultiImageFiles(urls);
+
+  //     toast.success("Uploaded multiple images successfully");
+  //   } catch (err) {
+  //     toast.error("Error in uploading multiple images");
+  //     console.error(err);
+  //   }
+  // };
+
   const onSubmit = (data) => {
-    // const formData = new FormData();
-    // console.log(data.availableColors, "edit form");
-    // formData.append("title", data.title);
-    // formData.append("description", data.description);
-    // formData.append("quantity", data.quantity);
-    // formData.append("price", data.price);
-    // formData.append("ratingsQuantity", data.ratingsQuantity);
-    // formData.append("ratingsAverage", data.ratingsAverage);
-    // formData.append("availableColors", JSON.stringify(data.availableColors));
-    // formData.append(
-    //   "imageCover",
-    //   "https://m.media-amazon.com/images/I/512WDTbwHwL._AC_SX569_.jpg"
-    // );
-    // if (data.images && data.images.length > 0) {
-    //   Array.from(data.images).forEach(() => {
-    //     formData.append(
-    //       "images",
-    //       "https://m.media-amazon.com/images/I/512WDTbwHwL._AC_SX569_.jpg"
-    //     );
-    //   });
-    // }
-    // formData.append("category", data.category);
-    // formData.append("brand", data.brand);
     const formData = {
       ...data,
-      // imageCover: imgCoverFile,
-      // images: multiImageFiles,
-       imageCover: '/upload test',
-      images: ['teset' , 'test2' , 'test3'],
+      imageCover: imgCoverFile,
+      images: multiImages.map((img) => img.url),
+      //  imageCover: '/upload test',
+      // images: ['teset' , 'test2' , 'test3'],
     };
     const productId = editedProduct._id;
     mutate(
@@ -202,7 +299,7 @@ const EditProduct = ({ isOpenEdit, closeModalEdit, title, editedProduct }) => {
                   if (!colorsList.includes(selectedColor)) {
                     const newColors = [...colorsList, selectedColor];
                     setColorsList(newColors);
-                    setValue("availableColors", newColors); 
+                    setValue("availableColors", newColors);
                   }
                 }}
                 className="bg-[#ed1d24] text-white px-3 py-1 rounded hover:bg-red-700"
@@ -211,10 +308,8 @@ const EditProduct = ({ isOpenEdit, closeModalEdit, title, editedProduct }) => {
               </button>
             </div>
 
-          
             <Input type="hidden" {...register("availableColors")} />
 
-            
             <div className="flex gap-2 mt-2 flex-wrap mb-3">
               {colorsList.map((color, i) => (
                 <div key={i} className="relative">
@@ -249,40 +344,62 @@ const EditProduct = ({ isOpenEdit, closeModalEdit, title, editedProduct }) => {
           </div>
 
           {/* Image Cover */}
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 ">
             <Label htmlFor="imageCover">Image Cover :</Label>
-
-            <Input
-              type="file"
-              {...register("imageCover")}
-              //  defaultValue={editedProduct ? editedProduct["imageCover"] : ""}
+            <Controller
+              name="imageCover"
+              control={control}
+              render={({ field }) => (
+                <div className="relative">
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    className="inset-0 opacity-0 cursor-pointer absolute rounded-[10px]"
+                    onChange={(e) => {
+                      changeHandeler(e);
+                      field.onChange(e.target.files[0]);
+                    }}
+                  />
+                  <img
+                    src={imageCoverPreview || imgplaceholder}
+                    alt={`preview-cover`}
+                    className="w-1/2 p-3 h-[150px] object-contain rounded-[10px]"
+                  />
+                </div>
+              )}
             />
 
             {errors.imageCover && <Errormsg msg={errors.imageCover.message} />}
           </div>
 
           {/* Images */}
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="images">Images :</Label>
-
-            <Input
-              type="file"
-              accept="image/*"
-              multiple
-              {...register("images")}
-              //  defaultValue={editedProduct ? editedProduct["images"] : ""}
-            />
-            <div className="flex gap-2 mt-2 flex-wrap">
-              {/* {previews.images?.map((src, i) => (
-                       <img
-                         key={i}
-                         src={src}
-                         alt={`preview-${i}`}
-                         className="w-20 h-20 object-cover rounded"
-                       />
-                     ))} */}
-            </div>
-            {errors?.images && <Errormsg msg={errors.images.message} />}
+          <div className="flex flex-wrap gap-4 p-3">
+            {multiImages.length > 0 ? (
+              multiImages.map((img, i) => (
+                <div key={i} className="relative group">
+                  <img
+                    src={imageClean(img.preview)}
+                    alt={`preview-${i}`}
+                    className="w-[120px] h-[120px] object-contain rounded-[10px]"
+                  />
+                  <label className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 cursor-pointer">
+                    <span className="text-white text-sm">Edit</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => handleSingleImageChange(e, i)}
+                    />
+                  </label>
+                </div>
+              ))
+            ) : (
+              <img
+                src={imgplaceholder}
+                alt="placeholder"
+                className="w-[120px] h-[120px] object-contain rounded-[10px]"
+              />
+            )}
           </div>
 
           {/* Category */}
