@@ -45,7 +45,7 @@ const AddBlog = () => {
         })
       );
       const res = await axios.post(
-        `http://localhost:1337/api/upload`,
+        `https://better-light-c4601bbd8f.strapiapp.com/api/upload`,
         formData,
         {
           headers: {

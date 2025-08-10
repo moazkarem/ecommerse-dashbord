@@ -83,7 +83,7 @@ const EditProduct = ({ isOpenEdit, closeModalEdit, title, editedProduct }) => {
       );
       try {
         const res = await axios.post(
-          "http://localhost:1337/api/upload",
+          "https://better-light-c4601bbd8f.strapiapp.com/api/upload",
           formData,
           {
             headers: {
@@ -112,7 +112,7 @@ const EditProduct = ({ isOpenEdit, closeModalEdit, title, editedProduct }) => {
 
     try {
       const res = await axios.post(
-        "http://localhost:1337/api/upload",
+        "https://better-light-c4601bbd8f.strapiapp.com/api/upload",
         formData,
         {
           headers: {
@@ -136,48 +136,11 @@ const EditProduct = ({ isOpenEdit, closeModalEdit, title, editedProduct }) => {
     }
   };
 
-  // const changeMultiHandeler = async (e) => {
-  //   // Array.from({length:10})
-  //   const files = Array.from(e.target.files);
-
-  //   const previews = [];
-  //   const urls = [];
-
-  //   try {
-  //     for (const file of files) {
-  //       const formData = new FormData();
-  //       formData.append("files", file);
-  //       formData.append("fileInfo", JSON.stringify({ name: file.name }));
-
-  //       const res = await axios.post(
-  //         "http://localhost:1337/api/upload",
-  //         formData,
-  //         {
-  //           headers: { "Content-Type": "multipart/form-data" },
-  //         }
-  //       );
-
-  //       previews.push(URL.createObjectURL(file));
-  //       urls.push(res?.data[0]?.url);
-  //     }
-
-  //     setMultiImagePreviews(previews);
-  //     setMultiImageFiles(urls);
-
-  //     toast.success("Uploaded multiple images successfully");
-  //   } catch (err) {
-  //     toast.error("Error in uploading multiple images");
-  //     console.error(err);
-  //   }
-  // };
-
   const onSubmit = (data) => {
     const formData = {
       ...data,
       imageCover: imgCoverFile,
       images: multiImages.map((img) => img.url),
-      //  imageCover: '/upload test',
-      // images: ['teset' , 'test2' , 'test3'],
     };
     const productId = editedProduct._id;
     mutate(

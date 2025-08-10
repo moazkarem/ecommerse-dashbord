@@ -14,7 +14,7 @@ import { useGetAbout, useUpdateAbout } from "../../../hooks/useAbout.js";
 
 const EditBlog = () => {
   const { data } = useGetAbout();
-  // console.log(data?.[0]?.documentId , 'about adad');
+  console.log(data?.[0]?.documentId , 'about adad');
   const id = data?.[0]?.documentId;
   const {
     register,
@@ -38,9 +38,9 @@ const EditBlog = () => {
       data?.[0]?.vissionImg?.url &&
       data?.[0]?.bannerImg?.url
     ) {
-      setPreviewMission(`http://localhost:1337${data?.[0]?.missionImg?.url}`);
-      setPreviewVission(`http://localhost:1337${data?.[0]?.vissionImg?.url}`);
-      setPreviewBanner(`http://localhost:1337${data?.[0]?.bannerImg?.url}`);
+      setPreviewMission(`${data?.[0]?.missionImg?.url}`);
+      setPreviewVission(`${data?.[0]?.vissionImg?.url}`);
+      setPreviewBanner(`${data?.[0]?.bannerImg?.url}`);
     }
   }, [data, reset]);
 
@@ -63,7 +63,7 @@ const EditBlog = () => {
 
       try {
         const res = await axios.post(
-          `http://localhost:1337/api/upload`,
+          `https://better-light-c4601bbd8f.strapiapp.com/api/upload`,
           formData,
           {
             headers: {
@@ -107,7 +107,7 @@ const EditBlog = () => {
       vissionImg: fileVission,
       bannerImg: fileBanner,
     };
-    // console.log(id , 'subb ');
+    console.log(id , 'subb ');
     mutate(
       { finalData, id },
       {

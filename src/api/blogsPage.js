@@ -45,6 +45,6 @@ export const delBlogApi = async (id) => {
     `${import.meta.env.VITE_SECOND_DOMAIN}/blogs/${id}`
   );
 
-  console.log(res, "del blog data");
+  // console.log(res, "del blog data");
   return res;
 };

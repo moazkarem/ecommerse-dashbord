@@ -54,7 +54,7 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
       );
       try {
         const res = await axios.post(
-          "http://localhost:1337/api/upload",
+          "https://better-light-c4601bbd8f.strapiapp.com/api/upload",
           formData,
           {
             headers: {
@@ -90,7 +90,7 @@ const AddProduct = ({ isOpen, closeModal, title }) => {
         formData.append("fileInfo", JSON.stringify({ name: file.name }));
 
         const res = await axios.post(
-          "http://localhost:1337/api/upload",
+          "https://better-light-c4601bbd8f.strapiapp.com/api/upload",
           formData,
           {
             headers: { "Content-Type": "multipart/form-data" },

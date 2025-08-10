@@ -27,7 +27,7 @@ const EditBlog = () => {
     reset,
   } = useForm({
     resolver: yupResolver(blogsSchema),
-  });
+  }); 
   useEffect(() => {
     reset({
       title: singleBlog?.title,
@@ -36,7 +36,7 @@ const EditBlog = () => {
     });
 
     if (singleBlog?.image?.url) {
-      setPreview(`http://localhost:1337${singleBlog.image.url}`);
+      setPreview(`${singleBlog.image.url}`);
     }
   }, [singleBlog, reset]);
 
@@ -59,7 +59,7 @@ const EditBlog = () => {
       );
       try {
         const res = await axios.post(
-          `http://localhost:1337/api/upload?id=${singleBlog?.image?.id}`,
+          `https://better-light-c4601bbd8f.strapiapp.com/api/upload?id=${singleBlog?.image?.id}`,
           formData,
           {
             headers: {
@@ -78,17 +78,17 @@ const EditBlog = () => {
     }
   };
   const onSubmit = async (data) => {
+    console.log(fileImage , 'filll')
     const finalData = {
       title: data?.title,
       description: data?.description,
       image: fileImage,
     };
-    console.log(typeof fileImage, "fiii");
     mutate({finalData , id}, {
       onSuccess: () => {
         queryClient.invalidateQueries("blogs");
         toast.success("Blog Updated Successfully");
-        navigate("/pages/blogs");
+        // navigate("/pages/blogs");
       },
       onError: (error) => {
         console.error("Update error:", error.response?.data || error.message);

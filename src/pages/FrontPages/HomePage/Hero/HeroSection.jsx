@@ -3,6 +3,7 @@ import { useGetHero } from "../../../../hooks/useHomePage";
 import AddButton from "../../../../components/Add Button/AddButton";
 import { useState } from "react";
 import DelHero from "./DelHero";
+import { imageClean } from "../../../../helpers/imageClean";
 
 const HeroSection = () => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const HeroSection = () => {
     >
       <div>
         <img
-          src={`http://localhost:1337${slider?.image?.url}`}
+          src={`${imageClean(slider?.image?.url)}`}
           className="w-full h-[150px] object-contain rounded-md"
         />
       </div>

@@ -49,7 +49,7 @@ const HeroForm = ({ slider }) => {
     });
 
     if (data?.image?.url) {
-      setPreview(`http://localhost:1337${data.image.url}`);
+      setPreview(`${data.image.url}`);
     }
   }, [reset, data]);
 
@@ -66,7 +66,7 @@ const HeroForm = ({ slider }) => {
         })
       );
       const res = await axios.post(
-        `http://localhost:1337/api/upload?id=${data?.image?.id}`,
+        `https://better-light-c4601bbd8f.strapiapp.com/api/upload`,
         formData,
         {
           headers: {
@@ -78,7 +78,7 @@ const HeroForm = ({ slider }) => {
       console.log(res, "changee");
       data.image = res?.data;
       setPreview(URL.createObjectURL(file));
-      setFileImage(res?.data?.id);
+      setFileImage(res?.data[0]?.id);
     }
   };
   const onSubmit = async (data) => {
