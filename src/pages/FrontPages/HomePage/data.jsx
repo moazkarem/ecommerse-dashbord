@@ -53,7 +53,7 @@ export const HeroData = [
   {
     name: "category",
     type: "text",
-    label: "Title",
+    label: "Category",
     col: 12,
   },
 ];

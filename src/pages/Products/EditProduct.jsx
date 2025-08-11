@@ -375,11 +375,11 @@ const EditProduct = ({ isOpenEdit, closeModalEdit, title, editedProduct }) => {
                 {...register("category")}
               >
                 <option value={editedProduct?.category}>
-                  {editedProduct?.category}
+               Select Category
                 </option>
-                {categories?.data?.data?.map(({ _id }) => (
+                {categories?.data?.data?.map(({ _id , name }) => (
                   <option key={_id} value={_id}>
-                    {_id}
+                    {name}
                   </option>
                 ))}
               </select>
@@ -400,11 +400,11 @@ const EditProduct = ({ isOpenEdit, closeModalEdit, title, editedProduct }) => {
                 {...register("brand")}
               >
                 <option value={editedProduct?.category}>
-                  {editedProduct?.brand}
+                Select Brand
                 </option>
-                {brands?.data?.data?.map(({ _id }) => (
+                {brands?.data?.data?.map(({ _id , name}) => (
                   <option key={_id} value={_id}>
-                    {_id}
+                    {name}
                   </option>
                 ))}
               </select>

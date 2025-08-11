@@ -146,8 +146,8 @@ const Sidebar = ({ open, setOpen }) => {
                     primary={item.title}
                     sx={{ opacity: open ? 1 : 0 }}
                   />
-                  {hasChildren &&
-                    (isAccordionOpen ? <ExpandLess /> : <ExpandMore />)}
+                  {/* {hasChildren &&
+                    (isAccordionOpen ? <ExpandLess /> : <ExpandMore />)} */}
                 </ListItemButton>
               </ListItem>
 
