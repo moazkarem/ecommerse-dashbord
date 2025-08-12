@@ -7,13 +7,14 @@ import imgplaceholder from "../../../../../public/images/placeholder.jpeg";
 import { HeroData } from "../data.jsx";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Errormsg from "../../../../Components/Error/Errormsg.jsx";
+import Errormsg from "../../../../components/Error/Errormsg.jsx";
 import { herosectionSchema } from "../../../../helpers/validation.js";
 import { useAddHero } from "../../../../hooks/useHomePage.js";
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
 
 const AddHero = () => {
   const navigate = useNavigate();
