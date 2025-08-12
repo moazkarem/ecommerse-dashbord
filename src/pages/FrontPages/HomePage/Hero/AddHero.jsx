@@ -7,7 +7,7 @@ import imgplaceholder from "../../../../../public/images/placeholder.jpeg";
 import { HeroData } from "../data.jsx";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Errormsg from "../../../../components/Error/Errormsg";
+import Errormsg from "./../../../../components/Error/ErrorMsg";
 import { herosectionSchema } from "../../../../helpers/validation.js";
 import { useAddHero } from "../../../../hooks/useHomePage.js";
 import toast from "react-hot-toast";
