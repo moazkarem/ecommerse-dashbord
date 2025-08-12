@@ -88,7 +88,7 @@ const EditBlog = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("blogs");
         toast.success("Blog Updated Successfully");
-        // navigate("/pages/blogs");
+        navigate("/pages/blogs");
       },
       onError: (error) => {
         console.error("Update error:", error.response?.data || error.message);
