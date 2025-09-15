@@ -8,7 +8,7 @@ import Errormsg from "./../../components/Error/ErrorMsg";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { categorySchema } from "../../helpers/validation";
-import { useEditBrand } from "../../hooks/useBrands";
+// import { useEditBrand } from "../../hooks/useBrands";
 import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
@@ -38,98 +38,98 @@ const EditBrand = ({ isOpenEdit, closeModalEdit, title, editedBrand }) => {
     }
   }, [editedBrand, reset]);
 
-  const changeHandeler = async (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setImgPreview(URL.createObjectURL(file));
-      const formData = new FormData();
-      formData.append("files", file);
-      formData.append(
-        "fileInfo",
-        JSON.stringify({
-          name: file.name,
-        })
-      );
-      try {
-        const res = await axios.post(
-          "https://better-light-c4601bbd8f.strapiapp.com/api/upload",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form*data",
-            },
-          }
-        );
-        setFileImage(res?.data[0]?.url);
-        toast.success("Success Image Upload");
-      } catch (err) {
-        toast.error("Erro In  Image Upload");
+  // const changeHandeler = async (e) => {
+  //   if (e.target.files && e.target.files[0]) {
+  //     const file = e.target.files[0];
+  //     setImgPreview(URL.createObjectURL(file));
+  //     const formData = new FormData();
+  //     formData.append("files", file);
+  //     formData.append(
+  //       "fileInfo",
+  //       JSON.stringify({
+  //         name: file.name,
+  //       })
+  //     );
+  //     try {
+  //       const res = await axios.post(
+  //         "https://better-light-c4601bbd8f.strapiapp.com/api/upload",
+  //         formData,
+  //         {
+  //           headers: {
+  //             "Content-Type": "multipart/form*data",
+  //           },
+  //         }
+  //       );
+  //       setFileImage(res?.data[0]?.url);
+  //       toast.success("Success Image Upload");
+  //     } catch (err) {
+  //       toast.error("Erro In  Image Upload");
 
-        console.log(err?.message);
-      }
-    }
-  };
+  //       console.log(err?.message);
+  //     }
+  //   }
+  // };
 
-  const renderCatFields = addBrandsFields?.map(({ label, name, type }, idx) => (
-    <div key={idx} className="flex gap-2 flex-col mb-3">
-      <Label htmlFor={label}>{label} :</Label>
+  // const renderCatFields = addBrandsFields?.map(({ label, name, type }, idx) => (
+  //   <div key={idx} className="flex gap-2 flex-col mb-3">
+  //     <Label htmlFor={label}>{label} :</Label>
 
-      {type === "file" ? (
-        <>
-          <Controller
-            name={name}
-            control={control}
-            render={({ field }) => (
-              <div className="relative">
-                <Input
-                  type="file"
-                  id={label}
-                  classname="inset-0 opacity-0 cursor-pointer absolute"
-                  onChange={(e) => {
-                    changeHandeler(e);
-                    field.onChange(e.target.files[0]);
-                  }}
-                />
-                <img
-                  src={imgPreview ? imgPreview : imgplaceholder}
-                  alt={`preview-${label}`}
-                  className="w-1/2 p-3 h-[150px] object-contain rounded-md"
-                />
-              </div>
-            )}
-          />
-        </>
-      ) : (
-        <Input type={type} id={label} {...register(name)} />
-      )}
+  //     {type === "file" ? (
+  //       <>
+  //         <Controller
+  //           name={name}
+  //           control={control}
+  //           render={({ field }) => (
+  //             <div className="relative">
+  //               <Input
+  //                 type="file"
+  //                 id={label}
+  //                 classname="inset-0 opacity-0 cursor-pointer absolute"
+  //                 onChange={(e) => {
+  //                   changeHandeler(e);
+  //                   field.onChange(e.target.files[0]);
+  //                 }}
+  //               />
+  //               <img
+  //                 src={imgPreview ? imgPreview : imgplaceholder}
+  //                 alt={`preview-${label}`}
+  //                 className="w-1/2 p-3 h-[150px] object-contain rounded-md"
+  //               />
+  //             </div>
+  //           )}
+  //         />
+  //       </>
+  //     ) : (
+  //       <Input type={type} id={label} {...register(name)} />
+  //     )}
 
-      {errors[name] && <Errormsg msg={errors[name]?.message} />}
-    </div>
-  ));
+  //     {errors[name] && <Errormsg msg={errors[name]?.message} />}
+  //   </div>
+  // ));
 
-  const onSubmit = (data) => {
-    const formData = { ...data, image: fileImg };
+  // const onSubmit = (data) => {
+  //   const formData = { ...data, image: fileImg };
 
-    const catId = editedBrand._id;
-    mutate(
-      { formData, catId },
-      {
-        onSuccess: () => {
-          toast.success("Brand edited successfully");
-          queryClient.invalidateQueries(["brands"]);
-          closeModalEdit();
-        },
-        onError: (error) => {
-          toast.error("An error occurred, category was not added");
-          console.log(error.message, "error from edit category");
-        },
-      }
-    );
-  };
+  //   const catId = editedBrand._id;
+  //   mutate(
+  //     { formData, catId },
+  //     {
+  //       onSuccess: () => {
+  //         toast.success("Brand edited successfully");
+  //         queryClient.invalidateQueries(["brands"]);
+  //         closeModalEdit();
+  //       },
+  //       onError: (error) => {
+  //         toast.error("An error occurred, category was not added");
+  //         console.log(error.message, "error from edit category");
+  //       },
+  //     }
+  //   );
+  // };
 
   return (
     <div>
-      <Modal title={title} isOpen={isOpenEdit} closeModal={closeModalEdit}>
+      {/* <Modal title={title} isOpen={isOpenEdit} closeModal={closeModalEdit}>
         <form onSubmit={handleSubmit(onSubmit)}>
           {renderCatFields}
           <div className="flex justify-center items-center space-x-3">
@@ -150,7 +150,7 @@ const EditBrand = ({ isOpenEdit, closeModalEdit, title, editedBrand }) => {
             </div>
           </div>
         </form>
-      </Modal>
+      </Modal> */}
     </div>
   );
 };

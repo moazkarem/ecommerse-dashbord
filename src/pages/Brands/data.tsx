@@ -1,7 +1,17 @@
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { imageClean } from "../../helpers/imageClean";
-export const getCategoryColumns = ({ onEdit, onDelete }) => [
+
+import { Ibrand } from "../../types/brands";
+import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+interface Iprops {
+  onEdit: (row: Ibrand) => void;
+  onDelete: (row: Ibrand) => void;
+}
+export const getCategoryColumns = ({
+  onEdit,
+  onDelete,
+}: Iprops): GridColDef<Ibrand>[] => [
   {
     field: "name",
     headerName: "Name",
@@ -17,11 +27,11 @@ export const getCategoryColumns = ({ onEdit, onDelete }) => [
     flex: 1,
     align: "center",
     headerAlign: "center",
-    renderCell: (row) => (
+    renderCell: (params: GridRenderCellParams<Ibrand>) => (
       <div className="w-full flex justify-center ">
         <img
           className="w-12 h-12 object-contain p-2"
-          src={`${imageClean(row?.row?.image)}`}
+          src={`${imageClean(params?.row?.image)}`}
         />
       </div>
     ),
@@ -33,8 +43,11 @@ export const getCategoryColumns = ({ onEdit, onDelete }) => [
     flex: 1,
     align: "center",
     headerAlign: "center",
-    renderCell: (brand) => (
-      <button style={{ lineHeight: "32px" }} onClick={() => onEdit(brand.row)}>
+    renderCell: (params: GridRenderCellParams<Ibrand>) => (
+      <button
+        style={{ lineHeight: "32px" }}
+        onClick={() => onEdit(params?.row)}
+      >
         <FaEdit color="#008000" className="text-[20px]" />
       </button>
     ),
@@ -46,14 +59,16 @@ export const getCategoryColumns = ({ onEdit, onDelete }) => [
     width: 150,
     align: "center",
     headerAlign: "center",
-    renderCell: (brand) => (
-      <button
-        style={{ lineHeight: "32px" }}
-        onClick={() => onDelete(brand.row)}
-      >
-        <MdDelete className="text-[#ff0000cc] text-[20px]" />
-      </button>
-    ),
+    renderCell: (params: GridRenderCellParams<Ibrand>) => {
+      return (
+        <button
+          style={{ lineHeight: "32px" }}
+          onClick={() => onDelete(params?.row)}
+        >
+          <MdDelete className="text-[#ff0000cc] text-[20px]" />
+        </button>
+      );
+    },
   },
 ];
 

@@ -7,8 +7,8 @@ import { addBrandsFields } from "../../data/data";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Errormsg from "./../../components/Error/ErrorMsg";
-import { categorySchema } from "../../helpers/validation";
-import { useAddBrand } from "../../hooks/useBrands";
+// import { categorySchema } from "../../helpers/validation";
+// import { useAddBrand } from "../../hooks/useBrands";
 import { toast } from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
@@ -54,70 +54,70 @@ const AddBrand = ({ isOpen, closeModal, title }) => {
     }
   };
 
-  const renderCatFields = addBrandsFields?.map(({ label, name, type }, idx) => {
-    const inputId = `${name}-input`;
-    if (type === "file") {
-      return (
-        <div key={idx} className="mt-4 relative">
-          <Label htmlFor={inputId}>{label} : </Label>
-          <div className="relative w-full">
-            <Controller
-              name={name}
-              control={control}
-              render={({ field }) => (
-                <>
-                  <Input
-                    id={inputId}
-                    className="absolute inset-0 opacity-0 cursor-pointer"
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => {
-                      changeHandeler(e);
-                      field.onChange(e.target.files[0]);
-                    }}
-                  />
-                  <img
-                    className="w-1/2 p-3 h-[150px] object-contain rounded-md"
-                    src={imagePreview || imgplaceholder}
-                    alt="Preview"
-                  />
-                </>
-              )}
-            />
-          </div>
-          <Errormsg msg={errors[name]?.message} />
-        </div>
-      );
-    } else {
-      return (
-        <div key={idx} className="flex gap-2 flex-col">
-          <Label htmlFor={inputId}>{label} : </Label>
-          <Input type={type} id={inputId} {...register(name)} />
-          {errors[name] && <Errormsg msg={errors[name]?.message} />}
-        </div>
-      );
-    }
-  });
+  // const renderCatFields = addBrandsFields?.map(({ label, name, type }, idx) => {
+  //   const inputId = `${name}-input`;
+  //   if (type === "file") {
+  //     return (
+  //       <div key={idx} className="mt-4 relative">
+  //         <Label htmlFor={inputId}>{label} : </Label>
+  //         <div className="relative w-full">
+  //           <Controller
+  //             name={name}
+  //             control={control}
+  //             render={({ field }) => (
+  //               <>
+  //                 <Input
+  //                   id={inputId}
+  //                   className="absolute inset-0 opacity-0 cursor-pointer"
+  //                   type="file"
+  //                   accept="image/*"
+  //                   onChange={(e) => {
+  //                     changeHandeler(e);
+  //                     field.onChange(e.target.files[0]);
+  //                   }}
+  //                 />
+  //                 <img
+  //                   className="w-1/2 p-3 h-[150px] object-contain rounded-md"
+  //                   src={imagePreview || imgplaceholder}
+  //                   alt="Preview"
+  //                 />
+  //               </>
+  //             )}
+  //           />
+  //         </div>
+  //         <Errormsg msg={errors[name]?.message} />
+  //       </div>
+  //     );
+  //   } else {
+  //     return (
+  //       <div key={idx} className="flex gap-2 flex-col">
+  //         <Label htmlFor={inputId}>{label} : </Label>
+  //         <Input type={type} id={inputId} {...register(name)} />
+  //         {errors[name] && <Errormsg msg={errors[name]?.message} />}
+  //       </div>
+  //     );
+  //   }
+  // });
 
   //================= SUBMIT DATA ========
-  const onSubmit = (data) => {
-    const formData = { ...data, image: fileImage };
+  // const onSubmit = (data) => {
+  //   const formData = { ...data, image: fileImage };
 
-    mutate(formData, {
-      onSuccess: () => {
-        toast.success("Brand added successfully");
-        closeModal();
-        reset();
-        queryClient.invalidateQueries(["brands"]);
-      },
-      onError: () => {
-        toast.error("An error occurred, brand was not added");
-      },
-    });
-  };
+  //   mutate(formData, {
+  //     onSuccess: () => {
+  //       toast.success("Brand added successfully");
+  //       closeModal();
+  //       reset();
+  //       queryClient.invalidateQueries(["brands"]);
+  //     },
+  //     onError: () => {
+  //       toast.error("An error occurred, brand was not added");
+  //     },
+  //   });
+  // };
   return (
     <div>
-      <Modal title={title} isOpen={isOpen} closeModal={closeModal}>
+      {/* <Modal title={title} isOpen={isOpen} closeModal={closeModal}>
         <form onSubmit={handleSubmit(onSubmit)}>
           {renderCatFields}
           <div className="flex justify-center items-center space-x-3">
@@ -136,7 +136,7 @@ const AddBrand = ({ isOpen, closeModal, title }) => {
             </Button>
           </div>
         </form>
-      </Modal>
+      </Modal> */}
     </div>
   );
 };
