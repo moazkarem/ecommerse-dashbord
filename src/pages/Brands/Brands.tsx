@@ -11,6 +11,8 @@ import DelBrand from "./DelBrand";
 import EditBrand from "./EditBrand";
 import { setBrandsAction } from "../../store/features/brandsSlice";
 import AddBrand from "./AddBrand";
+import { Ibrand } from "../../types/brands";
+
 
 const Brands = () => {
   //===================== MODAL STATES ===========
@@ -23,13 +25,13 @@ const Brands = () => {
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
-  const openModalEdit = (selectedBrand) => {
+  const openModalEdit = (selectedBrand:Ibrand) => {
     setIsOpenEdit(true);
     setEditedBrand(selectedBrand);
   };
   const closeModalEdit = () => setIsOpenEdit(false);
 
-  const openModalDel = (selectedBrand) => {
+  const openModalDel = (selectedBrand:Ibrand) => {
     setIsOpenDel(true);
     setDeletedBrand(selectedBrand);
   };
@@ -39,18 +41,19 @@ const Brands = () => {
   const dispatch = useDispatch();
   const { data: brands, isLoading } = useGetBrands();
 
-  useEffect(() => {
-    if (brands?.data) {
-      dispatch(setBrandsAction(brands?.data?.data));
-    }
-  }, [brands, dispatch]);
 
   const columns = getCategoryColumns({
     onEdit: openModalEdit,
     onDelete: openModalDel,
   });
 
-  const rows = brands?.data?.data.map((brand, index) => ({
+  useEffect(() => {
+    if (brands?.data) {
+      dispatch(setBrandsAction(brands?.data)); 
+    }
+  }, [brands, dispatch]);
+  
+  const rows = brands?.data?.map((brand, index) => ({
     ...brand,
     id: brand._id || index,
   }));
@@ -61,24 +64,24 @@ const Brands = () => {
       <TitlePage path={"Dashbord / "} page={"Brands"} />
       <AddButton add={openModal} title={"Add New Brand"} />
       <DataGrid rows={rows} columns={columns} sx={style} />
-      <AddBrand
+      {/* <AddBrand
         title={"Add New Brand"}
         isOpen={isOpen}
         closeModal={closeModal}
-      />
-      <EditBrand
+      /> */}
+      {/* <EditBrand
       key={editedBrand._id}
         title={"Edit Brand "}
         isOpenEdit={isOpenEdit}
         closeModalEdit={closeModalEdit}
         editedBrand={editedBrand}
-      />
-      <DelBrand
+      /> */}
+      {/* <DelBrand
         key={deletedBrand._id}
         isOpen={isOpenDel}
         closeModal={closeModalDel}
         deletedBrand={deletedBrand}
-      />
+      /> */}
     </Box>
   );
 };
